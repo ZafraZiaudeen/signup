@@ -98,6 +98,7 @@ const Child = ({
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [txId, setTxId] = useState("");
   const [steps, setSteps] = useState({
     stepOne: false,
     stepTwo: false,
@@ -1068,6 +1069,14 @@ const Child = ({
     );
   }
 
+  const openLoginPage = () => {
+    // eslint-disable-next-line no-undef
+    chrome.runtime.sendMessage("ieeoghocjopnnocljhibhgababgemndd", {
+      command: "openPage",
+      openLoginPage: txId,
+    });
+  };
+
   return (
     <div className={styles.container}>
       {step === "welcome" ? (
@@ -1096,7 +1105,8 @@ const Child = ({
               type="button"
               onClick={() => {
                 localStorage.removeItem("signUpForm");
-                wantToSignUp(false);
+                // wantToSignUp(false);
+                openLoginPage();
               }}
             >
               <img src={arrowBtnSignUp} className={styles.arrow} alt="Arrow" />

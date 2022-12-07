@@ -1,0 +1,60 @@
+/**
+* Shows how you can use CSS to style your Element's container.
+* These classes are added to your Stripe Element by default.
+* You can override these classNames by using the options passed
+* to the CardElement component.
+* https://stripe.com/docs/js/elements_object/create_element?type=card#elements_create-options-classes
+*/
+
+.StripeElement {
+  height: 51px;
+  padding: 10px 12px;
+  max-width: 499px;
+  width: 100%;
+  color: #32325d;
+  background-color: white;
+  border: 1px solid #ededed;
+  border-radius: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+.cardElementContainer {
+  margin-top: 56px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 26px;
+}
+.__PrivateStripeElement {
+  width: 100%;
+}
+.payButton {
+  background: linear-gradient(89.53deg, #469ee7 -4.3%, #d855f9 102.07%);
+  width: 100%;
+  border-radius: 360px;
+  max-width: 499px;
+  height: 49px;
+  color: #ffffff;
+  letter-spacing: 3.9px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: "Quicksand", sans-serif;
+  transition: 0.3s ease-in-out;
+}
+.payButton:hover{
+  background: linear-gradient(270.53deg, #469ee7 -4.3%, #d855f9 102.07%);
+}

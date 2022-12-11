@@ -676,6 +676,10 @@ input[type="radio"]:hover + label {
   border: 1px solid #ededed;
   border-radius: 20px;
   margin-top: 32px;
+  transition: 0.3s ease-in-out;
+}
+.cardElemLoading {
+  filter: blur(3px);
 }
 .stripeName {
   color: #696969;

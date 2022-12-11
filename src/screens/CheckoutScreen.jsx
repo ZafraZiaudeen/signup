@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import config from "../config/config";
+import user from "../api/user";
+import extension from "../api/extension";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
-
 import styles from "../styles/SignUp.module.css";
 
 import arrowForward from "../images/arrowOnly.svg";
@@ -10,13 +12,23 @@ import padLock from "../images/checkoutPadLock.svg";
 import badge from "../images/badgeWithCheck.svg";
 
 export default function CheckoutScreen({ clientData, setCheckoutPage }) {
-  const stripePromise = loadStripe(
-    "pk_test_51MCJIYE9iLxZZhRi4gIxJXtFM0UJ6aCUYosbxOtKn0eQs2fJNO62QHBR8XoQyQTlqPZBhPzygF2NKKM5jEgSMg6C00HNnprEui"
-  );
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('submitted')
+  const [data, setData] = useState({});
+  const stripePromise = loadStripe(config.stripeSecret);
+
+  const handleSuccess = async (data) => {
+    let result = await user.updateStripeCustomer({
+      email: clientData.email,
+      stripeCustomerId: clientData.paymentIntent.customerId,
+    });
+
+    extension.openLoginPage(data.paymentIntent.id);
+    localStorage.removeItem("signUpForm");
   };
+
+  useEffect(() => {
+    console.log(clientData);
+  }, [clientData, data]);
+
   return (
     <div className={styles.container}>
       <section className={styles.signUpActions}>
@@ -52,7 +64,10 @@ export default function CheckoutScreen({ clientData, setCheckoutPage }) {
               </div>
               <div className={styles.cardElemContainer}>
                 <Elements stripe={stripePromise}>
-                  <CheckoutForm handleSubmit={handleSubmit} />
+                  <CheckoutForm
+                    handleSuccess={handleSuccess}
+                    clientData={clientData}
+                  />
                 </Elements>
               </div>
               <span className={styles.stripeName}>Powered by stripe</span>

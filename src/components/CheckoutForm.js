@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { CardElement } from "@stripe/react-stripe-js";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import Button from "./Button";
 import "../styles/CardElement.css";
 
@@ -21,20 +21,47 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-function CheckoutForm({ handleSubmit }) {
+function CheckoutForm({ clientData, handleSuccess }) {
+  const stripe = useStripe();
+  const elements = useElements();
   const formRef = useRef();
-  const handleButtonPress = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    formRef.submit();
+
+    if (!stripe || !elements || !clientData.paymentIntent.clientSecret) {
+      return;
+    }
+
+    const result = await stripe.confirmCardPayment(
+      clientData.paymentIntent.clientSecret,
+      {
+        payment_method: {
+          card: elements.getElement(CardElement),
+          billing_details: {
+            name: clientData.name,
+            email: clientData.email,
+          },
+        },
+      }
+    );
+
+    if (result.error) {
+      console.log(result.error.message);
+    } else {
+      if (result.paymentIntent.status === "succeeded") {
+        handleSuccess(result);
+      }
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} ref={formRef}>
+    <form ref={formRef}>
       <label className="cardElementContainer">
         <CardElement options={CARD_ELEMENT_OPTIONS} />
       </label>
       <Button
-        action={handleButtonPress}
+        action={handleSubmit}
         text={"Pay Forward"}
         className={"payButton"}
       />

@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import config from "../config/config";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
@@ -26,6 +27,8 @@ import happyPerson1 from "../images/happyPerson1.jpg";
 import happyPerson2 from "../images/happyPerson2.jpg";
 import happyPerson3 from "../images/happyPerson3.jpg";
 import Loader from "../components/Loader";
+import payments from "../api/payments";
+import extension from "../api/extension";
 
 const stripePromise = loadStripe(
   "pk_test_51MCJIYE9iLxZZhRi4gIxJXtFM0UJ6aCUYosbxOtKn0eQs2fJNO62QHBR8XoQyQTlqPZBhPzygF2NKKM5jEgSMg6C00HNnprEui"
@@ -128,10 +131,14 @@ const Child = ({
         subscriptionAmount: subscriptionAmount,
       })
     );
+  }, [name, email, password, step, welcomeStep, payPeriod, subscriptionAmount]);
+
+  useEffect(() => {
     clientData.name = name;
     clientData.subscriptionAmount = subscriptionAmount;
+    clientData.email = email;
     setClientData({ ...clientData });
-  }, [name, email, password, step, welcomeStep, payPeriod, subscriptionAmount]);
+  }, [name, subscriptionAmount, email]);
 
   useEffect(() => {
     const saved = localStorage.getItem("signUpForm");
@@ -241,7 +248,7 @@ const Child = ({
   const checkIfAccountExists = (email) => {
     axios
       .post(
-        "http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/check-account",
+        config.serverUrl + "/check-account",
         { email },
         {
           headers: {
@@ -264,6 +271,28 @@ const Child = ({
       });
   };
 
+  const getPaymentIntent = () => {
+    return new Promise(async (resolve) => {
+      let customerResult = await payments.createCustomer({
+        email: clientData.email,
+        name: clientData.name,
+      });
+      let subscriptionResult = await payments.createSubscription({
+        customerId: customerResult.data.customer.id,
+        price: clientData.subscriptionAmount,
+      });
+      console.log({ customerResult });
+      console.log({ subscriptionResult });
+      resolve({
+        customerId: customerResult.data.customer.id,
+        subscriptionId: subscriptionResult.data.subscription.id,
+        clientSecret:
+          subscriptionResult.data.subscription.latest_invoice.payment_intent
+            .client_secret,
+      });
+    });
+  };
+
   const handleSubmitSub = async (e) => {
     e.preventDefault();
     // setLoading(true);
@@ -274,12 +303,13 @@ const Child = ({
       password,
     };
 
-    const user = await axios.post(
-      "http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/api/v1/users",
-      userData
-    );
+    const user = await axios.post(config.serverUrl + "/api/v1/users", userData);
     if (user) {
       localStorage.setItem("user", JSON.stringify(user.data));
+      let paymentIntentResult = await getPaymentIntent();
+
+      clientData.paymentIntent = paymentIntentResult;
+      setClientData(clientData);
       setCheckoutPage(true);
       // window.open(
       //   `http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/subscribe.html?name=${name}&email=${email}&price=${subscriptionAmount}`,
@@ -1069,14 +1099,6 @@ const Child = ({
     );
   }
 
-  const openLoginPage = () => {
-    // eslint-disable-next-line no-undef
-    chrome.runtime.sendMessage("ieeoghocjopnnocljhibhgababgemndd", {
-      command: "openPage",
-      openLoginPage: txId,
-    });
-  };
-
   return (
     <div className={styles.container}>
       {step === "welcome" ? (
@@ -1106,7 +1128,7 @@ const Child = ({
               onClick={() => {
                 localStorage.removeItem("signUpForm");
                 // wantToSignUp(false);
-                openLoginPage();
+                extension.openLoginPage();
               }}
             >
               <img src={arrowBtnSignUp} className={styles.arrow} alt="Arrow" />

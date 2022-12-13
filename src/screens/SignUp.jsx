@@ -362,6 +362,13 @@ const Child = ({
     }
   };
 
+  const getTriangleLeft = () => {
+    const pos = Object.keys(subAmounts).find(
+      (key) => subAmounts[key] === subscriptionAmount
+    );
+    return pos === "left" ? "25%" : pos === "mid" ? "50%" : "75%";
+  };
+
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
 
   let insideForm;
@@ -787,17 +794,6 @@ const Child = ({
   } else if (welcomeStep === "2") {
     welcome = (
       <div className={styles.welcome}>
-        <button
-          type="button"
-          onClick={() => setWelcomeStep("1")}
-          className={styles.backBtn}
-        >
-          <img
-            src={arrowBack}
-            className={styles.backArrowBtn}
-            alt="go to previous form step"
-          />
-        </button>
         <div className={styles.mainSection}>
           {name &&
             (name ? (
@@ -816,7 +812,6 @@ const Child = ({
                 <img src={star} alt="icon of rating star" />
                 <img src={star} alt="icon of rating star" />
               </div>
-              <article>5000+ LIVES CHANGED</article>
             </div>
             <div className={styles.monthlyOrYearlyTab}>
               <div className={styles.monthlyOrYearly}>
@@ -835,14 +830,17 @@ const Child = ({
                     setSubAmounts(amounts);
                     setSubscriptionAmount(amounts[key]);
                   }}
-                  style={{
-                    marginRight: "30px",
-                    opacity: payPeriod === "monthly" ? 1 : 0.53,
-                    borderBottom:
-                      payPeriod === "monthly" ? "2px solid #FF00c4" : "none",
-                  }}
+                  className={payPeriod === "monthly" ? styles.activePeriod : ""}
                 >
                   MONTHLY
+                  <div
+                    className={
+                      payPeriod === "monthly"
+                        ? `${styles.PeriodUnderline} ${styles.activePeriodUnderline}`
+                        : styles.PeriodUnderline
+                    }
+                  ></div>
+                  <span className={styles.youSave}>Save 18%</span>
                 </button>
                 <button
                   type="button"
@@ -859,172 +857,200 @@ const Child = ({
                     setSubAmounts(amounts);
                     setSubscriptionAmount(amounts[key]);
                   }}
-                  style={{
-                    opacity: payPeriod === "yearly" ? 1 : 0.53,
-                    borderBottom:
-                      payPeriod === "yearly" ? "2px solid #FF00c4" : "none",
-                  }}
+                  className={payPeriod === "yearly" ? styles.activePeriod : ""}
                 >
                   YEARLY
+                  <div
+                    className={
+                      payPeriod === "yearly"
+                        ? `${styles.PeriodUnderline} ${styles.activePeriodUnderline}`
+                        : styles.PeriodUnderline
+                    }
+                  ></div>
                 </button>
               </div>
-              {payPeriod === "monthly" ? (
-                <div className={styles.monthlyPrices}>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$0.99"
-                    id="$0.99"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["left"])}
-                  />
-                  <label
-                    htmlFor="$0.99"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$0.99" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$0.99"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$0.99" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    $0.99
-                  </label>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$3.99"
-                    id="$3.99"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["mid"])}
-                  />
-                  <label
-                    htmlFor="$3.99"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$3.99" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$3.99"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$3.99" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    $3.99
-                  </label>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$9.99"
-                    id="$9.99"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["right"])}
-                    checked={subscriptionAmount === "$9.99"}
-                  />
-                  <label
-                    htmlFor="$9.99"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$9.99" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$9.99"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$9.99" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    $9.99
-                  </label>
+              <div className={styles.pricesWrapper}>
+                {payPeriod === "monthly" ? (
+                  <div className={styles.monthlyPrices}>
+                    <input
+                      type="radio"
+                      name="price"
+                      value="$0.99"
+                      id="$0.99"
+                      onChange={(e) =>
+                        setSubscriptionAmount(subAmounts["left"])
+                      }
+                      checked={subscriptionAmount === "$0.99"}
+                    />
+                    <label
+                      htmlFor="$0.99"
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === "$0.99" ? "#0089ff" : "",
+                        border:
+                          subscriptionAmount === "$0.99"
+                            ? "1px solid #ffffff"
+                            : "",
+                        color: subscriptionAmount === "$0.99" ? "#ffffff" : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>$3</span>
+                      $0.99
+                    </label>
+                    <input
+                      type="radio"
+                      name="price"
+                      value="$3.99"
+                      id="$3.99"
+                      onChange={(e) => setSubscriptionAmount(subAmounts["mid"])}
+                      checked={subscriptionAmount === "$3.99"}
+                    />
+                    <label
+                      htmlFor="$3.99"
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === "$3.99" ? "#0089ff" : "",
+                        border:
+                          subscriptionAmount === "$3.99"
+                            ? "1px solid #ffffff"
+                            : "",
+                        color: subscriptionAmount === "$3.99" ? "#ffffff" : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>$9</span>
+                      $3.99
+                    </label>
+                    <input
+                      type="radio"
+                      name="price"
+                      value="$9.99"
+                      id="$9.99"
+                      onChange={(e) =>
+                        setSubscriptionAmount(subAmounts["right"])
+                      }
+                      checked={subscriptionAmount === "$9.99"}
+                    />
+                    <label
+                      htmlFor="$9.99"
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === "$9.99" ? "#0089ff" : "",
+                        border:
+                          subscriptionAmount === "$9.99"
+                            ? "1px solid #ffffff"
+                            : "",
+                        color: subscriptionAmount === "$9.99" ? "#ffffff" : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>$19</span>
+                      $9.99
+                    </label>
+                  </div>
+                ) : (
+                  <div className={styles.yearlyPrices}>
+                    <input
+                      type="radio"
+                      name="price"
+                      value="$11.88"
+                      id="$11.88"
+                      onChange={(e) =>
+                        setSubscriptionAmount(subAmounts["left"])
+                      }
+                      checked={subscriptionAmount === "$11.88"}
+                    />
+                    <label
+                      htmlFor="$11.88"
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === "$11.88" ? "#0089ff" : "",
+                        border:
+                          subscriptionAmount === "$11.88"
+                            ? "1px solid #ffffff"
+                            : "",
+                        color: subscriptionAmount === "$11.88" ? "#ffffff" : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>$15</span>
+                      $11.88
+                    </label>
+                    <input
+                      type="radio"
+                      name="price"
+                      value="$47.88"
+                      id="$47.88"
+                      onChange={(e) => setSubscriptionAmount(subAmounts["mid"])}
+                      checked={subscriptionAmount === "$47.88"}
+                    />
+                    <label
+                      htmlFor="$47.88"
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === "$47.88" ? "#0089ff" : "",
+                        border:
+                          subscriptionAmount === "$47.88"
+                            ? "1px solid #ffffff"
+                            : "",
+                        color: subscriptionAmount === "$47.88" ? "#ffffff" : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>$56</span>
+                      $47.88
+                    </label>
+                    <input
+                      type="radio"
+                      name="price"
+                      value="$119.88"
+                      id="$119.88"
+                      onChange={(e) =>
+                        setSubscriptionAmount(subAmounts["right"])
+                      }
+                      checked={subscriptionAmount === "$119.88"}
+                    />
+                    <label
+                      htmlFor="$119.88"
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === "$119.88" ? "#0089ff" : "",
+                        border:
+                          subscriptionAmount === "$119.88"
+                            ? "1px solid #ffffff"
+                            : "",
+                        color:
+                          subscriptionAmount === "$119.88" ? "#ffffff" : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>$130</span>
+                      $119.88
+                    </label>
+                  </div>
+                )}
+                <div className={styles.packageText}>
+                  <div
+                    className={styles.triangle}
+                    style={{ left: getTriangleLeft() }}
+                  ></div>
+                  {getText()}
                 </div>
-              ) : (
-                <div className={styles.yearlyPrices}>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$11.88"
-                    id="$11.88"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["left"])}
-                    checked={subscriptionAmount === "$11.88"}
-                  />
-                  <label
-                    htmlFor="$11.88"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$11.88" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$11.88"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$11.88" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    $11.88
-                  </label>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$47.88"
-                    id="$47.88"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["mid"])}
-                    checked={subscriptionAmount === "$47.88"}
-                  />
-                  <label
-                    htmlFor="$47.88"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$47.88" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$47.88"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$47.88" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    $47.88
-                  </label>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$119.88"
-                    id="$119.88"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["right"])}
-                    checked={subscriptionAmount === "$119.88"}
-                  />
-                  <label
-                    htmlFor="$119.88"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$119.88" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$119.88"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$119.88" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    $119.88
-                  </label>
-                </div>
-              )}
-              <p>{getText()}</p>
+              </div>
               <button
                 type="submit"
                 onClick={(e) => handleSubmitSub(e)}
                 className={styles.buttonWithLoader}
                 disabled={subscriptionAmount === "" || loading}
               >
-                <span>{loading ? <Loader /> : "PAY FORWARD"}</span>
+                <span>{loading ? <Loader /> : "LET'S GO!"}</span>
               </button>
             </div>
           </div>

@@ -2,6 +2,10 @@
   font-family: "Quicksand Bold";
   src: url("../fonts/Quicksand-Bold.ttf");
 }
+@font-face {
+  font-family: "VarelaRound";
+  src: url("../fonts/VarelaRound-Regular.ttf");
+}
 .container {
   position: absolute;
   width: 100%;
@@ -316,7 +320,7 @@
   padding-right: 29px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -410,7 +414,7 @@
 }
 
 .promoSection {
-  margin-top: -29px;
+  margin-top: 56px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -418,17 +422,15 @@
 
 .innerContainer .promoSection p {
   font-family: "Playfair Display", serif;
-  line-height: 66px;
-  font-size: 66px;
+  line-height: normal;
+  font-size: 59px;
   font-weight: 200;
   color: #000000;
-  margin-bottom: 16px;
 }
 
 .innerContainer .promoSection .starSection {
   display: flex;
   gap: 21px;
-  margin-bottom: 16px;
 }
 
 .innerContainer .promoSection article {
@@ -439,22 +441,101 @@
   font-weight: bold;
 }
 
+.innerContainer .pricesWrapper {
+  border: 1px solid #ededed;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  width: 100%;
+  height: 172px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.innerContainer .pricesWrapper .packageText {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+  font-family: "VarelaRound";
+  letter-spacing: normal;
+  border-top: 1px solid #ededed;
+}
+
+.innerContainer .pricesWrapper .packageText .triangle {
+  position: absolute;
+  top: 0;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 9px 0 9px;
+  border-color: #ff15c4 transparent transparent transparent;
+  transition: 0.2s ease-in-out;
+}
+
 .innerContainer .monthlyOrYearlyTab {
-  padding: 1rem 2rem;
-  margin-top: -144px;
-  background: #f8f8f8 0% 0% no-repeat padding-box;
-  height: 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 561px;
+}
+
+.innerContainer .monthlyOrYearly {
+  width: 100%;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  column-gap: 13px;
+  margin-top: 36.97px;
 }
 
 .innerContainer .monthlyOrYearlyTab .monthlyOrYearly button {
+  height: 100%;
+  width: 264px;
+  border: 1px solid #d9d9d9;
+  border-radius: 9px 9px 0 0;
   background: none;
   cursor: pointer;
-  border: none;
-  padding-bottom: 2px;
-  font-weight: 300;
+  font-family: "Quicksand Bold";
+  font-weight: 700;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #b5b5b5;
+  column-gap: 6px;
+}
+
+.innerContainer .monthlyOrYearlyTab .monthlyOrYearly button .youSave {
+  color: #ff9300 !important;
+}
+
+.innerContainer .monthlyOrYearlyTab .monthlyOrYearly .activePeriod {
+  background-color: #f7fbff;
+  border-color: #dbeeff !important;
+  color: #1c1c1c;
+}
+
+.innerContainer .monthlyOrYearlyTab .monthlyOrYearly .PeriodUnderline {
+  width: 0;
+  height: 4px;
+  background-color: transparent;
+  position: absolute;
+  bottom: 0;
+  transition: 0.2s ease-in-out;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.innerContainer .monthlyOrYearlyTab .monthlyOrYearly .activePeriodUnderline {
+  width: 100%;
+  background-color: #0089ff;
 }
 
 .innerContainer .monthlyOrYearlyTab p {
@@ -465,12 +546,15 @@
 }
 
 .innerContainer .buttonWithLoader {
-  height: 1.5em;
+  width: 500px;
+  height: 49px;
   color: white;
-  width: 70%;
-  font-size: 1.2em;
+
+  font-size: 13px;
   border-radius: 360px;
-  margin-top: 20px;
+  letter-spacing: 3.9px;
+  font-family: "Quicksand Bold";
+  margin-top: 22px;
   background-image: linear-gradient(
     to right,
     #b611dc,
@@ -491,12 +575,11 @@
     #874fe4,
     #b611dc
   );
-  transform: scale(1.3);
 }
 
 .monthlyPrices,
 .yearlyPrices {
-  margin-top: 42px;
+  margin-top: 49.5px;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -511,9 +594,22 @@ input[type="radio"] + label {
   border-radius: 360px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  width: 135px;
+  justify-content: space-between;
+  min-width: 160px;
   height: 49px;
+  font-family: "VarelaRound";
+  font-weight: 700;
+  letter-spacing: 2.1px;
+  padding: 7px;
+}
+
+input[type="radio"] + label .previousPrice {
+  font-size: 12px;
+  color: #f3c2c2;
+  min-width: 15px;
+  text-decoration: line-through;
+  text-decoration-color: red;
+  margin: 0 3px;
 }
 
 input[type="radio"] {
@@ -532,6 +628,13 @@ input[type="radio"]:hover + label {
   background-color: #0089ff;
   border: 1px solid #ffffff;
   color: #ffffff;
+}
+input[type="radio"]:checked + label .previousPrice,
+input[type="radio"]:hover + label .previousPrice {
+  color: #73beff !important;
+  min-width: 15px;
+  text-decoration: line-through;
+  text-decoration-color: #fff;
 }
 
 .innerContainer .priceDisplay {

@@ -19,6 +19,8 @@ export default function CheckoutScreen({ clientData, setCheckoutPage }) {
     let result = await user.updateStripeCustomer({
       email: clientData.email,
       stripeCustomerId: clientData.paymentIntent.customerId,
+      subscriptionAmount: clientData.subscriptionAmount,
+      payPeriod: clientData.payPeriod,
     });
 
     extension.openLoginPage(data.paymentIntent.id);

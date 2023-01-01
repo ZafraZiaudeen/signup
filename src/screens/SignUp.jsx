@@ -137,8 +137,9 @@ const Child = ({
     clientData.name = name;
     clientData.subscriptionAmount = subscriptionAmount;
     clientData.email = email;
+    clientData.payPeriod = payPeriod;
     setClientData({ ...clientData });
-  }, [name, subscriptionAmount, email]);
+  }, [name, subscriptionAmount, email, payPeriod]);
 
   useEffect(() => {
     const saved = localStorage.getItem("signUpForm");

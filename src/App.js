@@ -3,7 +3,7 @@ import axios from "axios";
 import "./App.css";
 import SignUp from "./screens/SignUp";
 import CheckoutScreen from "./screens/CheckoutScreen";
-import config from "../config/config";
+import config from "./config/config";
 
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";

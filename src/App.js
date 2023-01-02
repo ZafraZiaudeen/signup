@@ -3,6 +3,7 @@ import axios from "axios";
 import "./App.css";
 import SignUp from "./screens/SignUp";
 import CheckoutScreen from "./screens/CheckoutScreen";
+import config from "./config";
 
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
@@ -58,7 +59,7 @@ function App() {
     } else {
       axios
         .get(
-          `http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/api/v1/images/${today}`
+          `${config.serverUrl}/api/v1/images/${today}`
         )
         .then((res) => {
           if (res.data.image) {
@@ -87,7 +88,7 @@ function App() {
 
     axios
       .get(
-        `http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/api/v1/images/${today}`
+        `${config.serverUrl}/api/v1/images/${today}`
       )
       .then((res) => {
         if (res.data.image && res.data.image.toString() !== todayImg) {
@@ -109,7 +110,7 @@ function App() {
     if (!tomorrowImg) {
       axios
         .get(
-          `http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/api/v1/images/${tomorrowDate}`
+          `${config.serverUrl}/api/v1/images/${tomorrowDate}`
         )
         .then((res) => {
           if (res.data.image) {
@@ -158,7 +159,7 @@ function App() {
       setLoggedIn(true);
       axios
         .get(
-          `http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/subscribed/${
+          `${config.serverUrl}/subscribed/${
             user?.email
           }/${new Date().getMonth()}`
         )

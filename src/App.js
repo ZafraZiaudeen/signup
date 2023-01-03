@@ -8,6 +8,13 @@ import config from "./config/config";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
 
+import io from "socket.io-client";
+
+const socket = io.connect("http://localhost:5000", {
+  secure: true,
+  rejectUnauthorized: false,
+});
+
 const TRACKINGID = "G-S9JG17MMY8";
 ReactGA.initialize(TRACKINGID);
 
@@ -25,6 +32,8 @@ function App() {
   const [outerHeight, setOuterHeight] = useState("100vh");
   const appContainerRef = useRef();
   const overlayRef = useRef();
+
+  const [isConnected, setIsConnected] = useState(socket.connected);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -58,9 +67,7 @@ function App() {
       setBgImage(todayImg);
     } else {
       axios
-        .get(
-          `${config.serverUrl}/api/v1/images/${today}`
-        )
+        .get(`${config.serverUrl}/api/v1/images/${today}`)
         .then((res) => {
           if (res.data.image) {
             localStorage.setItem(
@@ -87,9 +94,7 @@ function App() {
     }
 
     axios
-      .get(
-        `${config.serverUrl}/api/v1/images/${today}`
-      )
+      .get(`${config.serverUrl}/api/v1/images/${today}`)
       .then((res) => {
         if (res.data.image && res.data.image.toString() !== todayImg) {
           localStorage.setItem(`beatific-image-${todayParsed}`, res.data.image);
@@ -109,9 +114,7 @@ function App() {
 
     if (!tomorrowImg) {
       axios
-        .get(
-          `${config.serverUrl}/api/v1/images/${tomorrowDate}`
-        )
+        .get(`${config.serverUrl}/api/v1/images/${tomorrowDate}`)
         .then((res) => {
           if (res.data.image) {
             localStorage.setItem(
@@ -159,7 +162,7 @@ function App() {
       setLoggedIn(true);
       axios
         .get(
-          `${config.serverUrl}/subscribed/${
+          `${config.serverUrl}/api/v1/subscribed/${
             user?.email
           }/${new Date().getMonth()}`
         )
@@ -180,6 +183,13 @@ function App() {
       localStorage.setItem("firstTime", "true");
     }
   }, [user, today]);
+
+  useEffect(() => {
+    socket.on("connection", (res) => {
+      setIsConnected(true);
+      console.log(res);
+    });
+  }, []);
 
   const determineLoggedIn = (loggedInState) => setLoggedIn(loggedInState);
   const wantToSignUp = (goToSignUp) => setSignUp(goToSignUp);

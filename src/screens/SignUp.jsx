@@ -33,12 +33,12 @@ import extension from "../api/extension";
 import PayForwardScreenB from "./PayForwardScreenB";
 import PayForwardScreen from "./PayForwardScreen";
 
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
-const socket = io.connect(config.serverUrl, {
-  secure: true,
-  rejectUnauthorized: false,
-});
+// const socket = io.connect(config.serverUrl, {
+//   secure: true,
+//   rejectUnauthorized: false,
+// });
 
 const stripePromise = loadStripe(
   "pk_test_51MCJIYE9iLxZZhRi4gIxJXtFM0UJ6aCUYosbxOtKn0eQs2fJNO62QHBR8XoQyQTlqPZBhPzygF2NKKM5jEgSMg6C00HNnprEui"
@@ -239,11 +239,11 @@ const Child = ({
   }, [videoNumber, welcomeStep]);
 
   useEffect(() => {
-    if (welcomeStep === "2") return;
-    socket.on("connection", (res) => {
-      if (!res?.userCount) return;
-      setUserCount(res.userCount);
-    });
+    // if (welcomeStep === "2") return;
+    // socket.on("connection", (res) => {
+    //   if (!res?.userCount) return;
+    //   setUserCount(res.userCount);
+    // });
   }, [welcomeStep, step]);
 
   // form validation
@@ -812,36 +812,51 @@ const Child = ({
       </div>
     );
   } else if (welcomeStep === "2") {
-    welcome =
-      userCount % 2 === 0 ? (
-        <PayForwardScreenB
-          name={name}
-          setPayPeriod={setPayPeriod}
-          subAmounts={subAmounts}
-          setSubAmounts={setSubAmounts}
-          subscriptionAmount={subscriptionAmount}
-          setSubscriptionAmount={setSubscriptionAmount}
-          payPeriod={payPeriod}
-          getText={getText}
-          getTriangleLeft={getTriangleLeft}
-          handleSubmitSub={handleSubmitSub}
-          loading={loading}
-        />
-      ) : (
-        <PayForwardScreen
-          name={name}
-          setPayPeriod={setPayPeriod}
-          subAmounts={subAmounts}
-          setSubAmounts={setSubAmounts}
-          subscriptionAmount={subscriptionAmount}
-          setSubscriptionAmount={setSubscriptionAmount}
-          payPeriod={payPeriod}
-          getText={getText}
-          getTriangleLeft={getTriangleLeft}
-          handleSubmitSub={handleSubmitSub}
-          loading={loading}
-        />
-      );
+    // welcome =
+    //   userCount % 2 === 0 ? (
+    //     <PayForwardScreenB
+    //       name={name}
+    //       setPayPeriod={setPayPeriod}
+    //       subAmounts={subAmounts}
+    //       setSubAmounts={setSubAmounts}
+    //       subscriptionAmount={subscriptionAmount}
+    //       setSubscriptionAmount={setSubscriptionAmount}
+    //       payPeriod={payPeriod}
+    //       getText={getText}
+    //       getTriangleLeft={getTriangleLeft}
+    //       handleSubmitSub={handleSubmitSub}
+    //       loading={loading}
+    //     />
+    //   ) : (
+    //     <PayForwardScreen
+    //       name={name}
+    //       setPayPeriod={setPayPeriod}
+    //       subAmounts={subAmounts}
+    //       setSubAmounts={setSubAmounts}
+    //       subscriptionAmount={subscriptionAmount}
+    //       setSubscriptionAmount={setSubscriptionAmount}
+    //       payPeriod={payPeriod}
+    //       getText={getText}
+    //       getTriangleLeft={getTriangleLeft}
+    //       handleSubmitSub={handleSubmitSub}
+    //       loading={loading}
+    //     />
+    //   );
+    welcome = (
+      <PayForwardScreen
+        name={name}
+        setPayPeriod={setPayPeriod}
+        subAmounts={subAmounts}
+        setSubAmounts={setSubAmounts}
+        subscriptionAmount={subscriptionAmount}
+        setSubscriptionAmount={setSubscriptionAmount}
+        payPeriod={payPeriod}
+        getText={getText}
+        getTriangleLeft={getTriangleLeft}
+        handleSubmitSub={handleSubmitSub}
+        loading={loading}
+      />
+    );
   } else if (welcomeStep === "3") {
     welcome = (
       <div className={styles.welcome}>

@@ -8,12 +8,6 @@ import config from "./config/config";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
 
-import io from "socket.io-client";
-
-const socket = io.connect("http://localhost:5000", {
-  secure: true,
-  rejectUnauthorized: false,
-});
 
 const TRACKINGID = "G-S9JG17MMY8";
 ReactGA.initialize(TRACKINGID);
@@ -32,8 +26,6 @@ function App() {
   const [outerHeight, setOuterHeight] = useState("100vh");
   const appContainerRef = useRef();
   const overlayRef = useRef();
-
-  const [isConnected, setIsConnected] = useState(socket.connected);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -184,12 +176,6 @@ function App() {
     }
   }, [user, today]);
 
-  useEffect(() => {
-    socket.on("connection", (res) => {
-      setIsConnected(true);
-      console.log(res);
-    });
-  }, []);
 
   const determineLoggedIn = (loggedInState) => setLoggedIn(loggedInState);
   const wantToSignUp = (goToSignUp) => setSignUp(goToSignUp);

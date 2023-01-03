@@ -23,8 +23,8 @@ export default function CheckoutScreen({ clientData, setCheckoutPage }) {
       payPeriod: clientData.payPeriod,
     });
 
-    extension.openLoginPage(data.paymentIntent.id);
     localStorage.removeItem("signUpForm");
+    extension.openLoginPage(data.paymentIntent.id);
   };
 
   useEffect(() => {

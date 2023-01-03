@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../styles/SignUp.module.css";
 import star from "../images/ratingStar.svg";
 import priceBadge from "../images/pricebadge.svg";
 
 import Loader from "../components/Loader";
 
-export default function PayForwardScreen({
+export default function PayForwardScreenB({
   name,
   setPayPeriod,
   subAmounts,
@@ -18,6 +18,10 @@ export default function PayForwardScreen({
   handleSubmitSub,
   loading,
 }) {
+  useEffect(() => {
+    setSubscriptionAmount(subAmounts["right"]);
+  }, []);
+
   return (
     <div className={styles.welcome}>
       <div className={styles.mainSection}>
@@ -45,8 +49,6 @@ export default function PayForwardScreen({
                     (k) => subAmounts[k] === subscriptionAmount
                   );
                   const amounts = {
-                    left: "$0.99",
-                    mid: "$3.99",
                     right: "$9.99",
                   };
                   setSubAmounts(amounts);
@@ -54,7 +56,8 @@ export default function PayForwardScreen({
                 }}
                 className={payPeriod === "monthly" ? styles.activePeriod : ""}
               >
-                MONTHLY
+                <div className={styles.topText}>PAY MONTHLY</div>
+                <span className={styles.commitPeriod}>Commit Monthly</span>
                 <div
                   className={
                     payPeriod === "monthly"
@@ -62,7 +65,6 @@ export default function PayForwardScreen({
                       : styles.PeriodUnderline
                   }
                 ></div>
-                <span className={styles.youSave}>Save 18%</span>
               </button>
               <button
                 type="button"
@@ -81,7 +83,11 @@ export default function PayForwardScreen({
                 }}
                 className={payPeriod === "yearly" ? styles.activePeriod : ""}
               >
-                YEARLY
+                <div className={styles.topText}>
+                  UP FRONT
+                  <span className={styles.youSave}>Save 18%</span>
+                </div>
+                <span className={styles.commitPeriod}>Commit Annually</span>
                 <div
                   className={
                     payPeriod === "yearly"
@@ -93,68 +99,22 @@ export default function PayForwardScreen({
             </div>
             <div className={styles.pricesWrapper}>
               {payPeriod === "monthly" ? (
-                <div className={styles.monthlyPrices}>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$0.99"
-                    id="$0.99"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["left"])}
-                    checked={subscriptionAmount === "$0.99"}
-                  />
-                  <label
-                    htmlFor="$0.99"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$0.99" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$0.99"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$0.99" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    <span className={styles.previousPrice}>$3</span>
-                    $0.99
-                  </label>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$3.99"
-                    id="$3.99"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["mid"])}
-                    checked={subscriptionAmount === "$3.99"}
-                  />
-                  <label
-                    htmlFor="$3.99"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$3.99" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$3.99"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$3.99" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    <span className={styles.previousPrice}>$9</span>
-                    $3.99
-                  </label>
+                <div
+                  className={`${styles.monthlyPrices} ${styles.monthlyYearlyB}`}
+                >
+                  <span className={styles.mostPopular}>Most Popular</span>
                   <input
                     type="radio"
                     name="price"
                     value="$9.99"
                     id="$9.99"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["right"])}
+                    onChange={(e) => setSubscriptionAmount(subAmounts["mid"])}
                     checked={subscriptionAmount === "$9.99"}
                   />
+
                   <label
                     htmlFor="$9.99"
-                    className={styles.radioBtnGroup}
+                    className={`${styles.radioBtnGroup} ${styles.longLabel}`}
                     style={{
                       backgroundColor:
                         subscriptionAmount === "$9.99" ? "#0089ff" : "",
@@ -171,57 +131,10 @@ export default function PayForwardScreen({
                   </label>
                 </div>
               ) : (
-                <div className={styles.yearlyPrices}>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$11.88"
-                    id="$11.88"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["left"])}
-                    checked={subscriptionAmount === "$11.88"}
-                  />
-                  <label
-                    htmlFor="$11.88"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$11.88" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$11.88"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$11.88" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    <span className={styles.previousPrice}>$15</span>
-                    $11.88
-                  </label>
-                  <input
-                    type="radio"
-                    name="price"
-                    value="$47.88"
-                    id="$47.88"
-                    onChange={(e) => setSubscriptionAmount(subAmounts["mid"])}
-                    checked={subscriptionAmount === "$47.88"}
-                  />
-                  <label
-                    htmlFor="$47.88"
-                    className={styles.radioBtnGroup}
-                    style={{
-                      backgroundColor:
-                        subscriptionAmount === "$47.88" ? "#0089ff" : "",
-                      border:
-                        subscriptionAmount === "$47.88"
-                          ? "1px solid #ffffff"
-                          : "",
-                      color: subscriptionAmount === "$47.88" ? "#ffffff" : "",
-                    }}
-                  >
-                    <img src={priceBadge} alt="badge" />
-                    <span className={styles.previousPrice}>$56</span>
-                    $47.88
-                  </label>
+                <div
+                  className={`${styles.yearlyPrices} ${styles.monthlyYearlyB}`}
+                >
+                  <span className={styles.mostPopular}>Most Popular</span>
                   <input
                     type="radio"
                     name="price"
@@ -232,7 +145,7 @@ export default function PayForwardScreen({
                   />
                   <label
                     htmlFor="$119.88"
-                    className={styles.radioBtnGroup}
+                    className={`${styles.radioBtnGroup} ${styles.longLabel}`}
                     style={{
                       backgroundColor:
                         subscriptionAmount === "$119.88" ? "#0089ff" : "",
@@ -249,13 +162,6 @@ export default function PayForwardScreen({
                   </label>
                 </div>
               )}
-              <div className={styles.packageText}>
-                <div
-                  className={styles.triangle}
-                  style={{ left: getTriangleLeft() }}
-                ></div>
-                {getText()}
-              </div>
             </div>
             <button
               type="submit"

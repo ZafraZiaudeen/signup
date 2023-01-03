@@ -508,10 +508,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #b5b5b5;
+  color: #6a6a6a;
   column-gap: 6px;
+  flex-direction: column;
 }
 
+.innerContainer .monthlyOrYearlyTab .monthlyOrYearly button .topText {
+  display: flex;
+  column-gap: 6px;
+}
+.innerContainer .monthlyOrYearlyTab .monthlyOrYearly button .commitPeriod {
+  font-size: 10px;
+}
 .innerContainer .monthlyOrYearlyTab .monthlyOrYearly button .youSave {
   color: #ff9300 !important;
 }
@@ -519,7 +527,7 @@
 .innerContainer .monthlyOrYearlyTab .monthlyOrYearly .activePeriod {
   background-color: #f7fbff;
   border-color: #dbeeff !important;
-  color: #1c1c1c;
+  color: #2488f7;
 }
 
 .innerContainer .monthlyOrYearlyTab .monthlyOrYearly .PeriodUnderline {
@@ -576,6 +584,22 @@
     #b611dc
   );
 }
+.monthlyYearlyB {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 0 !important;
+  flex-direction: column;
+  gap: 10px !important;
+}
+
+.monthlyYearlyB .mostPopular {
+  font-family: "Quicksand Bold";
+  font-size: 11px;
+  letter-spacing: normal;
+  color: #ff9300 !important
+}
 
 .monthlyPrices,
 .yearlyPrices {
@@ -586,6 +610,9 @@
   font-size: 15px;
 }
 
+.longLabel {
+  min-width: 188px !important;
+}
 input[type="radio"] + label {
   color: #000000;
   cursor: pointer;

@@ -380,7 +380,7 @@
 }
 
 .welcome button {
-  margin-bottom: -170px;
+  margin-bottom: -175px;
 }
 
 .welcome .backBtn {
@@ -557,7 +557,7 @@
   width: 500px;
   height: 49px;
   color: white;
-
+  cursor: pointer;
   font-size: 13px;
   border-radius: 360px;
   letter-spacing: 3.9px;

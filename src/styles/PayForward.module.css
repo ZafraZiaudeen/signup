@@ -1,0 +1,24 @@
+.backBtn {
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  background-color: transparent;
+  border: none;
+  border: 2px solid #ffffff;
+  border-radius: 360px;
+  transform: rotate(180deg);
+  transition: 0.3s ease-in-out;
+  opacity: 0.3;
+  border: 2px solid #ffff;
+  left: -142px;
+  position: absolute;
+}
+.backBtn:hover {
+  opacity: 1;
+  background-color: #55b72e;
+}
+
+.backBtn img {
+  margin-left: -23px;
+  margin-bottom: -2px;
+}

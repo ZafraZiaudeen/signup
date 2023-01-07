@@ -1,9 +1,11 @@
 import React from "react";
 import styles from "../styles/SignUp.module.css";
+import newStyles from "../styles/PayForward.module.css";
 import star from "../images/ratingStar.svg";
 import priceBadge from "../images/pricebadge.svg";
 
 import Loader from "../components/Loader";
+import arrowForward from "../images/arrowOnly.svg";
 
 export default function PayForwardScreen({
   name,
@@ -17,9 +19,25 @@ export default function PayForwardScreen({
   getText,
   handleSubmitSub,
   loading,
+  setStep,
 }) {
+  const handleGoBack = () => {
+    setStep("3");
+  };
+
   return (
     <div className={styles.welcome}>
+      <button
+        type="button"
+        onClick={handleGoBack}
+        className={newStyles.backBtn}
+      >
+        <img
+          src={arrowForward}
+          className={newStyles.backArrowBtn}
+          alt="go to previous form step"
+        />
+      </button>
       <div className={styles.mainSection}>
         {name &&
           (name ? <p>I'm {name} it feels good to</p> : <p>It feels good to</p>)}

@@ -386,7 +386,7 @@ const Child = ({
     const pos = Object.keys(subAmounts).find(
       (key) => subAmounts[key] === subscriptionAmount
     );
-    return pos === "left" ? "25%" : pos === "mid" ? "50%" : "75%";
+    return pos === "left" ? "17%" : pos === "mid" ? "50%" : "80%";
   };
 
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
@@ -855,6 +855,7 @@ const Child = ({
         getTriangleLeft={getTriangleLeft}
         handleSubmitSub={handleSubmitSub}
         loading={loading}
+        setStep={setStep}
       />
     );
   } else if (welcomeStep === "3") {

@@ -24,6 +24,9 @@ export default function CheckoutScreen({ clientData, setCheckoutPage }) {
     });
 
     localStorage.removeItem("signUpForm");
+    localStorage.removeItem("step1");
+    localStorage.removeItem("step2");
+    localStorage.removeItem("step3");
     extension.openLoginPage(data.paymentIntent.id);
   };
 

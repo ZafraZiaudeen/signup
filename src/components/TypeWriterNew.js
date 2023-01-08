@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../styles/TypeWriter.module.css";
 import Typewriter from "typewriter-effect";
 
@@ -8,6 +8,14 @@ export function WriteName({ steps, setSteps }) {
     setSteps({ ...steps });
   };
 
+  useEffect(() => {
+    let isStep1 = localStorage.getItem("step1");
+    if (isStep1) {
+      steps.stepOne = true;
+      setSteps({ ...steps });
+    }
+  }, []);
+
   return (
     <div className={styles.container}>
       <span id="txt-type">
@@ -15,6 +23,7 @@ export function WriteName({ steps, setSteps }) {
         {!steps.stepOne && (
           <Typewriter
             onInit={(typewriter) => {
+              localStorage.setItem("step1", true);
               typewriter
                 .typeString("How shall I cal y")
                 .pauseFor(200)
@@ -37,12 +46,22 @@ export function WriteEmail({ steps, setSteps }) {
     steps.stepTwo = true;
     setSteps({ ...steps });
   };
+
+  useEffect(() => {
+    let isStepTwo = localStorage.getItem("step2");
+    if (isStepTwo) {
+      steps.stepTwo = true;
+      setSteps({ ...steps });
+    }
+  }, []);
+
   if (steps.stepTwo) {
     return <>What is your email?</>;
   } else {
     return (
       <Typewriter
         onInit={(typewriter) => {
+          localStorage.setItem("step2", true);
           typewriter
             .typeString("What is your email")
             .pauseFor(500)
@@ -62,12 +81,22 @@ export function WritePassword({ steps, setSteps }) {
     steps.stepThree = true;
     setSteps({ ...steps });
   };
+
+  useEffect(() => {
+    let isStepThree = localStorage.getItem("step3");
+    if (isStepThree) {
+      steps.stepThree = true;
+      setSteps({ ...steps });
+    }
+  }, []);
+
   if (steps.stepThree) {
     return <>Create a password</>;
   } else {
     return (
       <Typewriter
         onInit={(typewriter) => {
+          localStorage.setItem("step3", true);
           typewriter
             .typeString("Create  a pass")
             .deleteChars(6)

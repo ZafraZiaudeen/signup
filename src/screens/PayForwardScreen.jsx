@@ -20,6 +20,7 @@ export default function PayForwardScreen({
   handleSubmitSub,
   loading,
   setStep,
+  userCreated,
 }) {
   const handleGoBack = () => {
     setStep("3");
@@ -27,17 +28,19 @@ export default function PayForwardScreen({
 
   return (
     <div className={styles.welcome}>
-      <button
-        type="button"
-        onClick={handleGoBack}
-        className={newStyles.backBtn}
-      >
-        <img
-          src={arrowForward}
-          className={newStyles.backArrowBtn}
-          alt="go to previous form step"
-        />
-      </button>
+      {!userCreated && (
+        <button
+          type="button"
+          onClick={handleGoBack}
+          className={newStyles.backBtn}
+        >
+          <img
+            src={arrowForward}
+            className={newStyles.backArrowBtn}
+            alt="go to previous form step"
+          />
+        </button>
+      )}
       <div className={styles.mainSection}>
         {name &&
           (name ? <p>I'm {name} it feels good to</p> : <p>It feels good to</p>)}

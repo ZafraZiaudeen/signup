@@ -63,6 +63,8 @@ const SignUp = ({
   setCheckoutPage,
   clientData,
   setClientData,
+  userCreated,
+  setUserCreated,
 }) => {
   return (
     <Elements stripe={stripePromise}>
@@ -73,6 +75,8 @@ const SignUp = ({
         setCheckoutPage={setCheckoutPage}
         clientData={clientData}
         setClientData={setClientData}
+        setUserCreated={setUserCreated}
+        userCreated={userCreated}
       />
     </Elements>
   );
@@ -85,6 +89,8 @@ const Child = ({
   setCheckoutPage,
   clientData,
   setClientData,
+  setUserCreated,
+  userCreated,
 }) => {
   const [subAmounts, setSubAmounts] = useState({
     left: "$0.99",
@@ -315,6 +321,7 @@ const Child = ({
 
   const handleSubmitSub = async (e) => {
     e.preventDefault();
+
     // setLoading(true);
 
     const userData = {
@@ -325,6 +332,7 @@ const Child = ({
 
     const user = await axios.post(config.serverUrl + "/api/v1/users", userData);
     if (user) {
+      setUserCreated(true);
       localStorage.setItem("user", JSON.stringify(user.data));
       let paymentIntentResult = await getPaymentIntent();
 
@@ -856,6 +864,7 @@ const Child = ({
         handleSubmitSub={handleSubmitSub}
         loading={loading}
         setStep={setStep}
+        userCreated={userCreated}
       />
     );
   } else if (welcomeStep === "3") {

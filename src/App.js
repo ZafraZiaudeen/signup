@@ -24,6 +24,7 @@ function App() {
   const [checkoutPage, setCheckoutPage] = useState(false);
   const [clientData, setClientData] = useState({});
   const [outerHeight, setOuterHeight] = useState("100vh");
+  const [userCreated, setUserCreated] = useState(false);
   const appContainerRef = useRef();
   const overlayRef = useRef();
 
@@ -197,6 +198,8 @@ function App() {
             setCheckoutPage={setCheckoutPage}
             clientData={clientData}
             setClientData={setClientData}
+            setUserCreated={setUserCreated}
+            userCreated={userCreated}
           />
         )}
         {checkoutPage && (

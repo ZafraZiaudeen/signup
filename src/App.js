@@ -8,7 +8,6 @@ import config from "./config/config";
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
 
-
 const TRACKINGID = "G-S9JG17MMY8";
 ReactGA.initialize(TRACKINGID);
 
@@ -177,6 +176,17 @@ function App() {
     }
   }, [user, today]);
 
+  useEffect(() => {
+    let timer = setInterval(() => {
+      let localImage = localStorage.getItem(`beatific-image${todayParsed}`);
+      if (localImage) {
+        setBgImage(localImage);
+      }
+    }, 300);
+    setTimeout(() => {
+      clearInterval(timer);
+    }, 60 * 1000);
+  }, []);
 
   const determineLoggedIn = (loggedInState) => setLoggedIn(loggedInState);
   const wantToSignUp = (goToSignUp) => setSignUp(goToSignUp);

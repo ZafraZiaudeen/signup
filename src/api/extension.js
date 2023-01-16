@@ -3,7 +3,7 @@ const extension = {
     // eslint-disable-next-line no-undef
     chrome.runtime.sendMessage("nlefhoanajbkkbgclihfeklpimfmgbdm", {
       command: "openPage",
-      openLoginPage: txId,
+      openLoginPage: txId || "",
     });
   },
 };

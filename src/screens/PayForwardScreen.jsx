@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../styles/SignUp.module.css";
 import newStyles from "../styles/PayForward.module.css";
+import anims from "../styles/animations.module.css";
 import star from "../images/ratingStar.svg";
 import priceBadge from "../images/pricebadge.svg";
 
 import Loader from "../components/Loader";
 import arrowForward from "../images/arrowOnly.svg";
+import Lottie from "react-lottie";
+import loadingAnimation from "../images/loading.json";
 
 export default function PayForwardScreen({
   name,
@@ -21,10 +24,37 @@ export default function PayForwardScreen({
   loading,
   setStep,
   userCreated,
+  plans,
 }) {
   const handleGoBack = () => {
     setStep("3");
   };
+
+  const subscriptions = {
+    monthly: {
+      left: "$0.99",
+      mid: "$3.99",
+      right: "$9.99",
+    },
+    yearly: {
+      left: "$11.88",
+      mid: "$47.88",
+      right: "$119.88",
+    },
+  };
+
+  useEffect(() => {
+    let signUpForm = localStorage.getItem("signUpForm");
+    if (signUpForm) {
+      let parsedForm = JSON.parse(signUpForm);
+      if (parsedForm.subscriptionAmount) {
+        let _payPeriod = parsedForm.payPeriod;
+        setPayPeriod(_payPeriod);
+        setSubAmounts(subscriptions[_payPeriod]);
+        setSubscriptionAmount(parsedForm.subscriptionAmount);
+      }
+    }
+  }, []);
 
   return (
     <div className={styles.welcome}>
@@ -45,7 +75,17 @@ export default function PayForwardScreen({
         {name &&
           (name ? <p>I'm {name} it feels good to</p> : <p>It feels good to</p>)}
         <h2>Pay Forward</h2>
-        <div className={styles.innerContainer}>
+        <div className={`${styles.innerContainer} ${newStyles.relativeDiv}`}>
+          {loading && (
+            <div className={newStyles.lottieContainer}>
+              <Lottie
+                options={{ animationData: loadingAnimation }}
+                width={48}
+                height={48}
+                className={anims.fadeIn}
+              />
+            </div>
+          )}
           <div className={styles.promoSection}>
             <p>5.0</p>
             <div className={styles.starSection}>

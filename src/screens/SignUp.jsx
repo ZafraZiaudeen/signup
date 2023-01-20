@@ -333,6 +333,7 @@ const Child = ({
   };
 
   const handleSubmitSub = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     // setLoading(true);
@@ -351,6 +352,7 @@ const Child = ({
 
       clientData.paymentIntent = paymentIntentResult;
       setClientData(clientData);
+      setLoading(false);
       setCheckoutPage(true);
       // window.open(
       //   `http://happiness-tracker-extension-dev.us-east-2.elasticbeanstalk.com/subscribe.html?name=${name}&email=${email}&price=${subscriptionAmount}`,

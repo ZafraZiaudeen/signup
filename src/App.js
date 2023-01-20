@@ -24,6 +24,7 @@ function App() {
   const [clientData, setClientData] = useState({});
   const [outerHeight, setOuterHeight] = useState("100vh");
   const [userCreated, setUserCreated] = useState(false);
+  const [loading, setLoading] = useState(false);
   const appContainerRef = useRef();
   const overlayRef = useRef();
 
@@ -216,6 +217,8 @@ function App() {
           <CheckoutScreen
             clientData={clientData}
             setCheckoutPage={setCheckoutPage}
+            loading={loading}
+            setLoading={setLoading}
           />
         )}
       </div>

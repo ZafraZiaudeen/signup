@@ -21,13 +21,14 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-function CheckoutForm({ clientData, handleSuccess }) {
+function CheckoutForm({ clientData, handleSuccess, setLoading }) {
   const stripe = useStripe();
   const elements = useElements();
   const formRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (!stripe || !elements || !clientData.paymentIntent.clientSecret) {
       return;

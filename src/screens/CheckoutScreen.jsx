@@ -5,17 +5,22 @@ import extension from "../api/extension";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
+import Lottie from "react-lottie";
 import styles from "../styles/SignUp.module.css";
+import newStyles from "../styles/PayForward.module.css";
+import anims from "../styles/animations.module.css";
 
 import arrowForward from "../images/arrowOnly.svg";
 import padLock from "../images/checkoutPadLock.svg";
 import badge from "../images/badgeWithCheck.svg";
+import loadingAnimation from "../images/loading.json";
 
-export default function CheckoutScreen({ clientData, setCheckoutPage }) {
+export default function CheckoutScreen({ clientData, setCheckoutPage, loading, setLoading }) {
   const [data, setData] = useState({});
   const stripePromise = loadStripe(config.stripeSecret);
 
   const handleSuccess = async (data) => {
+    setLoading(false);
     let result = await user.updateStripeCustomer({
       email: clientData.email,
       stripeCustomerId: clientData.paymentIntent.customerId,
@@ -60,7 +65,17 @@ export default function CheckoutScreen({ clientData, setCheckoutPage }) {
                 alt="go to previous form step"
               />
             </button>
-            <div className={styles.paymentCard}>
+            <div className={`${styles.paymentCard} ${newStyles.relativeDiv}`}>
+              {loading && (
+                <div className={newStyles.lottieContainer}>
+                  <Lottie
+                    options={{ animationData: loadingAnimation }}
+                    width={48}
+                    height={48}
+                    className={anims.fadeIn}
+                  />
+                </div>
+              )}
               <img src={padLock} className={styles.padLock} alt="" />
               <span className={styles.secureText}>100% Secure</span>
               <div className={styles.bluePrice}>
@@ -72,6 +87,7 @@ export default function CheckoutScreen({ clientData, setCheckoutPage }) {
                   <CheckoutForm
                     handleSuccess={handleSuccess}
                     clientData={clientData}
+                    setLoading={setLoading}
                   />
                 </Elements>
               </div>

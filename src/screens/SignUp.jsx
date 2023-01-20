@@ -28,6 +28,7 @@ import happyPerson2 from "../images/happyPerson2.jpg";
 import happyPerson3 from "../images/happyPerson3.jpg";
 import Loader from "../components/Loader";
 import payments from "../api/payments";
+import Pricing from "../api/pricingPlans";
 import extension from "../api/extension";
 
 import PayForwardScreenB from "./PayForwardScreenB";
@@ -118,6 +119,7 @@ const Child = ({
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [txId, setTxId] = useState("");
+  const [pricingPlans, setPricingPlans] = useState([]);
   const [steps, setSteps] = useState({
     stepOne: false,
     stepTwo: false,
@@ -133,6 +135,17 @@ const Child = ({
   // const elements = useElements();
 
   // handling socket stuff
+
+  //get pricing plans
+  useEffect(() => {
+    const fetchPlans = async () => {
+      console.log("fetching plans");
+      const response = await Pricing.getAllPlans();
+      setPricingPlans(response.data[0]);
+    };
+
+    fetchPlans();
+  }, []);
 
   useEffect(() => {
     if (!name) return;
@@ -865,6 +878,7 @@ const Child = ({
         loading={loading}
         setStep={setStep}
         userCreated={userCreated}
+        plans={pricingPlans}
       />
     );
   } else if (welcomeStep === "3") {
@@ -962,7 +976,7 @@ const Child = ({
             <button
               type="button"
               onClick={() => {
-                localStorage.removeItem("signUpForm");
+                // localStorage.removeItem("signUpForm");
                 // wantToSignUp(false);
                 extension.openLoginPage();
               }}

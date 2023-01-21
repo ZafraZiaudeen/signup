@@ -7,6 +7,7 @@ import config from "./config/config";
 
 import { Helmet } from "react-helmet";
 import ReactGA from "react-ga";
+import CanvasBackground from "./components/CanvasBackground";
 
 const TRACKINGID = "G-S9JG17MMY8";
 ReactGA.initialize(TRACKINGID);
@@ -16,9 +17,10 @@ function App() {
   const [signUp, setSignUp] = useState(true);
   const [subscribed, setSubscribed] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
-  const [bgImage, setBgImage] = useState(
-    "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
-  );
+  // const [bgImage, setBgImage] = useState(
+  //   "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
+  // );
+  const [bgImage, setBgImage] = useState("");
   const [dailyQuestion, setDailyQuestion] = useState("");
   const [checkoutPage, setCheckoutPage] = useState(false);
   const [clientData, setClientData] = useState({});
@@ -70,19 +72,19 @@ function App() {
             setBgImage(res.data.image);
           } else if (!res.data.image && res.message === "Image not found") {
             console.log("Image not found");
-            localStorage.setItem(
-              `beatific-image-${todayParsed}`,
-              "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
-            );
-            setBgImage("https://i.postimg.cc/cLjZm9RS/default-01.jpg");
+            // localStorage.setItem(
+            //   `beatific-image-${todayParsed}`,
+            //   "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
+            // );
+            // setBgImage("https://i.postimg.cc/cLjZm9RS/default-01.jpg");
           }
         })
         .catch((err) => {
-          localStorage.setItem(
-            `beatific-image-${todayParsed}`,
-            "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
-          );
-          setBgImage("https://i.postimg.cc/cLjZm9RS/default-01.jpg");
+          // localStorage.setItem(
+          //   `beatific-image-${todayParsed}`,
+          //   "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
+          // );
+          // setBgImage("https://i.postimg.cc/cLjZm9RS/default-01.jpg");
         });
     }
 
@@ -97,11 +99,11 @@ function App() {
       })
       .catch((err) => {
         if (!todayImg) {
-          localStorage.setItem(
-            `beatific-image-${todayParsed}`,
-            "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
-          );
-          setBgImage("https://i.postimg.cc/cLjZm9RS/default-01.jpg");
+          // localStorage.setItem(
+          //   `beatific-image-${todayParsed}`,
+          //   "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
+          // );
+          // setBgImage("https://i.postimg.cc/cLjZm9RS/default-01.jpg");
         }
       });
 
@@ -116,17 +118,17 @@ function App() {
             );
           } else if (res.message === "Image not found") {
             console.log("Image not found");
-            localStorage.setItem(
-              `beatific-image-${tomorrowDateParsed}`,
-              "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
-            );
+            // localStorage.setItem(
+            //   `beatific-image-${tomorrowDateParsed}`,
+            //   "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
+            // );
           }
         })
         .catch((err) => {
-          localStorage.setItem(
-            `beatific-image-${tomorrowDateParsed}`,
-            "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
-          );
+          // localStorage.setItem(
+          //   `beatific-image-${tomorrowDateParsed}`,
+          //   "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
+          // );
         });
     }
   }, [today, tomorrowDate, todayParsed, tomorrowDateParsed, user]);
@@ -195,34 +197,38 @@ function App() {
   const goToForgotPassword = (goOrNot) => setForgotPassword(goOrNot);
 
   return (
-    <div
-      className="App"
-      style={{ backgroundImage: `url(${bgImage})` }}
-      ref={appContainerRef}
-    >
-      <div className="overlay" ref={overlayRef}>
-        {!checkoutPage && (
-          <SignUp
-            setLoggedIn={determineLoggedIn}
-            wantToSignUp={wantToSignUp}
-            isSubscribed={subscriptionState}
-            setCheckoutPage={setCheckoutPage}
-            clientData={clientData}
-            setClientData={setClientData}
-            setUserCreated={setUserCreated}
-            userCreated={userCreated}
-          />
-        )}
-        {checkoutPage && (
-          <CheckoutScreen
-            clientData={clientData}
-            setCheckoutPage={setCheckoutPage}
-            loading={loading}
-            setLoading={setLoading}
-          />
-        )}
+    <>
+      <CanvasBackground />
+      <div
+        className="background-image"
+        style={{ backgroundImage: `url(${bgImage})` }}
+        ref={appContainerRef}
+      />
+      <div className="App">
+        <div className="overlay" ref={overlayRef}>
+          {!checkoutPage && (
+            <SignUp
+              setLoggedIn={determineLoggedIn}
+              wantToSignUp={wantToSignUp}
+              isSubscribed={subscriptionState}
+              setCheckoutPage={setCheckoutPage}
+              clientData={clientData}
+              setClientData={setClientData}
+              setUserCreated={setUserCreated}
+              userCreated={userCreated}
+            />
+          )}
+          {checkoutPage && (
+            <CheckoutScreen
+              clientData={clientData}
+              setCheckoutPage={setCheckoutPage}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

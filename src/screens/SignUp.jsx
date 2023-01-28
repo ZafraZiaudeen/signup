@@ -106,9 +106,8 @@ const Child = ({
   const [welcomeStep, setWelcomeStep] = useState("");
   const [videoNumber, setVideoNumber] = useState("1");
   const [payPeriod, setPayPeriod] = useState("monthly");
-  const [subscriptionAmount, setSubscriptionAmount] = useState(
-    subAmounts["mid"]
-  );
+  const [subscriptionAmount, setSubscriptionAmount] = useState(3.99);
+  const [planId, setPlanId] = useState(null);
   const [name, setName] = useState("");
   const [emptyName, setEmptyName] = useState(false);
   const [email, setEmail] = useState("");
@@ -137,6 +136,11 @@ const Child = ({
   // handling socket stuff
 
   //get pricing plans
+
+  useEffect(() => {
+    console.log("planId changed ===>", planId);
+  }, [planId]);
+
   useEffect(() => {
     const fetchPlans = async () => {
       console.log("fetching plans");
@@ -159,6 +163,7 @@ const Child = ({
         welcomeStep: welcomeStep,
         payPeriod: payPeriod,
         subscriptionAmount: subscriptionAmount,
+        planId: planId,
       })
     );
   }, [name, email, password, step, welcomeStep, payPeriod, subscriptionAmount]);
@@ -166,10 +171,11 @@ const Child = ({
   useEffect(() => {
     clientData.name = name;
     clientData.subscriptionAmount = subscriptionAmount;
+    clientData.planId = planId;
     clientData.email = email;
     clientData.payPeriod = payPeriod;
     setClientData({ ...clientData });
-  }, [name, subscriptionAmount, email, payPeriod]);
+  }, [name, subscriptionAmount, email, payPeriod, planId]);
 
   useEffect(() => {
     const saved = localStorage.getItem("signUpForm");
@@ -319,6 +325,7 @@ const Child = ({
       let subscriptionResult = await payments.createSubscription({
         customerId: customerResult.data.customer.id,
         price: clientData.subscriptionAmount,
+        planId: clientData.planId,
       });
       console.log({ customerResult });
       console.log({ subscriptionResult });
@@ -406,10 +413,11 @@ const Child = ({
   };
 
   const getTriangleLeft = () => {
-    const pos = Object.keys(subAmounts).find(
-      (key) => subAmounts[key] === subscriptionAmount
-    );
-    return pos === "left" ? "17%" : pos === "mid" ? "50%" : "80%";
+    // const pos = Object.keys(subAmounts).find(
+    //   (key) => subAmounts[key] === subscriptionAmount
+    // );
+    // return pos === "left" ? "17%" : pos === "mid" ? "50%" : "80%";
+    return "17%";
   };
 
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
@@ -873,11 +881,13 @@ const Child = ({
         setSubAmounts={setSubAmounts}
         subscriptionAmount={subscriptionAmount}
         setSubscriptionAmount={setSubscriptionAmount}
+        setPlanId={setPlanId}
         payPeriod={payPeriod}
         getText={getText}
         getTriangleLeft={getTriangleLeft}
         handleSubmitSub={handleSubmitSub}
         loading={loading}
+        setLoading={setLoading}
         setStep={setStep}
         userCreated={userCreated}
         plans={pricingPlans}

@@ -6,6 +6,11 @@
   font-family: "VarelaRound";
   src: url("../fonts/VarelaRound-Regular.ttf");
 }
+
+@font-face {
+  font-family: "Canela Light";
+  src: url(../fonts/Canela-Light.ttf);
+}
 .container {
   position: absolute;
   width: 100%;
@@ -17,7 +22,7 @@
 }
 
 .greeting {
-  font-family: "Playfair Display", serif;
+  font-family: "Canela Light";
   letter-spacing: 0;
   font-weight: 200;
   margin-top: 24.5px;
@@ -80,7 +85,7 @@
 }
 
 .signUpActions .formAction label {
-  font-family: "Playfair Display", serif;
+  font-family: "Canela Light";
   letter-spacing: 3px;
   line-height: 80px;
   font-size: 80px;
@@ -292,7 +297,7 @@
 
 .welcome .mainSection h1 {
   text-align: center;
-  font-family: "Playfair Display", serif;
+  font-family: "Canela Light";
   letter-spacing: 3px;
   font-weight: 200;
   line-height: 26px;
@@ -301,7 +306,7 @@
 
 .welcome .mainSection h2 {
   text-align: center;
-  font-family: "Playfair Display", serif;
+  font-family: "Canela Light";
   letter-spacing: 3px;
   font-weight: 200;
   line-height: 80px;
@@ -421,7 +426,7 @@
 }
 
 .innerContainer .promoSection p {
-  font-family: "Playfair Display", serif;
+  font-family: "Canela Light";
   line-height: normal;
   font-size: 59px;
   font-weight: 200;
@@ -748,7 +753,7 @@ input[type="radio"]:hover + label .previousPrice {
   text-align: center;
 }
 .payForwardContainer {
-  font-family: "Playfair Display", serif;
+  font-family: "Canela Light";
   letter-spacing: 3px;
   line-height: 80px;
   font-size: 80px;

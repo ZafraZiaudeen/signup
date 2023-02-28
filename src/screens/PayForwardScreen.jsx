@@ -161,87 +161,161 @@ export default function PayForwardScreen({
             </div>
             <div className={styles.pricesWrapper}>
               {payPeriod === "monthly" && (
+                // <div className={styles.monthlyPrices}>
+                //   {subscriptions?.monthly?.map((subscription, index) => {
+                //     return (
+                //       <div key={index}>
+                //         <input
+                //           type="radio"
+                //           name="price"
+                //           value={subscription.price}
+                //           id={subscription.price}
+                //           onChange={() => handleSubChange(index)}
+                //           checked={subscriptionAmount === subscription.price}
+                //         />
+                //         <label
+                //           htmlFor={subscription.price}
+                //           className={styles.radioBtnGroup}
+                //           style={{
+                //             backgroundColor:
+                //               subscriptionAmount === subscription.price
+                //                 ? "#0089ff"
+                //                 : "",
+                //             border:
+                //               subscriptionAmount === subscription.price
+                //                 ? "1px solid #ffffff"
+                //                 : "",
+                //             color:
+                //               subscriptionAmount === subscription.price
+                //                 ? "#ffffff"
+                //                 : "",
+                //           }}
+                //         >
+                //           <img src={priceBadge} alt="badge" />
+                //           <span className={styles.previousPrice}>
+                //             ${subscription.previousPrice}
+                //           </span>
+                //           ${subscription.price}
+                //         </label>
+                //       </div>
+                //     );
+                //   })}
+                // </div>
                 <div className={styles.monthlyPrices}>
-                  {subscriptions?.monthly?.map((subscription, index) => {
-                    return (
-                      <div key={index}>
-                        <input
-                          type="radio"
-                          name="price"
-                          value={subscription.price}
-                          id={subscription.price}
-                          onChange={() => handleSubChange(index)}
-                          checked={subscriptionAmount === subscription.price}
-                        />
-                        <label
-                          htmlFor={subscription.price}
-                          className={styles.radioBtnGroup}
-                          style={{
-                            backgroundColor:
-                              subscriptionAmount === subscription.price
-                                ? "#0089ff"
-                                : "",
-                            border:
-                              subscriptionAmount === subscription.price
-                                ? "1px solid #ffffff"
-                                : "",
-                            color:
-                              subscriptionAmount === subscription.price
-                                ? "#ffffff"
-                                : "",
-                          }}
-                        >
-                          <img src={priceBadge} alt="badge" />
-                          <span className={styles.previousPrice}>
-                            ${subscription.previousPrice}
-                          </span>
-                          ${subscription.price}
-                        </label>
-                      </div>
-                    );
-                  })}
+                  <div>
+                    <input
+                      type="radio"
+                      name="price"
+                      value={subscriptions.monthly[1]?.price}
+                      id={subscriptions.monthly[1]?.price}
+                      onChange={() => handleSubChange(1)}
+                      checked={
+                        subscriptionAmount === subscriptions.monthly[1]?.price
+                      }
+                    />
+                    <label
+                      htmlFor={subscriptions.monthly[1]?.price}
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === subscriptions.monthly[1]?.price
+                            ? "#0089ff"
+                            : "",
+                        border:
+                          subscriptionAmount === subscriptions.monthly[1]?.price
+                            ? "1px solid #ffffff"
+                            : "",
+                        color:
+                          subscriptionAmount === subscriptions.monthly[1]?.price
+                            ? "#ffffff"
+                            : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>
+                        ${subscriptions.monthly[1]?.previousPrice}
+                      </span>
+                      ${subscriptions.monthly[1]?.price}
+                    </label>
+                  </div>
                 </div>
               )}
               {payPeriod === "yearly" && (
+                // <div className={styles.monthlyPrices}>
+                //   {subscriptions?.yearly?.map((subscription, index) => {
+                //     return (
+                //       <div key={index}>
+                //         <input
+                //           type="radio"
+                //           name="price"
+                //           value={subscription.price}
+                //           id={subscription.price}
+                //           onChange={() => handleSubChange(index)}
+                //           checked={subscriptionAmount === subscription.price}
+                //         />
+                //         <label
+                //           htmlFor={subscription.price}
+                //           className={styles.radioBtnGroup}
+                //           style={{
+                //             backgroundColor:
+                //               subscriptionAmount === subscription.price
+                //                 ? "#0089ff"
+                //                 : "",
+                //             border:
+                //               subscriptionAmount === subscription.price
+                //                 ? "1px solid #ffffff"
+                //                 : "",
+                //             color:
+                //               subscriptionAmount === subscription.price
+                //                 ? "#ffffff"
+                //                 : "",
+                //           }}
+                //         >
+                //           <img src={priceBadge} alt="badge" />
+                //           <span className={styles.previousPrice}>
+                //             ${subscription.previousPrice}
+                //           </span>
+                //           ${subscription.price}
+                //         </label>
+                //       </div>
+                //     );
+                //   })}
+                // </div>
                 <div className={styles.monthlyPrices}>
-                  {subscriptions?.yearly?.map((subscription, index) => {
-                    return (
-                      <div key={index}>
-                        <input
-                          type="radio"
-                          name="price"
-                          value={subscription.price}
-                          id={subscription.price}
-                          onChange={() => handleSubChange(index)}
-                          checked={subscriptionAmount === subscription.price}
-                        />
-                        <label
-                          htmlFor={subscription.price}
-                          className={styles.radioBtnGroup}
-                          style={{
-                            backgroundColor:
-                              subscriptionAmount === subscription.price
-                                ? "#0089ff"
-                                : "",
-                            border:
-                              subscriptionAmount === subscription.price
-                                ? "1px solid #ffffff"
-                                : "",
-                            color:
-                              subscriptionAmount === subscription.price
-                                ? "#ffffff"
-                                : "",
-                          }}
-                        >
-                          <img src={priceBadge} alt="badge" />
-                          <span className={styles.previousPrice}>
-                            ${subscription.previousPrice}
-                          </span>
-                          ${subscription.price}
-                        </label>
-                      </div>
-                    );
-                  })}
+                  <div>
+                    <input
+                      type="radio"
+                      name="price"
+                      value={subscriptions?.yearly[1]?.price}
+                      id={subscriptions?.yearly[1]?.price}
+                      onChange={() => handleSubChange(1)}
+                      checked={subscriptionAmount === subscriptions?.yearly[1]?.price}
+                    />
+                    <label
+                      htmlFor={subscriptions?.yearly[1]?.price}
+                      className={styles.radioBtnGroup}
+                      style={{
+                        backgroundColor:
+                          subscriptionAmount === subscriptions?.yearly[1]?.price
+                            ? "#0089ff"
+                            : "",
+                        border:
+                          subscriptionAmount === subscriptions?.yearly[1]?.price
+                            ? "1px solid #ffffff"
+                            : "",
+                        color:
+                          subscriptionAmount === subscriptions?.yearly[1]?.price
+                            ? "#ffffff"
+                            : "",
+                      }}
+                    >
+                      <img src={priceBadge} alt="badge" />
+                      <span className={styles.previousPrice}>
+                        ${subscriptions?.yearly[1]?.previousPrice}
+                      </span>
+                      ${subscriptions?.yearly[1]?.price}
+                    </label>
+                  </div>
                 </div>
               )}
               <div className={styles.packageText}>

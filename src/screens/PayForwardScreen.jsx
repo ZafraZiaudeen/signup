@@ -30,7 +30,10 @@ export default function PayForwardScreen({
     setStep("3");
   };
 
-  const [subscriptions, setSubscriptions] = useState({});
+  const [subscriptions, setSubscriptions] = useState({
+    monthly: [],
+    yearly: [],
+  });
   const [selectedIndex, setSelectedIndex] = useState(1);
   const [planText, setPlanText] = useState(
     "Join our family and pay forward for one person"
@@ -132,7 +135,7 @@ export default function PayForwardScreen({
                 }}
                 className={payPeriod === "monthly" ? styles.activePeriod : ""}
               >
-                MONTHLY
+                PAY MONTHLY
                 <div
                   className={
                     payPeriod === "monthly"
@@ -140,7 +143,16 @@ export default function PayForwardScreen({
                       : styles.PeriodUnderline
                   }
                 ></div>
-                <span className={styles.youSave}>Save 18%</span>
+                {/* <span className={styles.youSave}>Save 18%</span> */}
+                <span
+                  className={
+                    payPeriod === "monthly"
+                      ? `${styles.commit} ${styles.active}`
+                      : styles.commit
+                  }
+                >
+                  Commit Monthly
+                </span>
               </button>
               <button
                 type="button"
@@ -149,7 +161,9 @@ export default function PayForwardScreen({
                 }}
                 className={payPeriod === "yearly" ? styles.activePeriod : ""}
               >
-                YEARLY
+                <div className={styles.buttonText}>
+                  UP FRONT <span className={styles.youSave}>Save 18%</span>
+                </div>
                 <div
                   className={
                     payPeriod === "yearly"
@@ -157,6 +171,15 @@ export default function PayForwardScreen({
                       : styles.PeriodUnderline
                   }
                 ></div>
+                <span
+                  className={
+                    payPeriod === "yearly"
+                      ? `${styles.commit} ${styles.active}`
+                      : styles.commit
+                  }
+                >
+                  Commit Annually
+                </span>
               </button>
             </div>
             <div className={styles.pricesWrapper}>
@@ -202,23 +225,25 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
+                  <span className={styles.mostPopular}>Most Popular</span>
                   <div>
                     <input
                       type="radio"
                       name="price"
-                      value={subscriptions.monthly[1]?.price}
-                      id={subscriptions.monthly[1]?.price}
+                      value={subscriptions?.monthly[1]?.price}
+                      id={subscriptions?.monthly[1]?.price}
                       onChange={() => handleSubChange(1)}
                       checked={
-                        subscriptionAmount === subscriptions.monthly[1]?.price
+                        subscriptionAmount === subscriptions?.monthly[1]?.price
                       }
                     />
                     <label
-                      htmlFor={subscriptions.monthly[1]?.price}
+                      htmlFor={subscriptions?.monthly[1]?.price}
                       className={styles.radioBtnGroup}
                       style={{
                         backgroundColor:
-                          subscriptionAmount === subscriptions.monthly[1]?.price
+                          subscriptionAmount ===
+                          subscriptions?.monthly[1]?.price
                             ? "#0089ff"
                             : "",
                         border:
@@ -282,6 +307,7 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
+                  <span className={styles.mostPopular}>Most Popular</span>
                   <div>
                     <input
                       type="radio"
@@ -289,7 +315,9 @@ export default function PayForwardScreen({
                       value={subscriptions?.yearly[1]?.price}
                       id={subscriptions?.yearly[1]?.price}
                       onChange={() => handleSubChange(1)}
-                      checked={subscriptionAmount === subscriptions?.yearly[1]?.price}
+                      checked={
+                        subscriptionAmount === subscriptions?.yearly[1]?.price
+                      }
                     />
                     <label
                       htmlFor={subscriptions?.yearly[1]?.price}
@@ -318,13 +346,13 @@ export default function PayForwardScreen({
                   </div>
                 </div>
               )}
-              <div className={styles.packageText}>
+              {/* <div className={styles.packageText}>
                 <div
                   className={styles.triangle}
                   style={{ left: getTriangleLeft() }}
                 ></div>
                 {planText}
-              </div>
+              </div> */}
             </div>
             <button
               type="submit"

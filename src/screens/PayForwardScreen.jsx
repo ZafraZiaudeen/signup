@@ -225,7 +225,7 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
-                  <span className={styles.mostPopular}>Most Popular</span>
+                  {/* <span className={styles.mostPopular}>Most Popular</span> */}
                   <div>
                     <input
                       type="radio"

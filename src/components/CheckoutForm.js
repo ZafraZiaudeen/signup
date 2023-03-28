@@ -63,7 +63,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
       </label>
       <Button
         action={handleSubmit}
-        text={"Pay Forward"}
+        text={"Seal the deal"}
         className={"payButton"}
       />
     </form>

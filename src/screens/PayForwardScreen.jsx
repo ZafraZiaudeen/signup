@@ -34,7 +34,7 @@ export default function PayForwardScreen({
     monthly: [],
     yearly: [],
   });
-  const [selectedIndex, setSelectedIndex] = useState(1);
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [planText, setPlanText] = useState(
     "Join our family and pay forward for one person"
   );
@@ -79,7 +79,7 @@ export default function PayForwardScreen({
       setLoading(true);
       const response = await Pricing.getAllPlans();
       setSubscriptions(response.data[0].plans);
-      setPlanId(response.data[0].plans.monthly[1].priceId);
+      setPlanId(response.data[0].plans.monthly[0].priceId);
       setLoading(false);
     };
 
@@ -230,37 +230,37 @@ export default function PayForwardScreen({
                     <input
                       type="radio"
                       name="price"
-                      value={subscriptions?.monthly[1]?.price}
-                      id={subscriptions?.monthly[1]?.price}
-                      onChange={() => handleSubChange(1)}
+                      value={subscriptions?.monthly[0]?.price}
+                      id={subscriptions?.monthly[0]?.price}
+                      onChange={() => handleSubChange(0)}
                       checked={
-                        subscriptionAmount === subscriptions?.monthly[1]?.price
+                        subscriptionAmount === subscriptions?.monthly[0]?.price
                       }
                     />
                     <label
-                      htmlFor={subscriptions?.monthly[1]?.price}
+                      htmlFor={subscriptions?.monthly[0]?.price}
                       className={styles.radioBtnGroup}
                       style={{
                         backgroundColor:
                           subscriptionAmount ===
-                          subscriptions?.monthly[1]?.price
+                          subscriptions?.monthly[0]?.price
                             ? "#0089ff"
                             : "",
                         border:
-                          subscriptionAmount === subscriptions.monthly[1]?.price
+                          subscriptionAmount === subscriptions.monthly[0]?.price
                             ? "1px solid #ffffff"
                             : "",
                         color:
-                          subscriptionAmount === subscriptions.monthly[1]?.price
+                          subscriptionAmount === subscriptions.monthly[0]?.price
                             ? "#ffffff"
                             : "",
                       }}
                     >
                       <img src={priceBadge} alt="badge" />
                       <span className={styles.previousPrice}>
-                        ${subscriptions.monthly[1]?.previousPrice}
+                        ${subscriptions.monthly[0]?.previousPrice}
                       </span>
-                      ${subscriptions.monthly[1]?.price}
+                      ${subscriptions.monthly[0]?.price}
                     </label>
                   </div>
                 </div>
@@ -312,36 +312,36 @@ export default function PayForwardScreen({
                     <input
                       type="radio"
                       name="price"
-                      value={subscriptions?.yearly[1]?.price}
-                      id={subscriptions?.yearly[1]?.price}
-                      onChange={() => handleSubChange(1)}
+                      value={subscriptions?.yearly[0]?.price}
+                      id={subscriptions?.yearly[0]?.price}
+                      onChange={() => handleSubChange(0)}
                       checked={
-                        subscriptionAmount === subscriptions?.yearly[1]?.price
+                        subscriptionAmount === subscriptions?.yearly[0]?.price
                       }
                     />
                     <label
-                      htmlFor={subscriptions?.yearly[1]?.price}
+                      htmlFor={subscriptions?.yearly[0]?.price}
                       className={styles.radioBtnGroup}
                       style={{
                         backgroundColor:
-                          subscriptionAmount === subscriptions?.yearly[1]?.price
+                          subscriptionAmount === subscriptions?.yearly[0]?.price
                             ? "#0089ff"
                             : "",
                         border:
-                          subscriptionAmount === subscriptions?.yearly[1]?.price
+                          subscriptionAmount === subscriptions?.yearly[0]?.price
                             ? "1px solid #ffffff"
                             : "",
                         color:
-                          subscriptionAmount === subscriptions?.yearly[1]?.price
+                          subscriptionAmount === subscriptions?.yearly[0]?.price
                             ? "#ffffff"
                             : "",
                       }}
                     >
                       <img src={priceBadge} alt="badge" />
                       <span className={styles.previousPrice}>
-                        ${subscriptions?.yearly[1]?.previousPrice}
+                        ${subscriptions?.yearly[0]?.previousPrice}
                       </span>
-                      ${subscriptions?.yearly[1]?.price}
+                      ${subscriptions?.yearly[0]?.price}
                     </label>
                   </div>
                 </div>

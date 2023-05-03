@@ -19,6 +19,8 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
   const [data, setData] = useState({});
   const stripePromise = loadStripe(config.stripeSecret);
 
+  console.log(clientData);
+
   const handleSuccess = async (data) => {
     setLoading(false);
     let result = await user.updateStripeCustomer({

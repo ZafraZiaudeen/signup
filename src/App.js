@@ -153,33 +153,6 @@ function App() {
   }, [outerHeight]);
 
   useEffect(() => {
-    if (user !== null) {
-      setLoggedIn(true);
-      axios
-        .get(
-          `${config.serverUrl}/api/v1/subscribed/${
-            user?.email
-          }/${new Date().getMonth()}`
-        )
-        .then((res) => {
-          if (res.data.message === "true") {
-            setSubscribed(true);
-          } else {
-            setSubscribed(false);
-          }
-        })
-        .catch((err) => {});
-    }
-
-    if (localStorage.getItem("firstTime") === null) {
-      setLoggedIn(false);
-      setForgotPassword(false);
-      setSignUp(true);
-      localStorage.setItem("firstTime", "true");
-    }
-  }, [user, today]);
-
-  useEffect(() => {
     let timer = setInterval(() => {
       let localImage = localStorage.getItem(`beatific-image${todayParsed}`);
       if (localImage) {

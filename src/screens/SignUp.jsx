@@ -3,6 +3,7 @@ import config from "../config/config";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
+import userApi from "../api/user";
 
 import {
   WriteEmail,
@@ -125,6 +126,8 @@ const Child = ({
     stepThree: false,
     stepFour: false,
   });
+  const [emailParam, setEmailParam] = useState("");
+  const [userToken, setUserToken] = useState("");
   const [userCount, setUserCount] = useState(0);
 
   // const [exists, setExists] = useState('');
@@ -264,12 +267,27 @@ const Child = ({
   }, [videoNumber, welcomeStep]);
 
   useEffect(() => {
-    // if (welcomeStep === "2") return;
-    // socket.on("connection", (res) => {
-    //   if (!res?.userCount) return;
-    //   setUserCount(res.userCount);
-    // });
-  }, [welcomeStep, step]);
+    (async () => {
+      const query = new URLSearchParams(window.location.search);
+      const email = query.get("email");
+      const token = query.get("token");
+      setEmailParam(email);
+      setUserToken(token);
+      console.log(email);
+      if (!email) return;
+      const subscribed = await userApi.checkIfSubscribed({
+        email: email,
+      });
+      if (subscribed?.data?.message === "false") {
+        setStep("welcome");
+        setWelcomeStep("2");
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    console.log("welcomeStep changed ===>", welcomeStep);
+  }, [welcomeStep]);
 
   // form validation
   const handleEmailChange = (e) => {
@@ -339,7 +357,28 @@ const Child = ({
     });
   };
 
+  const handleActivateSubscribtion = async () => {
+    const user = await userApi.getUserByEmail({
+      email: emailParam,
+    });
+
+    setUserCreated(true);
+    localStorage.setItem(
+      "user",
+      JSON.stringify({ ...user.data.data, token: userToken })
+    );
+    let paymentIntentResult = await getPaymentIntent();
+    clientData.email = emailParam;
+    clientData.name = user.data.data.name;
+    clientData.paymentIntent = paymentIntentResult;
+    setClientData(clientData);
+    setLoading(false);
+    setCheckoutPage(true);
+  };
+
   const handleSubmitSub = async (e) => {
+    if (emailParam) return handleActivateSubscribtion();
+
     setLoading(true);
     e.preventDefault();
 

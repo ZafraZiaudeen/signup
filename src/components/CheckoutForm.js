@@ -48,7 +48,8 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
     );
 
     if (result.error) {
-      console.log(result.error.message);
+      setLoading(false);
+      alert(result.error.message);
     } else {
       if (result.paymentIntent.status === "succeeded") {
         handleSuccess(result);

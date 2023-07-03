@@ -238,16 +238,22 @@
 .footerLinks {
   position: absolute;
   bottom: 20px;
+  column-gap: 20px;
   margin: auto;
-  gap: 20px;
   display: flex;
   align-items: center;
   font-size: 12px;
 }
 
+.footerP{
+  padding: 0 !important;
+}
+
 .footerLinks button {
   width: 92px;
   height: 31px;
+  transition: 0.3s ease-in-out;
+  border-radius: 19px;
 }
 
 .footerLinks button img {
@@ -257,6 +263,7 @@
 
 .footerLinks button:hover {
   cursor: pointer;
+  background-color: #55B72E;
 }
 
 .arrow {

@@ -1022,8 +1022,8 @@ const Child = ({
             <form>{insideForm}</form>
           </section>
           <div className={styles.footerLinks}>
-            <p>HAVE AN ACCOUNT?</p>
-            <p>LOG IN</p>
+            <p className={styles.footerP}>HAVE AN ACCOUNT?</p>
+            <p className={styles.footerP}>LOG IN</p>
             <button
               type="button"
               onClick={() => {

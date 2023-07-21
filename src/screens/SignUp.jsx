@@ -637,7 +637,7 @@ const Child = ({
                   {alreadyReg && (
                     <span
                       className={styles.whiteError}
-                      onClick={() => wantToSignUp(false)}
+                      onClick={() => extension.openLoginPage()}
                     >
                       Go to login
                     </span>

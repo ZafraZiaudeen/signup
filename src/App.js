@@ -134,13 +134,13 @@ function App() {
   }, [today, tomorrowDate, todayParsed, tomorrowDateParsed, user]);
 
   useEffect(() => {
-    setOuterHeight(`${window.outerHeight}px`);
+    setOuterHeight(`${window.innerHeight}px`);
     window.addEventListener("resize", () =>
-      setOuterHeight(`${window.outerHeight}px`)
+      setOuterHeight(`${window.innerHeight}px`)
     );
     return () => {
       window.removeEventListener("resize", () =>
-        setOuterHeight(`${window.outerHeight}px`)
+        setOuterHeight(`${window.innerHeight}px`)
       );
     };
   }, []);

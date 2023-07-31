@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import Privacy from "./screens/Privacy";
+import VerifyEmail from './screens/VerifyEmail'
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -13,6 +14,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/privacy-policy" element={<Privacy />} />
+        <Route path="/verify" element={<VerifyEmail />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

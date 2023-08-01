@@ -203,7 +203,7 @@ function VerifyEmail() {
                 <div className="App">
                     <div className={styles.container}>
                         <span className={styles.greeting}>
-                            Hi, Gvan!
+                            Hi!
                         </span>
                         <span className={styles.heading}>
                             Sweet! You are human

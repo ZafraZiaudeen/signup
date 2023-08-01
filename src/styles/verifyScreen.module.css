@@ -1,0 +1,136 @@
+@font-face {
+  font-family: "Canela Medium";
+  src: url(../fonts/Canela-Medium.ttf);
+}
+
+@font-face {
+  font-family: "Quicksand Bold";
+  src: url("../fonts/Quicksand-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Quicksand Regular";
+  src: url("../fonts/Quicksand-Regular.ttf");
+}
+
+.container {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.greeting {
+  font-family: "Canela Medium";
+  font-size: 26px;
+  color: #fff;
+}
+.heading {
+  font-family: "Canela Medium";
+  font-size: 80px;
+  color: #fff;
+  margin-top: 18px;
+}
+.card {
+  width: 631px;
+  height: 504px;
+  background-color: #fff;
+  border-radius: 20px;
+  margin-top: 59px;
+  display: flex;
+  align-items: center;
+  padding: 62px 34px;
+  flex-direction: column;
+}
+
+.card .emailIcon {
+  width: 29px;
+  height: 20px;
+}
+
+.simpleText {
+  font-family: "Quicksand Bold";
+  font-size: 12px;
+  margin-top: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.badgeContainer {
+  border-radius: 360px;
+  background-color: #0089ff;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 17px;
+}
+.priceBadge {
+  width: 28px;
+  height: 28px;
+}
+.textContainer {
+  width: 564px;
+  height: 199px;
+  background-color: #f8f8f8;
+  border: 1px solid #ededed;
+  border-radius: 20px;
+  margin-top: 52px;
+  padding: 37px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.text {
+  font-family: "Quicksand Regular";
+  font-size: 18px;
+  color: #000;
+  text-align: center;
+  width: 100%;
+}
+.button {
+  width: 100%;
+  height: 49px;
+  border-radius: 360px;
+  margin-top: 25px;
+  background: linear-gradient(45deg, #469fe7 0%, #cf28fa 100%);
+  font-family: "Quicksand Regular";
+  font-size: 13px;
+  letter-spacing: 3.9px;
+  color: #fff;
+  text-transform: uppercase;
+  position: relative;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background: #7e7e7e !important;
+  cursor: default;
+}
+.arrowIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.loadingImgContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading {
+  animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

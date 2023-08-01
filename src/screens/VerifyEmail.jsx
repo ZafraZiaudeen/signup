@@ -1,14 +1,22 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import styles from "../styles/verifyScreen.module.css";
 import config from "../config/config";
 import CanvasBackground from "../components/CanvasBackground";
-
-
+import emailIcon from "../images/emailIcon.svg"
+import emailiconRed from "../images/emailIconRed.svg"
+import priceBadge from "../images/pricebadge.svg"
+import failedIcon from "../images/failedIcon.svg"
+import arrowIcon from "../images/arrow.svg"
+import loadingImg from "../images/loading.svg"
 
 function VerifyEmail() {
 
-
+    const [loading, setLoading] = useState(true)
+    const [verifySuccess, setVerifySuccess] = useState(false)
     const [bgImage, setBgImage] = useState("");
+    const [email, setEmail] = useState(null)
+    const [linkSent, setLinkSent] = useState(false)
 
     const [outerHeight, setOuterHeight] = useState("100vh");
     const appContainerRef = useRef();
@@ -138,18 +146,44 @@ function VerifyEmail() {
         return { email, token };
     };
 
+    const resend = async () => {
+        setLinkSent(true)
+        const result = await axios.post(`${config.serverUrl}/api/v1/users/resend-email`, { email })
+    }
+
+    const handleButtonClick = () => {
+        if (!verifySuccess) {
+            return resend();
+        }
+        window.close()
+    }
+
 
     useEffect(() => {
         (async () => {
-            const { email, token } = parseQueryString(window.location.search);
-            const url = `${config.serverUrl}/api/v1/users/verify-email`
-            if (!email || !token) return console.log("Something is missing");
+            try {
+                const { email, token } = parseQueryString(window.location.search);
+                setEmail(email)
+                const url = `${config.serverUrl}/api/v1/users/verify-email`
+                if (!email || !token) {
+                    setLoading(false);
+                    setVerifySuccess(false);
+                    console.log("Something is missing")
+                }
 
-            const result = await axios.post(url, { email, token })
-            const data = result.data
+                const result = await axios.post(url, { email, token })
+                setLoading(false)
 
-            alert(data?.message)
-            window.close()
+                const data = result.data;
+                if (data.success) return setVerifySuccess(true);
+
+                return setVerifySuccess(false)
+            } catch (e) { }
+
+
+
+            // alert(data?.message)
+            // window.close()
 
         })()
     }, [])
@@ -159,14 +193,46 @@ function VerifyEmail() {
     return (
         <>
             <CanvasBackground />
+
             <div
                 className="background-image"
                 style={{ backgroundImage: `url(${bgImage})` }}
                 ref={appContainerRef}
             />
-            <div className="App">
-                <div className="overlay" ref={overlayRef}>
-
+            <div className="overlay" ref={overlayRef}>
+                <div className="App">
+                    <div className={styles.container}>
+                        <span className={styles.greeting}>
+                            Hi, Gvan!
+                        </span>
+                        <span className={styles.heading}>
+                            Sweet! You are human
+                        </span>
+                        {loading && <div className={styles.card}>
+                            <div className={styles.loadingImgContainer} >
+                                <img src={loadingImg} className={styles.loading} alt="" />
+                            </div>
+                        </div>}
+                        {!loading && <div className={styles.card}>
+                            <img src={verifySuccess ? emailIcon : emailiconRed} alt="" className={styles.emailIcon} />
+                            <span className={styles.simpleText} style={!verifySuccess ? { color: "red" } : null}>EMail verified</span>
+                            <div className={styles.badgeContainer} style={!verifySuccess ? { backgroundColor: "red" } : null}>
+                                <img src={verifySuccess ? priceBadge : failedIcon} alt="" className={styles.priceBadge} />
+                            </div>
+                            <div className={styles.textContainer}>
+                                {verifySuccess && <span className={styles.text}>
+                                    Woo-hoo! You’re officially verified as a fabulous human – get ready to have a blast on the inside! 🎉😄
+                                </span>}
+                                {!verifySuccess && <span className={styles.text}>
+                                    Oops! Verification hiccup! Click below to resend email and get in on the fun inside! 💌🎉
+                                </span>}
+                                {email && <button className={styles.button} onClick={handleButtonClick} disabled={linkSent}>
+                                    {verifySuccess ? "Let's do this" : linkSent ? "Link sent" : "Resend Link"}
+                                    {!linkSent && <img src={arrowIcon} alt="" className={styles.arrowIcon} />}
+                                </button>}
+                            </div>
+                        </div>}
+                    </div>
                 </div>
             </div>
         </>

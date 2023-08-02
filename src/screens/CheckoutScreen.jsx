@@ -45,7 +45,7 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
     <div className={styles.container}>
       <section className={styles.signUpActions}>
         <div className={styles.iconSection}></div>
-        <h1 className={`${styles.greeting} ${styles.shadow}`}>
+        <h1 className={`${styles.greeting} ${styles.shadow}`} style={{ marginTop: 14 }}>
           Hi{" "}
           {clientData.name &&
             (clientData.name ? clientData.name : "it feels good to")}

@@ -1,8 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import Countdown from 'react-countdown';
 import axios from "axios";
 import styles from "../styles/verifyScreen.module.css";
 import config from "../config/config";
 import CanvasBackground from "../components/CanvasBackground";
+import extensionApi from "../api/extension"
+
 import emailIcon from "../images/emailIcon.svg"
 import emailiconRed from "../images/emailIconRed.svg"
 import priceBadge from "../images/pricebadge.svg"
@@ -17,6 +20,7 @@ function VerifyEmail() {
     const [bgImage, setBgImage] = useState("");
     const [email, setEmail] = useState(null)
     const [linkSent, setLinkSent] = useState(false)
+    const [timerStarted, setTimerStarted] = useState(null)
 
     const [outerHeight, setOuterHeight] = useState("100vh");
     const appContainerRef = useRef();
@@ -138,6 +142,19 @@ function VerifyEmail() {
         }, 60 * 1000);
     }, []);
 
+    const closeTab = () => {
+        extensionApi.openLoginPage();
+        // window.close()
+    }
+
+    const renderer = ({ seconds, completed }) => {
+        if (completed) {
+            closeTab()
+        } else {
+            return <span className={styles.timer}>This window will be automatically closed in {seconds} seconds</span>;
+        }
+    };
+
 
     const parseQueryString = (queryString) => {
         const params = new URLSearchParams(queryString);
@@ -155,7 +172,7 @@ function VerifyEmail() {
         if (!verifySuccess) {
             return resend();
         }
-        window.close()
+        closeTab()
     }
 
 
@@ -175,6 +192,7 @@ function VerifyEmail() {
                 setLoading(false)
 
                 const data = result.data;
+                setTimerStarted(true)
                 if (data.success) return setVerifySuccess(true);
 
                 return setVerifySuccess(false)
@@ -231,6 +249,10 @@ function VerifyEmail() {
                                     {!linkSent && <img src={arrowIcon} alt="" className={styles.arrowIcon} />}
                                 </button>}
                             </div>
+                            {timerStarted && <Countdown
+                                date={Date.now() + 15000}
+                                renderer={renderer}
+                            />}
                         </div>}
                     </div>
                 </div>

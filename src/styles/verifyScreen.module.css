@@ -24,12 +24,12 @@
   height: 100%;
 }
 .greeting {
-  font-family: "Canela Medium";
+  font-family: "Quicksand Regular";
   font-size: 26px;
   color: #fff;
 }
 .heading {
-  font-family: "Canela Medium";
+  font-family: "Canela Light";
   font-size: 80px;
   color: #fff;
   margin-top: 18px;
@@ -124,6 +124,9 @@
 }
 .loading {
   animation: rotate 1s infinite;
+}
+.timer {
+  margin-top: 10px;
 }
 
 @keyframes rotate {

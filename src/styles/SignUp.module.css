@@ -325,7 +325,8 @@
 .innerContainer {
   width: 630px;
   height: 504px;
-  margin-top: 59px;
+  /* margin-top: 59px; */
+  margin-top: 14px;
   background: #ffffff 0% 0% no-repeat padding-box;
   border: 1px solid #ffffff;
   border-radius: 20px;
@@ -799,7 +800,8 @@ input[type="radio"]:hover + label .previousPrice {
 	align-items: flex-start; */
 }
 .paymentCard {
-  margin-top: 88px;
+  /* margin-top: 88px; */
+  margin-top: 48px;
   width: 630px;
   height: 504px;
   background: #ffffff 0% 0% no-repeat padding-box;

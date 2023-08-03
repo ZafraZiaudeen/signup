@@ -118,7 +118,7 @@
   color: red;
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: 2.7px;
+  letter-spacing: 0px;
   position: absolute;
   bottom: -23px;
   left: 50%;
@@ -306,7 +306,7 @@
 .welcome .mainSection h1 {
   text-align: center;
   font-family: "Canela Light";
-  letter-spacing: 3px;
+  letter-spacing: 0px;
   font-weight: 200;
   line-height: 26px;
   font-size: 26px;
@@ -448,7 +448,7 @@
 
 .innerContainer .promoSection article {
   font-size: 12px;
-  letter-spacing: 4.32px;
+  letter-spacing: 0px;
   opacity: 0.53;
   color: #000000;
   font-weight: bold;
@@ -586,7 +586,7 @@
   cursor: pointer;
   font-size: 13px;
   border-radius: 360px;
-  letter-spacing: 3.9px;
+  letter-spacing: 0px;
   font-family: "Quicksand Bold";
   margin-top: 22px;
   background-image: linear-gradient(
@@ -723,7 +723,7 @@ input[type="radio"]:hover + label .previousPrice {
   text-transform: uppercase;
   font-weight: bold;
   font-family: "Quicksand Bold", sans-serif;
-  letter-spacing: 4.32px;
+  letter-spacing: 0px;
 }
 
 .innerContainer .priceDisplay .price {
@@ -740,7 +740,7 @@ input[type="radio"]:hover + label .previousPrice {
 
 .innerContainer .priceDisplay .price p {
   font-size: 15px;
-  letter-spacing: 2.1px;
+  letter-spacing: 0px;
 }
 
 .innerContainer .cardSection {
@@ -770,7 +770,7 @@ input[type="radio"]:hover + label .previousPrice {
   font-weight: bold;
   font-size: 13px;
   color: #ffffff;
-  letter-spacing: 3.9px;
+  letter-spacing: 0px;
 }
 
 .innerContainer .cardSection button span {
@@ -828,7 +828,7 @@ input[type="radio"]:hover + label .previousPrice {
   justify-content: space-between;
   font-family: "Quicksand Bold", sans-serif;
   font-size: 15px;
-  letter-spacing: 2.1px;
+  letter-spacing: 0px;
   background-color: #2488f7;
   border-radius: 360px;
   width: 114px;

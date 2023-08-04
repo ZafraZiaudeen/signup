@@ -245,7 +245,7 @@
   font-size: 12px;
 }
 
-.footerP{
+.footerP {
   padding: 0 !important;
 }
 
@@ -263,7 +263,7 @@
 
 .footerLinks button:hover {
   cursor: pointer;
-  background-color: #55B72E;
+  background-color: #55b72e;
 }
 
 .arrow {
@@ -838,6 +838,9 @@ input[type="radio"]:hover + label .previousPrice {
   align-items: center;
   padding: 9.27px;
   margin-top: 18px;
+}
+.bluePrice span {
+  width: 100%;
 }
 .cardElemContainer {
   width: 562px;

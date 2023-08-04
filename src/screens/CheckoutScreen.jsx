@@ -82,7 +82,9 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
               <span className={styles.secureText}>100% Secure</span>
               <div className={styles.bluePrice}>
                 <img src={badge} alt="" />
-                ${`${clientData.subscriptionAmount}`}
+                <span>
+                  ${`${clientData.subscriptionAmount}`}
+                </span>
               </div>
               <div className={styles.cardElemContainer}>
                 <Elements stripe={stripePromise}>

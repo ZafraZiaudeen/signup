@@ -475,6 +475,7 @@ const Child = ({
               width: "100%",
               textAlign: "center",
               display: "flex",
+              rowGap: 30
             }}
           >
             <WriteName steps={steps} setSteps={setSteps} />
@@ -484,7 +485,7 @@ const Child = ({
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "center", rowGap: 30
           }}
         >
           <div className={styles.inputSection}>
@@ -565,7 +566,7 @@ const Child = ({
             <div className={styles.dot}></div>
           </div>
         </div>
-      </div>
+      </div >
     );
   } else if (step === "2") {
     insideForm = (

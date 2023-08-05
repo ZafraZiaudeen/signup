@@ -22,11 +22,11 @@
 }
 
 .greeting {
-  font-family: "Canela Light";
+  font-family: "Quicksand Regular";
   letter-spacing: 0;
   font-weight: 200;
   margin-top: 24.5px;
-  /* margin-bottom: 16.5px; */
+  margin-bottom: 16.5px;
   height: 30px;
 }
 .shadow {
@@ -82,6 +82,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  row-gap: 30px;
 }
 
 .signUpActions .formAction label {
@@ -102,9 +103,9 @@
 }
 
 .inputSection .formInputWrapper {
-  border: 2px solid transparent;
+  /* border: 2px solid transparent; */
   border-radius: 360px;
-  padding: 2px;
+  /* padding: 2px; */
   transition: 0.3s ease-in-out;
   position: relative;
 }
@@ -247,6 +248,9 @@
 
 .footerP {
   padding: 0 !important;
+  letter-spacing: 3px;
+  font-weight: 600;
+  box-shadow: 0px 4px 36px 0px rgba(53, 54, 54, 0.45);
 }
 
 .footerLinks button {
@@ -259,6 +263,7 @@
 .footerLinks button img {
   width: 92px;
   height: 31px;
+  box-shadow: 0px 4px 36px 0px rgba(53, 54, 54, 0.45);
 }
 
 .footerLinks button:hover {
@@ -299,6 +304,7 @@
 }
 
 .welcome .mainSection p {
+  font-family: "Quicksand Regular";
   font-size: 26px;
   letter-spacing: 0px;
 }

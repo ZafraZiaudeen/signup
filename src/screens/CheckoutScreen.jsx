@@ -45,14 +45,14 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
     <div className={styles.container}>
       <section className={styles.signUpActions}>
         <div className={styles.iconSection}></div>
-        <h1 className={`${styles.greeting} ${styles.shadow}`} style={{ marginTop: 14 }}>
+        <span className={`${styles.checkout_greeting} ${styles.shadow}`} >
           Hi{" "}
           {clientData.name &&
             (clientData.name ? clientData.name : "it feels good to")}
           !
-        </h1>
+        </span>
         <div className={`${styles.payForwardContainer} ${styles.shadow}`}>
-          <span id="txt-type">Pay Forward</span>
+          <h2 id="txt-type" className={styles.payForwardText}>Pay Forward</h2>
         </div>
         <div className={styles.formAction}>
           <div className={styles.inputSection}>

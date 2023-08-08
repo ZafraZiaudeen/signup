@@ -723,7 +723,7 @@ const Child = ({
               value={password}
             />
             <span className={styles.showPass} onClick={handleClick}>
-              {passwordVisible ? (
+              {(passwordVisible || !password) ? (
                 <img src={eyeOpen} className={styles.eye} alt="" />
               ) : (
                 <img src={eyeClosed} className={styles.eye} alt="" />

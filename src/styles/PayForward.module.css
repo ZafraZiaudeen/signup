@@ -40,3 +40,29 @@
 .relativeDiv {
   position: relative;
 }
+.prgressbarContainer {
+  width: 80%;
+  background-color: #dbdbdb;
+  border-radius: 360px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.prgressbarContainer .progressbar {
+  width: 40%;
+  height: 10px;
+  border-radius: 360px;
+  background: linear-gradient(89.53deg, #469ee7 -4.3%, #d855f9 102.07%);
+  transition: 1s ease-in-out;
+  animation: widthAnim 1s ease-in-out;
+}
+
+@keyframes widthAnim {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 40%;
+  }
+}

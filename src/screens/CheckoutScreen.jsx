@@ -17,24 +17,29 @@ import loadingAnimation from "../images/loading.json";
 
 export default function CheckoutScreen({ clientData, setCheckoutPage, loading, setLoading }) {
   const [data, setData] = useState({});
+  const [complete, setComplete] = useState(false)
   const stripePromise = loadStripe(config.stripeSecret);
 
   console.log(clientData);
 
   const handleSuccess = async (data) => {
-    setLoading(false);
-    let result = await user.updateStripeCustomer({
-      email: clientData.email,
-      stripeCustomerId: clientData.paymentIntent.customerId,
-      subscriptionAmount: clientData.subscriptionAmount,
-      payPeriod: clientData.payPeriod,
-    });
+    setComplete(true);
+    setTimeout(async () => {
 
-    localStorage.removeItem("signUpForm");
-    localStorage.removeItem("step1");
-    localStorage.removeItem("step2");
-    localStorage.removeItem("step3");
-    extension.openLoginPage(data.paymentIntent.id);
+      setLoading(false);
+      let result = await user.updateStripeCustomer({
+        email: clientData.email,
+        stripeCustomerId: clientData.paymentIntent.customerId,
+        subscriptionAmount: clientData.subscriptionAmount,
+        payPeriod: clientData.payPeriod,
+      });
+
+      localStorage.removeItem("signUpForm");
+      localStorage.removeItem("step1");
+      localStorage.removeItem("step2");
+      localStorage.removeItem("step3");
+      extension.openLoginPage(data.paymentIntent.id);
+    }, 1300)
   };
 
   useEffect(() => {
@@ -70,12 +75,15 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
             <div className={`${styles.paymentCard} ${newStyles.relativeDiv}`}>
               {loading && (
                 <div className={newStyles.lottieContainer}>
-                  <Lottie
+                  <div className={newStyles.prgressbarContainer}>
+                    <div className={newStyles.progressbar} style={{ width: !complete ? "40%" : "100%" }} />
+                  </div>
+                  {/* <Lottie
                     options={{ animationData: loadingAnimation }}
                     width={48}
                     height={48}
                     className={anims.fadeIn}
-                  />
+                  /> */}
                 </div>
               )}
               <img src={padLock} className={styles.padLock} alt="" />

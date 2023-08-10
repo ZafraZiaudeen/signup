@@ -48,7 +48,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
     );
 
     if (result.error) {
-      setLoading(false);
+      // setLoading(false);
       alert(result.error.message);
     } else {
       if (result.paymentIntent.status === "succeeded") {

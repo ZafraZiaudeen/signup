@@ -26,7 +26,7 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
     setComplete(true);
     setTimeout(async () => {
 
-      setLoading(false);
+
       let result = await user.updateStripeCustomer({
         email: clientData.email,
         stripeCustomerId: clientData.paymentIntent.customerId,

@@ -120,7 +120,8 @@ const Child = ({
   const [invalidEmail, setInvalidEmail] = useState(false);
   const [alreadyReg, setAlreadyReg] = useState(false);
   const [password, setPassword] = useState("");
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(true);
+  const [clicked, setClicked] = useState(false)
   const [loading, setLoading] = useState(false);
   const [txId, setTxId] = useState("");
   const [pricingPlans, setPricingPlans] = useState([]);
@@ -253,6 +254,10 @@ const Child = ({
     };
   }, [step, welcomeStep]);
 
+  useEffect(() => {
+    if (!clicked && password.trim() !== "") setPasswordVisible(false)
+  }, [password])
+
   // switching images on interval
   useEffect(() => {
     if (welcomeStep === "1") {
@@ -309,6 +314,7 @@ const Child = ({
   };
 
   const handleClick = (e) => {
+    setClicked(true)
     setPasswordVisible(!passwordVisible);
   };
 
@@ -723,7 +729,7 @@ const Child = ({
               value={password}
             />
             <span className={styles.showPass} onClick={handleClick}>
-              {(passwordVisible || !password) ? (
+              {(passwordVisible) ? (
                 <img src={eyeOpen} className={styles.eye} alt="" />
               ) : (
                 <img src={eyeClosed} className={styles.eye} alt="" />

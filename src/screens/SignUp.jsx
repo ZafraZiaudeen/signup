@@ -121,6 +121,7 @@ const Child = ({
   const [alreadyReg, setAlreadyReg] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [passwordInvalidMsg, setPasswordInvalidMsg] = useState(null)
   const [clicked, setClicked] = useState(false)
   const [loading, setLoading] = useState(false);
   const [txId, setTxId] = useState("");
@@ -313,6 +314,11 @@ const Child = ({
     }
   };
 
+  const handlePasswordChange = e => {
+    setPassword(e.target.value);
+    setPasswordInvalidMsg(null)
+  }
+
   const handleClick = (e) => {
     setClicked(true)
     setPasswordVisible(!passwordVisible);
@@ -416,6 +422,7 @@ const Child = ({
       // );
     }
   };
+
 
   const displayImg = () => {
     if (videoNumber === "1") {
@@ -718,16 +725,20 @@ const Child = ({
               id="password"
               placeholder="password"
               ref={passwordRef}
-              required
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               onKeyDown={(e) => {
                 if (e.code === "Enter") {
+                  e.preventDefault()
+                  if (e.target.value.trim() === "") {
+                    return setPasswordInvalidMsg("Password cannot be empty!")
+                  }
                   setStep("welcome");
                   setWelcomeStep("2");
                 }
               }}
               value={password}
             />
+
             <span className={styles.showPass} onClick={handleClick}>
               {(passwordVisible) ? (
                 <img src={eyeOpen} className={styles.eye} alt="" />
@@ -735,15 +746,22 @@ const Child = ({
                 <img src={eyeClosed} className={styles.eye} alt="" />
               )}
             </span>
+            {passwordInvalidMsg && (
+              <span className={styles.requiredMsg}>
+                {passwordInvalidMsg}
+              </span>
+            )}
           </div>
           <button
             type="button"
             onClick={() => {
+
+              if (password.trim() === "") { console.log('empty'); return setPasswordInvalidMsg("Password cannot be emtpy!"); }
               setStep("welcome");
               setWelcomeStep("2");
             }}
             className={styles.forwardBtn}
-            disabled={password === ""}
+
           >
             <img
               src={arrowForward}

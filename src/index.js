@@ -3,20 +3,31 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import Privacy from "./screens/Privacy";
-import VerifyEmail from './screens/VerifyEmail'
+import VerifyEmail from "./screens/VerifyEmail";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import rootReducer from "./reducers";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
+//configure store
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/privacy-policy" element={<Privacy />} />
-        <Route path="/verify" element={<VerifyEmail />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/privacy-policy" element={<Privacy />} />
+          <Route path="/verify" element={<VerifyEmail />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );
 

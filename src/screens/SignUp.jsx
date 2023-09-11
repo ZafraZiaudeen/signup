@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 import userApi from "../api/user";
+import { useDispatch } from "react-redux";
 
 import {
   WriteEmail,
@@ -28,8 +29,8 @@ import happyPerson1 from "../images/happyPerson1.jpg";
 import happyPerson2 from "../images/happyPerson2.jpg";
 import happyPerson3 from "../images/happyPerson3.jpg";
 
-import eyeOpen from "../images/eyeOpen.svg"
-import eyeClosed from "../images/eyeClosed.svg"
+import eyeOpen from "../images/eyeOpen.svg";
+import eyeClosed from "../images/eyeClosed.svg";
 
 import Loader from "../components/Loader";
 import payments from "../api/payments";
@@ -38,6 +39,8 @@ import extension from "../api/extension";
 
 import PayForwardScreenB from "./PayForwardScreenB";
 import PayForwardScreen from "./PayForwardScreen";
+import Alert from "../components/Alert";
+import { updateErrorMessage } from "../actions/common";
 
 // import io from "socket.io-client";
 
@@ -74,6 +77,7 @@ const SignUp = ({
 }) => {
   return (
     <Elements stripe={stripePromise}>
+      <Alert />
       <Child
         wantToSignUp={wantToSignUp}
         setLoggedIn={setLoggedIn}
@@ -121,8 +125,8 @@ const Child = ({
   const [alreadyReg, setAlreadyReg] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(true);
-  const [passwordInvalidMsg, setPasswordInvalidMsg] = useState(null)
-  const [clicked, setClicked] = useState(false)
+  const [passwordInvalidMsg, setPasswordInvalidMsg] = useState(null);
+  const [clicked, setClicked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [txId, setTxId] = useState("");
   const [pricingPlans, setPricingPlans] = useState([]);
@@ -135,6 +139,7 @@ const Child = ({
   const [emailParam, setEmailParam] = useState("");
   const [userToken, setUserToken] = useState("");
   const [userCount, setUserCount] = useState(0);
+  const dispatch = useDispatch();
 
   // const [exists, setExists] = useState('');
 
@@ -211,12 +216,26 @@ const Child = ({
 
   const handleEmailNext = (e) => {
     e.preventDefault();
-    if (email.trim() === "") setEmptyEmail(true);
+    if (email.trim() === "") {
+      setEmptyEmail(true);
+      dispatch(
+        updateErrorMessage({
+          message: "Email cannot be empty!",
+          negative: true,
+        })
+      );
+    }
 
     const emailRegex = /\S+@\S+\.\S+/;
 
     if (!emailRegex.test(email)) {
       setInvalidEmail(true);
+      dispatch(
+        updateErrorMessage({
+          message: "Invalid email address!",
+          negative: true,
+        })
+      );
     } else if (email && emailRegex.test(email)) {
       checkIfAccountExists(email);
     }
@@ -256,8 +275,8 @@ const Child = ({
   }, [step, welcomeStep]);
 
   useEffect(() => {
-    if (!clicked && password.trim() !== "") setPasswordVisible(false)
-  }, [password])
+    if (!clicked && password.trim() !== "") setPasswordVisible(false);
+  }, [password]);
 
   // switching images on interval
   useEffect(() => {
@@ -314,13 +333,13 @@ const Child = ({
     }
   };
 
-  const handlePasswordChange = e => {
+  const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    setPasswordInvalidMsg(null)
-  }
+    setPasswordInvalidMsg(null);
+  };
 
   const handleClick = (e) => {
-    setClicked(true)
+    setClicked(true);
     setPasswordVisible(!passwordVisible);
   };
 
@@ -339,7 +358,14 @@ const Child = ({
         console.log(res);
         // setExists(res.data.message);
         if (res.data.message === "exists") {
-          setAlreadyReg(true);
+          // setAlreadyReg(true);
+          dispatch(
+            updateErrorMessage({
+              message:
+                "This email has already been used to create an account with us!",
+              negative: true,
+            })
+          );
           // wantToSignUp(false);
         } else {
           setStep("3");
@@ -423,7 +449,6 @@ const Child = ({
     }
   };
 
-
   const displayImg = () => {
     if (videoNumber === "1") {
       return (
@@ -476,6 +501,42 @@ const Child = ({
     return "17%";
   };
 
+  const validatePassword = (password) => {
+    if (password.trim() === "") {
+      dispatch(
+        updateErrorMessage({
+          message: "Password cannot be empty!",
+          negative: true,
+        })
+      );
+      return setPasswordInvalidMsg("Password cannot be emtpy!");
+    }
+
+    //check if password is strong
+    const strongRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    );
+    const mediumRegex = new RegExp(
+      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
+    );
+
+    if (strongRegex.test(password)) {
+      return true;
+    }
+
+    if (mediumRegex.test(password)) {
+      return true;
+    }
+
+    dispatch(
+      updateErrorMessage({
+        message:
+          "Password must contain at least 8 characters, including UPPER/lowercase and numbers!",
+        negative: true,
+      })
+    );
+  };
+
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
 
   let insideForm;
@@ -488,7 +549,7 @@ const Child = ({
               width: "100%",
               textAlign: "center",
               display: "flex",
-              rowGap: 30
+              rowGap: 30,
             }}
           >
             <WriteName steps={steps} setSteps={setSteps} />
@@ -498,7 +559,8 @@ const Child = ({
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center", rowGap: 30
+            alignItems: "center",
+            rowGap: 30,
           }}
         >
           <div className={styles.inputSection}>
@@ -579,7 +641,7 @@ const Child = ({
             <div className={styles.dot}></div>
           </div>
         </div>
-      </div >
+      </div>
     );
   } else if (step === "2") {
     insideForm = (
@@ -642,16 +704,16 @@ const Child = ({
                     if (e.code === "Enter") handleEmailNext(e);
                   }}
                   value={email}
-                // required
+                  // required
                 />
                 <span className={styles.requiredMsg} style={{ left: "58%" }}>
                   {emptyEmail
                     ? "Email Required"
                     : invalidEmail
-                      ? "Invalid email address"
-                      : alreadyReg
-                        ? "This email has already been used to create an account with us!"
-                        : ""}
+                    ? "Invalid email address"
+                    : alreadyReg
+                    ? "This email has already been used to create an account with us!"
+                    : ""}
                   {alreadyReg && (
                     <span
                       className={styles.whiteError}
@@ -728,9 +790,9 @@ const Child = ({
               onChange={handlePasswordChange}
               onKeyDown={(e) => {
                 if (e.code === "Enter") {
-                  e.preventDefault()
+                  e.preventDefault();
                   if (e.target.value.trim() === "") {
-                    return setPasswordInvalidMsg("Password cannot be empty!")
+                    return setPasswordInvalidMsg("Password cannot be empty!");
                   }
                   setStep("welcome");
                   setWelcomeStep("2");
@@ -740,28 +802,25 @@ const Child = ({
             />
 
             <span className={styles.showPass} onClick={handleClick}>
-              {(passwordVisible) ? (
+              {passwordVisible ? (
                 <img src={eyeOpen} className={styles.eye} alt="" />
               ) : (
                 <img src={eyeClosed} className={styles.eye} alt="" />
               )}
             </span>
             {passwordInvalidMsg && (
-              <span className={styles.requiredMsg}>
-                {passwordInvalidMsg}
-              </span>
+              <span className={styles.requiredMsg}>{passwordInvalidMsg}</span>
             )}
           </div>
           <button
             type="button"
             onClick={() => {
-
-              if (password.trim() === "") { console.log('empty'); return setPasswordInvalidMsg("Password cannot be emtpy!"); }
+              const validPassword = validatePassword(password);
+              if (!validPassword) return;
               setStep("welcome");
               setWelcomeStep("2");
             }}
             className={styles.forwardBtn}
-
           >
             <img
               src={arrowForward}

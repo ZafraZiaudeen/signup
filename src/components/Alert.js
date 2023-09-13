@@ -12,11 +12,11 @@ import { updateErrorMessage } from "../actions/common";
 export default function Alert({ timer }) {
   const alertRef = useRef();
   const dispatch = useDispatch();
-  
+
   const errorMessage = useSelector((state) => state.common)?.errorMessage;
   const negative = errorMessage?.negative;
   const message = errorMessage?.message;
-  console.log(message, negative)
+  console.log(message, negative);
 
   const setMessage = useCallback(
     (msg) => {
@@ -46,10 +46,12 @@ export default function Alert({ timer }) {
       setTimeout(() => {
         if (alertRef.current) {
           alertRef.current.classList.add(styles.slideOut);
-          setMessage(null);
-          setNegative(false);
         }
       }, timer || 5000);
+      setTimeout(() => {
+        setMessage(null);
+        setNegative(false);
+      }, timer + 1000 || 6000);
     };
 
     runTimer();

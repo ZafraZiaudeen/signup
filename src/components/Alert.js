@@ -5,11 +5,12 @@ import { ReactComponent as SuccessIcon } from "../images/successIcon.svg";
 import { ReactComponent as FailedIcon } from "../images/black_x.svg";
 import { ReactComponent as ErrorBell } from "../images/errorBell.svg";
 import { ReactComponent as SuccessBell } from "../images/successNotificationIcon.svg";
+import gifBellIcon from "../images/gifBell.gif";
 
 import { useSelector, useDispatch } from "react-redux";
 import { updateErrorMessage } from "../actions/common";
 
-export default function Alert({ timer }) {
+export default function Alert({ timer, gifBell }) {
   const alertRef = useRef();
   const dispatch = useDispatch();
 
@@ -41,14 +42,16 @@ export default function Alert({ timer }) {
 
   useEffect(() => {
     if (!message) return;
+    let firstTimer;
+    let secondTimer;
 
     const runTimer = () => {
-      setTimeout(() => {
+      firstTimer = setTimeout(() => {
         if (alertRef.current) {
           alertRef.current.classList.add(styles.slideOut);
         }
       }, timer || 5000);
-      setTimeout(() => {
+      secondTimer = setTimeout(() => {
         setMessage(null);
         setNegative(false);
       }, timer + 1000 || 6000);
@@ -57,7 +60,9 @@ export default function Alert({ timer }) {
     runTimer();
 
     return () => {
-      clearTimeout(runTimer);
+      console.log("clearing timer");
+      clearTimeout(firstTimer);
+      clearTimeout(secondTimer);
       runTimer();
     };
   }, [message, setMessage, timer]);
@@ -70,7 +75,8 @@ export default function Alert({ timer }) {
           ref={alertRef}
         >
           {!negative && <SuccessBell />}
-          {negative && <ErrorBell />}
+          {negative && !gifBell &&<ErrorBell />}
+          {negative && gifBell &&<img src={gifBellIcon} alt="" className={styles.gifBell}/>}
 
           <span className={styles.messageText}>
             {message ||

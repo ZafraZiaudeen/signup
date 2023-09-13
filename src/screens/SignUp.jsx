@@ -77,7 +77,7 @@ const SignUp = ({
 }) => {
   return (
     <Elements stripe={stripePromise}>
-      <Alert />
+      <Alert gifBell={true} />
       <Child
         wantToSignUp={wantToSignUp}
         setLoggedIn={setLoggedIn}
@@ -208,7 +208,10 @@ const Child = ({
 
   const handleNameNext = () => {
     if (name.trim() === "") {
-      setEmptyName(true);
+      dispatch(
+        updateErrorMessage({ message: "Name cannot be empty!", negative: true })
+      );
+      // setEmptyName(true);
       return;
     }
     setStep("2");
@@ -217,7 +220,7 @@ const Child = ({
   const handleEmailNext = (e) => {
     e.preventDefault();
     if (email.trim() === "") {
-      setEmptyEmail(true);
+      // setEmptyEmail(true);
       dispatch(
         updateErrorMessage({
           message: "Email cannot be empty!",
@@ -229,7 +232,7 @@ const Child = ({
     const emailRegex = /\S+@\S+\.\S+/;
 
     if (!emailRegex.test(email)) {
-      setInvalidEmail(true);
+      // setInvalidEmail(true);
       dispatch(
         updateErrorMessage({
           message: "Invalid email address!",
@@ -509,7 +512,7 @@ const Child = ({
           negative: true,
         })
       );
-      return setPasswordInvalidMsg("Password cannot be emtpy!");
+      // return setPasswordInvalidMsg("Password cannot be emtpy!");
     }
 
     //check if password is strong

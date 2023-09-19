@@ -1,3 +1,15 @@
+@property --myColor1 {
+  syntax: "<color>";
+  initial-value: transparent;
+  inherits: false;
+}
+
+@property --myColor2 {
+  syntax: "<color>";
+  initial-value: transparent;
+  inherits: false;
+}
+
 @font-face {
   font-family: "Quicksand Bold";
   src: url("../fonts/Quicksand-Bold.ttf");
@@ -161,11 +173,23 @@
   text-decoration: underline;
 }
 
+.gradientWrapper {
+  background: linear-gradient(to right, var(--myColor1), var(--myColor2));
+  transition: --myColor1 0.3s, --myColor2 0.3s;
+  padding: 2px;
+  border-radius: 360px;
+}
+
+.gradientWrapper:focus-within {
+  --myColor1: #FFB600;
+  --myColor2: #CA27FF;
+}
+
 .signUpActions .formAction .inputSection .formInput {
   width: 630px;
   height: 49px;
-  border: 1px solid #ffffff;
-  background-color: #ffffff;
+  background-color: #fff;
+  padding: 1px;
   border-radius: 360px;
   font-size: 18px;
   display: flex;

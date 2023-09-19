@@ -15,9 +15,14 @@ import padLock from "../images/checkoutPadLock.svg";
 import badge from "../images/badgeWithCheck.svg";
 import loadingAnimation from "../images/loading.json";
 
-export default function CheckoutScreen({ clientData, setCheckoutPage, loading, setLoading }) {
+export default function CheckoutScreen({
+  clientData,
+  setCheckoutPage,
+  loading,
+  setLoading,
+}) {
   const [data, setData] = useState({});
-  const [complete, setComplete] = useState(false)
+  const [complete, setComplete] = useState(false);
   const stripePromise = loadStripe(config.stripeSecret);
 
   console.log(clientData);
@@ -25,8 +30,6 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
   const handleSuccess = async (data) => {
     setComplete(true);
     setTimeout(async () => {
-
-
       let result = await user.updateStripeCustomer({
         email: clientData.email,
         stripeCustomerId: clientData.paymentIntent.customerId,
@@ -39,7 +42,7 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
       localStorage.removeItem("step2");
       localStorage.removeItem("step3");
       extension.openLoginPage(data.paymentIntent.id);
-    }, 1300)
+    }, 1300);
   };
 
   useEffect(() => {
@@ -50,14 +53,16 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
     <div className={styles.container}>
       <section className={styles.signUpActions}>
         <div className={styles.iconSection}></div>
-        <span className={`${styles.checkout_greeting} ${styles.shadow}`} >
+        <span className={`${styles.checkout_greeting} ${styles.shadow}`}>
           Hi{" "}
           {clientData.name &&
             (clientData.name ? clientData.name : "it feels good to")}
           !
         </span>
         <div className={`${styles.payForwardContainer} ${styles.shadow}`}>
-          <h2 id="txt-type" className={styles.payForwardText}>Pay Forward</h2>
+          <h2 id="txt-type" className={styles.payForwardText}>
+            Pay Forward
+          </h2>
         </div>
         <div className={styles.formAction}>
           <div className={styles.inputSection}>
@@ -76,7 +81,10 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
               {loading && (
                 <div className={newStyles.lottieContainer}>
                   <div className={newStyles.prgressbarContainer}>
-                    <div className={newStyles.progressbar} style={{ width: !complete ? "40%" : "100%" }} />
+                    <div
+                      className={newStyles.progressbar}
+                      style={{ width: !complete ? "40%" : "100%" }}
+                    />
                   </div>
                   {/* <Lottie
                     options={{ animationData: loadingAnimation }}
@@ -90,9 +98,7 @@ export default function CheckoutScreen({ clientData, setCheckoutPage, loading, s
               <span className={styles.secureText}>100% Secure</span>
               <div className={styles.bluePrice}>
                 <img src={badge} alt="" />
-                <span>
-                  ${`${clientData.subscriptionAmount}`}
-                </span>
+                <span>${`${clientData.subscriptionAmount}`}</span>
               </div>
               <div className={styles.cardElemContainer}>
                 <Elements stripe={stripePromise}>

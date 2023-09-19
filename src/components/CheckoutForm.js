@@ -60,7 +60,9 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
   return (
     <form ref={formRef}>
       <label className="cardElementContainer">
-        <CardElement options={CARD_ELEMENT_OPTIONS} />
+        <div className="gradientWrapper">
+          <CardElement options={CARD_ELEMENT_OPTIONS} />
+        </div>
       </label>
       <Button
         action={handleSubmit}

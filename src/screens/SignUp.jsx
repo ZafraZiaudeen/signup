@@ -575,50 +575,52 @@ const Child = ({
               }
               style={{ marginLeft: "142.5px" }}
             >
-              <div className={styles.formInput} id="nameInput">
-                <span className={styles.icon}>
-                  <img
-                    src={smallSmile}
-                    className={styles.smallSmile}
-                    alt="smile icon"
-                  />
-                </span>
-                <div className={styles.inputAndWarning}>
-                  {/* <p
+              <div className={styles.gradientWrapper}>
+                <div className={styles.formInput} id="nameInput">
+                  <span className={styles.icon}>
+                    <img
+                      src={smallSmile}
+                      className={styles.smallSmile}
+                      alt="smile icon"
+                    />
+                  </span>
+                  <div className={styles.inputAndWarning}>
+                    {/* <p
                   id="warning"
                   style={{ color: "#FF0000" }}
                   className={styles.warning}
                 >
                   Name cannot be blank.
                 </p> */}
-                  <input
-                    ref={nameRef}
-                    style={{
-                      paddingLeft: "10px",
-                      width: "560px",
-                      height: "40px",
-                    }}
-                    type="text"
-                    name="name"
-                    id="name"
-                    onChange={(e) => {
-                      setName(e.target.value);
-                      setEmptyName(false);
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.code === "Enter") {
-                        e.preventDefault();
-                        handleNameNext();
-                      }
-                    }}
-                    value={name}
-                    required
-                  />
-                  {emptyName && (
-                    <span className={styles.requiredMsg}>
-                      Name cannot be a blank
-                    </span>
-                  )}
+                    <input
+                      ref={nameRef}
+                      style={{
+                        paddingLeft: "10px",
+                        width: "560px",
+                        height: "40px",
+                      }}
+                      type="text"
+                      name="name"
+                      id="name"
+                      onChange={(e) => {
+                        setName(e.target.value);
+                        setEmptyName(false);
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.code === "Enter") {
+                          e.preventDefault();
+                          handleNameNext();
+                        }
+                      }}
+                      value={name}
+                      required
+                    />
+                    {emptyName && (
+                      <span className={styles.requiredMsg}>
+                        Name cannot be a blank
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -691,41 +693,43 @@ const Child = ({
                   : styles.formInputWrapper
               }
             >
-              <div id="emailGroup" className={styles.formInput}>
-                <span className={styles.icon}>
-                  <img src={mail} className={styles.mail} alt="mail icon" />
-                </span>
-                <input
-                  style={{ paddingLeft: "10px" }}
-                  ref={emailRef}
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder="email"
-                  onChange={handleEmailChange}
-                  onKeyDown={(e) => {
-                    if (e.code === "Enter") handleEmailNext(e);
-                  }}
-                  value={email}
-                  // required
-                />
-                <span className={styles.requiredMsg} style={{ left: "58%" }}>
-                  {emptyEmail
-                    ? "Email Required"
-                    : invalidEmail
-                    ? "Invalid email address"
-                    : alreadyReg
-                    ? "This email has already been used to create an account with us!"
-                    : ""}
-                  {alreadyReg && (
-                    <span
-                      className={styles.whiteError}
-                      onClick={() => extension.openLoginPage()}
-                    >
-                      Go to login
-                    </span>
-                  )}
-                </span>
+              <div className={styles.gradientWrapper}>
+                <div id="emailGroup" className={styles.formInput}>
+                  <span className={styles.icon}>
+                    <img src={mail} className={styles.mail} alt="mail icon" />
+                  </span>
+                  <input
+                    style={{ paddingLeft: "10px" }}
+                    ref={emailRef}
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="email"
+                    onChange={handleEmailChange}
+                    onKeyDown={(e) => {
+                      if (e.code === "Enter") handleEmailNext(e);
+                    }}
+                    value={email}
+                    // required
+                  />
+                  <span className={styles.requiredMsg} style={{ left: "58%" }}>
+                    {emptyEmail
+                      ? "Email Required"
+                      : invalidEmail
+                      ? "Invalid email address"
+                      : alreadyReg
+                      ? "This email has already been used to create an account with us!"
+                      : ""}
+                    {alreadyReg && (
+                      <span
+                        className={styles.whiteError}
+                        onClick={() => extension.openLoginPage()}
+                      >
+                        Go to login
+                      </span>
+                    )}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -779,6 +783,7 @@ const Child = ({
               alt="go to previous form step"
             />
           </button>
+          <div className={styles.gradientWrapper}>
           <div className={styles.formInput} id="emailGroup">
             <span className={styles.icon}>
               <img src={lock} alt="lock icon" className={styles.lock} />
@@ -814,6 +819,7 @@ const Child = ({
             {passwordInvalidMsg && (
               <span className={styles.requiredMsg}>{passwordInvalidMsg}</span>
             )}
+          </div>
           </div>
           <button
             type="button"

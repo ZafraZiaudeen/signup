@@ -1,10 +1,14 @@
-/**
-* Shows how you can use CSS to style your Element's container.
-* These classes are added to your Stripe Element by default.
-* You can override these classNames by using the options passed
-* to the CardElement component.
-* https://stripe.com/docs/js/elements_object/create_element?type=card#elements_create-options-classes
-*/
+@property --myColor1 {
+  syntax: "<color>";
+  initial-value: transparent;
+  inherits: false;
+}
+
+@property --myColor2 {
+  syntax: "<color>";
+  initial-value: transparent;
+  inherits: false;
+}
 
 .StripeElement {
   height: 51px;
@@ -55,6 +59,22 @@
   font-family: "Quicksand", sans-serif;
   transition: 0.3s ease-in-out;
 }
-.payButton:hover{
+.payButton:hover {
   background: linear-gradient(270.53deg, #469ee7 -4.3%, #d855f9 102.07%);
+}
+
+.gradientWrapper {
+  width: 504px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, var(--myColor1), var(--myColor2));
+  transition: --myColor1 0.3s, --myColor2 0.3s;
+  padding: 2px;
+  border-radius: 360px;
+}
+
+.gradientWrapper:hover, .gradientWrapper:focus-within, .gradientWrapper:active {
+  --myColor1: #ffb600;
+  --myColor2: #ca27ff;
 }

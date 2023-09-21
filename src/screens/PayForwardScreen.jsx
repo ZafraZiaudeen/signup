@@ -57,6 +57,7 @@ export default function PayForwardScreen({
         let _payPeriod = parsedForm.payPeriod;
         setPayPeriod(_payPeriod);
         setSubAmounts(subscriptions[_payPeriod]);
+        console.log("PARSED FORM", parsedForm)
         setSubscriptionAmount(parsedForm.subscriptionAmount);
         if (parsedForm.planId) setPlanId(parsedForm.planId);
       }
@@ -225,6 +226,10 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
+                  {(()=>{
+                    console.log(subscriptions?.monthly[0]?.price)
+                    console.log(subscriptionAmount)
+                  })()}
                   {/* <span className={styles.mostPopular}>Most Popular</span> */}
                   <div>
                     <input

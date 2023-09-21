@@ -1,7 +1,10 @@
 import React, { useRef } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import Button from "./Button";
+import { useDispatch } from "react-redux";
 import "../styles/CardElement.css";
+import { updateErrorMessage } from "../actions/common";
+import Alert from "./Alert";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -25,6 +28,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
   const stripe = useStripe();
   const elements = useElements();
   const formRef = useRef();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -48,8 +52,13 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
     );
 
     if (result.error) {
-      // setLoading(false);
-      alert(result.error.message);
+      setLoading(false);
+      dispatch(
+        updateErrorMessage({
+          message: result.error.message,
+          negative: true,
+        })
+      );
     } else {
       if (result.paymentIntent.status === "succeeded") {
         handleSuccess(result);
@@ -59,6 +68,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
 
   return (
     <form ref={formRef}>
+      <Alert gifBell={true} />
       <label className="cardElementContainer">
         <div className="gradientWrapper">
           <CardElement options={CARD_ELEMENT_OPTIONS} />

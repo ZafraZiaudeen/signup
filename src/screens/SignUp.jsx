@@ -784,42 +784,44 @@ const Child = ({
             />
           </button>
           <div className={styles.gradientWrapper}>
-          <div className={styles.formInput} id="emailGroup">
-            <span className={styles.icon}>
-              <img src={lock} alt="lock icon" className={styles.lock} />
-            </span>
-            <input
-              style={{ paddingLeft: "10px" }}
-              type={passwordVisible ? "text" : "password"}
-              name="password"
-              id="password"
-              placeholder="password"
-              ref={passwordRef}
-              onChange={handlePasswordChange}
-              onKeyDown={(e) => {
-                if (e.code === "Enter") {
-                  e.preventDefault();
-                  if (e.target.value.trim() === "") {
-                    return setPasswordInvalidMsg("Password cannot be empty!");
+            <div className={styles.formInput} id="emailGroup">
+              <span className={styles.icon}>
+                <img src={lock} alt="lock icon" className={styles.lock} />
+              </span>
+              <input
+                style={{ paddingLeft: "10px" }}
+                type={passwordVisible ? "text" : "password"}
+                name="password"
+                id="password"
+                placeholder="password"
+                ref={passwordRef}
+                onChange={handlePasswordChange}
+                onKeyDown={(e) => {
+                  if (e.code === "Enter") {
+                    e.preventDefault();
+                    if (e.target.value.trim() === "") {
+                      return setPasswordInvalidMsg("Password cannot be empty!");
+                    }
+                    const validPassword = validatePassword(password);
+                    if (!validPassword) return;
+                    setStep("welcome");
+                    setWelcomeStep("2");
                   }
-                  setStep("welcome");
-                  setWelcomeStep("2");
-                }
-              }}
-              value={password}
-            />
+                }}
+                value={password}
+              />
 
-            <span className={styles.showPass} onClick={handleClick}>
-              {passwordVisible ? (
-                <img src={eyeOpen} className={styles.eye} alt="" />
-              ) : (
-                <img src={eyeClosed} className={styles.eye} alt="" />
+              <span className={styles.showPass} onClick={handleClick}>
+                {passwordVisible ? (
+                  <img src={eyeOpen} className={styles.eye} alt="" />
+                ) : (
+                  <img src={eyeClosed} className={styles.eye} alt="" />
+                )}
+              </span>
+              {passwordInvalidMsg && (
+                <span className={styles.requiredMsg}>{passwordInvalidMsg}</span>
               )}
-            </span>
-            {passwordInvalidMsg && (
-              <span className={styles.requiredMsg}>{passwordInvalidMsg}</span>
-            )}
-          </div>
+            </div>
           </div>
           <button
             type="button"

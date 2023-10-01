@@ -4,6 +4,7 @@ import newStyles from "../styles/PayForward.module.css";
 import anims from "../styles/animations.module.css";
 import star from "../images/ratingStar.svg";
 import priceBadge from "../images/pricebadge.svg";
+import lisa from "../images/Lisa.png";
 
 import Pricing from "../api/pricingPlans";
 import Loader from "../components/Loader";
@@ -57,7 +58,7 @@ export default function PayForwardScreen({
         let _payPeriod = parsedForm.payPeriod;
         setPayPeriod(_payPeriod);
         setSubAmounts(subscriptions[_payPeriod]);
-        console.log("PARSED FORM", parsedForm)
+        console.log("PARSED FORM", parsedForm);
         setSubscriptionAmount(parsedForm.subscriptionAmount);
         if (parsedForm.planId) setPlanId(parsedForm.planId);
       }
@@ -103,9 +104,8 @@ export default function PayForwardScreen({
         </button>
       )}
       <div className={styles.mainSection}>
-        {name &&
-          (name ? <p>I'm {name} it feels good to</p> : <p>It feels good to</p>)}
-        <h2>Pay Forward</h2>
+        <p>Self love feels right</p>
+        <h2>{name}</h2>
         <div className={`${styles.innerContainer} ${newStyles.relativeDiv}`}>
           {loading && (
             <div className={newStyles.lottieContainer}>
@@ -118,13 +118,16 @@ export default function PayForwardScreen({
             </div>
           )}
           <div className={styles.promoSection}>
-            <p>5.0</p>
-            <div className={styles.starSection}>
-              <img src={star} alt="icon of rating star" />
-              <img src={star} alt="icon of rating star" />
-              <img src={star} alt="icon of rating star" />
-              <img src={star} alt="icon of rating star" />
-              <img src={star} alt="icon of rating star" />
+            <div className={styles.reviewContainer}>
+              <img src={lisa} alt="" />
+              <div className={styles.ratingCount}>
+                5
+                <img src={star} alt="icon of rating star" />
+              </div>
+            </div>
+            <div className={styles.reviewText}>
+              Best life decision I’ve made in a long time!{" "}
+              <span className={styles.reviewerName}>Lisa Review</span>
             </div>
           </div>
           <div className={styles.monthlyOrYearlyTab}>
@@ -160,8 +163,13 @@ export default function PayForwardScreen({
                 onClick={() => {
                   setPayPeriod("yearly");
                 }}
-                className={payPeriod === "yearly" ? styles.activePeriod : ""}
+                className={
+                  payPeriod === "yearly"
+                    ? `${styles.activePeriod} ${styles.mostPopularContainer}`
+                    : styles.mostPopularContainer
+                }
               >
+                <div className={styles.mostPopular}>Most Popular</div>
                 <div className={styles.buttonText}>
                   UP FRONT <span className={styles.youSave}>Save 18%</span>
                 </div>
@@ -226,9 +234,9 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
-                  {(()=>{
-                    console.log(subscriptions?.monthly[0]?.price)
-                    console.log(subscriptionAmount)
+                  {(() => {
+                    console.log(subscriptions?.monthly[0]?.price);
+                    console.log(subscriptionAmount);
                   })()}
                   {/* <span className={styles.mostPopular}>Most Popular</span> */}
                   <div>
@@ -312,7 +320,6 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
-                  <span className={styles.mostPopular}>Most Popular</span>
                   <div>
                     <input
                       type="radio"

@@ -58,6 +58,13 @@
   animation: widthAnim 1s ease-in-out;
 }
 
+.countdown{
+  margin-top: 10px;
+  color: #B60BFF;
+  font-size: 13px;
+  font-family: "Quicksand Medium";
+}
+
 @keyframes widthAnim {
   0% {
     width: 0;

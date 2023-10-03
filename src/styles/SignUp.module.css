@@ -15,6 +15,10 @@
   src: url("../fonts/Quicksand-Bold.ttf");
 }
 @font-face {
+  font-family: "Quicksand Medium";
+  src: url("../fonts/Quicksand-Medium.ttf");
+}
+@font-face {
   font-family: "VarelaRound";
   src: url("../fonts/VarelaRound-Regular.ttf");
 }
@@ -528,6 +532,7 @@
   column-gap: 3px;
   top: 5px;
   right: -25px;
+  color: #000000;
 }
 
 .innerContainer .promoSection article {

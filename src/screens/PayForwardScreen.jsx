@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Countdown from "react-countdown";
 import styles from "../styles/SignUp.module.css";
 import newStyles from "../styles/PayForward.module.css";
 import anims from "../styles/animations.module.css";
@@ -39,6 +40,7 @@ export default function PayForwardScreen({
   const [planText, setPlanText] = useState(
     "Join our family and pay forward for one person"
   );
+  const [time, setTime] = useState(1000 * 60 * 30);
 
   useEffect(() => {
     if (subscriptions?.monthly?.length > 0) {
@@ -76,6 +78,12 @@ export default function PayForwardScreen({
     return selectedIndex === 0 ? "17%" : selectedIndex === 1 ? "50%" : "80%";
   };
 
+  const formatTime = (time) => {
+    let minutes = Math.floor(time / 60000);
+    let seconds = ((time % 60000) / 1000).toFixed(0);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+
   useEffect(() => {
     const fetchPlans = async () => {
       setLoading(true);
@@ -87,6 +95,31 @@ export default function PayForwardScreen({
 
     fetchPlans();
   }, []);
+
+  useEffect(() => {
+    let time = localStorage.getItem("timeoutTime");
+    if (!time || time === "undefined" || time === "NaN") time = 1000 * 60 * 30;
+    setTime(parseInt(time));
+  }, []);
+
+  useEffect(() => {
+    let timer = setInterval(() => {
+      if (time <= 0) return clearInterval(timer);
+      setTime((prevTime) => prevTime - 1000);
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
+  useEffect(() => {
+    const localTime = localStorage.getItem("timeoutTime");
+    if (localTime && localTime !== "undefined" && localTime !== "NaN") {
+      if(time === 1000 * 60 * 30) return;
+      localStorage.setItem("timeoutTime", time);
+    }
+  }, [time]);
 
   return (
     <div className={styles.welcome}>
@@ -103,6 +136,7 @@ export default function PayForwardScreen({
           />
         </button>
       )}
+
       <div className={styles.mainSection}>
         <p>Self love feels right</p>
         <h2>{name}</h2>
@@ -234,10 +268,6 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
-                  {(() => {
-                    console.log(subscriptions?.monthly[0]?.price);
-                    console.log(subscriptionAmount);
-                  })()}
                   {/* <span className={styles.mostPopular}>Most Popular</span> */}
                   <div>
                     <input
@@ -275,6 +305,9 @@ export default function PayForwardScreen({
                       </span>
                       ${subscriptions.monthly[0]?.price}
                     </label>
+                    <span className={newStyles.countdown}>
+                      Deal ends in {formatTime(time)}
+                    </span>
                   </div>
                 </div>
               )}
@@ -355,6 +388,9 @@ export default function PayForwardScreen({
                       </span>
                       ${subscriptions?.yearly[0]?.price}
                     </label>
+                    <span className={newStyles.countdown}>
+                      Deal ends in {formatTime(time)}
+                    </span>
                   </div>
                 </div>
               )}

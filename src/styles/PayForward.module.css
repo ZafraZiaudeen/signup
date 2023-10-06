@@ -59,10 +59,15 @@
 }
 
 .countdown{
+  background-color: #FFFFFF;
+  border: 1px solid #FBD1FB;
   margin-top: 10px;
   color: #B60BFF;
-  font-size: 13px;
+  font-size: 11px;
   font-family: "Quicksand Medium";
+  padding: 2px 5px;
+  border-bottom-width: 2px;
+  border-radius: 4px;
 }
 
 @keyframes widthAnim {

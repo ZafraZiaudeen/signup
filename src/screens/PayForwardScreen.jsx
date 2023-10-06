@@ -105,7 +105,10 @@ export default function PayForwardScreen({
   useEffect(() => {
     let timer = setInterval(() => {
       if (time <= 0) return clearInterval(timer);
-      setTime((prevTime) => prevTime - 1000);
+      setTime((prevTime) => {
+        if (prevTime <= 0) return 0;
+        return prevTime - 1000;
+      });
     }, 1000);
 
     return () => {
@@ -116,7 +119,7 @@ export default function PayForwardScreen({
   useEffect(() => {
     const localTime = localStorage.getItem("timeoutTime");
     if (localTime && localTime !== "undefined" && localTime !== "NaN") {
-      if(time === 1000 * 60 * 30) return;
+      if (time === 1000 * 60 * 30) return;
       localStorage.setItem("timeoutTime", time);
     }
   }, [time]);
@@ -173,7 +176,7 @@ export default function PayForwardScreen({
                 }}
                 className={payPeriod === "monthly" ? styles.activePeriod : ""}
               >
-                PAY MONTHLY
+                COMMIT MONTHLY
                 <div
                   className={
                     payPeriod === "monthly"
@@ -182,7 +185,7 @@ export default function PayForwardScreen({
                   }
                 ></div>
                 {/* <span className={styles.youSave}>Save 18%</span> */}
-                <span
+                {/* <span
                   className={
                     payPeriod === "monthly"
                       ? `${styles.commit} ${styles.active}`
@@ -190,7 +193,7 @@ export default function PayForwardScreen({
                   }
                 >
                   Commit Monthly
-                </span>
+                </span> */}
               </button>
               <button
                 type="button"
@@ -205,7 +208,8 @@ export default function PayForwardScreen({
               >
                 <div className={styles.mostPopular}>Most Popular</div>
                 <div className={styles.buttonText}>
-                  UP FRONT <span className={styles.youSave}>Save 18%</span>
+                  COMMIT ANNUALLY{" "}
+                  <span className={styles.youSave}>Save 18%</span>
                 </div>
                 <div
                   className={
@@ -214,7 +218,7 @@ export default function PayForwardScreen({
                       : styles.PeriodUnderline
                   }
                 ></div>
-                <span
+                {/* <span
                   className={
                     payPeriod === "yearly"
                       ? `${styles.commit} ${styles.active}`
@@ -222,7 +226,7 @@ export default function PayForwardScreen({
                   }
                 >
                   Commit Annually
-                </span>
+                </span> */}
               </button>
             </div>
             <div className={styles.pricesWrapper}>

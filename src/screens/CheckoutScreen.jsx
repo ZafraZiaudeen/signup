@@ -54,14 +54,11 @@ export default function CheckoutScreen({
       <section className={styles.signUpActions}>
         <div className={styles.iconSection}></div>
         <span className={`${styles.checkout_greeting} ${styles.shadow}`}>
-          Hi{" "}
-          {clientData.name &&
-            (clientData.name ? clientData.name : "it feels good to")}
-          !
+         Time to shine ✨
         </span>
         <div className={`${styles.payForwardContainer} ${styles.shadow}`}>
           <h2 id="txt-type" className={styles.payForwardText}>
-            Pay Forward
+          {clientData.name}
           </h2>
         </div>
         <div className={styles.formAction}>
@@ -98,6 +95,7 @@ export default function CheckoutScreen({
               <span className={styles.secureText}>100% Secure</span>
               <div className={styles.bluePrice}>
                 <img src={badge} alt="" />
+                <span className={styles.previousPrice}>$19</span>
                 <span>${`${clientData.subscriptionAmount}`}</span>
               </div>
               <div className={styles.cardElemContainer}>

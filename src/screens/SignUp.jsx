@@ -221,9 +221,10 @@ const Child = ({
     e.preventDefault();
     if (email.trim() === "") {
       // setEmptyEmail(true);
-      dispatch(
+      return dispatch(
         updateErrorMessage({
-          message: "Email cannot be empty!",
+          message:
+            "Oopsie-daisy! 🙊 The email field looks lonely. Don't forget to pop in your email to get started! 😃",
           negative: true,
         })
       );
@@ -235,7 +236,7 @@ const Child = ({
       // setInvalidEmail(true);
       dispatch(
         updateErrorMessage({
-          message: "Invalid email address!",
+          message: "Oh dear! 😟 Invalid email. Please double-check and retry! 📧😊",
           negative: true,
         })
       );

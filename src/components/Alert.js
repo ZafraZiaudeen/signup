@@ -17,7 +17,6 @@ export default function Alert({ timer, gifBell }) {
   const errorMessage = useSelector((state) => state.common)?.errorMessage;
   const negative = errorMessage?.negative;
   const message = errorMessage?.message;
-  console.log(message, negative);
 
   const setMessage = useCallback(
     (msg) => {
@@ -60,7 +59,6 @@ export default function Alert({ timer, gifBell }) {
     runTimer();
 
     return () => {
-      console.log("clearing timer");
       clearTimeout(firstTimer);
       clearTimeout(secondTimer);
       runTimer();
@@ -75,8 +73,10 @@ export default function Alert({ timer, gifBell }) {
           ref={alertRef}
         >
           {!negative && <SuccessBell />}
-          {negative && !gifBell &&<ErrorBell />}
-          {negative && gifBell &&<img src={gifBellIcon} alt="" className={styles.gifBell}/>}
+          {negative && !gifBell && <ErrorBell />}
+          {negative && gifBell && (
+            <img src={gifBellIcon} alt="" className={styles.gifBell} />
+          )}
 
           <span className={styles.messageText}>
             {message ||

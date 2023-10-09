@@ -959,6 +959,7 @@ input[type="radio"]:hover + label .previousPrice {
   height: 49px;
   align-items: center;
   padding: 9.27px;
+  padding-right: 25px;
   margin-top: 18px;
 }
 .bluePrice .previousPrice {

@@ -236,7 +236,8 @@ const Child = ({
       // setInvalidEmail(true);
       dispatch(
         updateErrorMessage({
-          message: "Oh dear! 😟 Invalid email. Please double-check and retry! 📧😊",
+          message:
+            "Oh dear! 😟 Invalid email. Please double-check and retry! 📧😊",
           negative: true,
         })
       );
@@ -507,12 +508,14 @@ const Child = ({
 
   const validatePassword = (password) => {
     if (password.trim() === "") {
+      console.log("password cannot be empty");
       dispatch(
         updateErrorMessage({
-          message: "Password cannot be empty!",
+          message: "Uh-oh! 🙈 It seems you forgot to add the magic word. A password, please add one! 🔒😅",
           negative: true,
         })
       );
+      return false;
       // return setPasswordInvalidMsg("Password cannot be emtpy!");
     }
 
@@ -539,6 +542,16 @@ const Child = ({
         negative: true,
       })
     );
+  };
+
+  const handlePasswordKeyDown = (e) => {
+    if (e.code === "Enter") {
+      e.preventDefault();
+      const validPassword = validatePassword(password);
+      if (!validPassword) return;
+      setStep("welcome");
+      setWelcomeStep("2");
+    }
   };
 
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
@@ -797,18 +810,7 @@ const Child = ({
                 placeholder="password"
                 ref={passwordRef}
                 onChange={handlePasswordChange}
-                onKeyDown={(e) => {
-                  if (e.code === "Enter") {
-                    e.preventDefault();
-                    if (e.target.value.trim() === "") {
-                      return setPasswordInvalidMsg("Password cannot be empty!");
-                    }
-                    const validPassword = validatePassword(password);
-                    if (!validPassword) return;
-                    setStep("welcome");
-                    setWelcomeStep("2");
-                  }
-                }}
+                onKeyDown={handlePasswordKeyDown}
                 value={password}
               />
 

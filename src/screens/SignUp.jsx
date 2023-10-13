@@ -541,7 +541,7 @@ const Child = ({
     dispatch(
       updateErrorMessage({
         message:
-          "Craft a stronger password. Mix 8 characters, sprinkle uppercase and lowercase letters generously, and numbers",
+          "Craft a strong Password! Blend uppercase, lowercase, digits to 8-long.",
         negative: true,
       })
     );

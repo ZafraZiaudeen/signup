@@ -17,12 +17,13 @@ import anims from "../styles/animations.module.css";
 import smile from "../images/smile.png";
 import smallSmile from "../images/smallsmiley.png";
 import padlock from "../images/padlock.svg";
-import letter from "../images/letter.png"
+import padlockBig from "../images/padlockBig.svg";
+import letter from "../images/letter.png";
 import arrowBtnSignUp from "../images/arrowBtnLoginTransparent.svg";
 import arrowForward from "../images/arrowOnly.svg";
 import arrowBack from "../images/backArrow.svg";
 import mail from "../images/smallMail.svg";
-import lock from "../images/2886699.svg";
+import lock from "../images/padlockSmall.svg";
 import badge from "../images/badgeMark.svg";
 import star from "../images/ratingStar.svg";
 import priceBadge from "../images/badgeWithCheck.svg";
@@ -1081,7 +1082,7 @@ const Child = ({
               <img
                 width={step === "2" ? 65 : 68}
                 height={step === "2" ? 65 : 68}
-                src={step === "2" ? letter : smile}
+                src={step === "2" ? letter : step === "3" ? padlockBig : smile}
                 className={step === "2" ? styles.padlockImg : styles.smileImg}
                 alt={step === "2" ? "Padlock" : "Smiling face"}
               />

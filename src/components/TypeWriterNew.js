@@ -91,17 +91,17 @@ export function WritePassword({ steps, setSteps }) {
   }, []);
 
   if (steps.stepThree) {
-    return <>Create a password</>;
+    return <>Craft your Password</>;
   } else {
     return (
       <Typewriter
         onInit={(typewriter) => {
           localStorage.setItem("step3", true);
           typewriter
-            .typeString("Create  a pass")
+            .typeString("Craft your  Pass")
             .deleteChars(6)
             .pauseFor(200)
-            .typeString(" a password")
+            .typeString(" Password")
             .start()
             .callFunction(completeStep);
         }}

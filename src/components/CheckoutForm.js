@@ -53,10 +53,21 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
 
     if (result.error) {
       setLoading(false);
+      if (result.error.message.includes("Your card number is incomplete")) {
+        return dispatch(
+          updateErrorMessage({
+            message:
+              "Your card number info? 🎩✨ We need it to continue the journey! 🚀🌟",
+            negative: true,
+            animated: true,
+          })
+        );
+      }
       dispatch(
         updateErrorMessage({
           message: result.error.message,
           negative: true,
+          animated: true,
         })
       );
     } else {

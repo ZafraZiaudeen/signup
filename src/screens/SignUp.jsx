@@ -538,7 +538,7 @@ const Child = ({
     dispatch(
       updateErrorMessage({
         message:
-          "Password must contain at least 8 characters, including UPPER/lowercase and numbers!",
+          "Craft a stronger password. Mix 8 characters, sprinkle uppercase and lowercase letters generously, and numbers",
         negative: true,
       })
     );

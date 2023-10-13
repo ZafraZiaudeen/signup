@@ -177,6 +177,11 @@
   text-decoration: underline;
 }
 
+.smallSmile{
+  width: 30px;
+  height: 30px;
+}
+
 .gradientWrapper {
   background: linear-gradient(to right, var(--myColor1), var(--myColor2));
   transition: --myColor1 0.3s, --myColor2 0.3s;

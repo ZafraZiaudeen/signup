@@ -14,7 +14,7 @@ import {
 } from "../components/TypeWriterNew";
 import styles from "../styles/SignUp.module.css";
 import anims from "../styles/animations.module.css";
-import smile from "../images/520464@2x.png";
+import smile from "../images/smile.png";
 import smallSmile from "../images/smallsmiley.png";
 import padlock from "../images/padlock.svg";
 import arrowBtnSignUp from "../images/arrowBtnLoginTransparent.svg";
@@ -593,7 +593,7 @@ const Child = ({
                 <div className={styles.formInput} id="nameInput">
                   <span className={styles.icon}>
                     <img
-                      src={smallSmile}
+                      src={smile}
                       className={styles.smallSmile}
                       alt="smile icon"
                     />
@@ -616,6 +616,7 @@ const Child = ({
                       type="text"
                       name="name"
                       id="name"
+                      placeholder="Name"
                       onChange={(e) => {
                         setName(e.target.value);
                         setEmptyName(false);
@@ -1088,7 +1089,7 @@ const Child = ({
               />
             </div>
             <h1 className={styles.greeting}>
-              Hi {name && (name ? name : "Amazing")}!
+              Hi Amazing!
             </h1>
             <form>{insideForm}</form>
           </section>

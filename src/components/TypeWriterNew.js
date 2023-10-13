@@ -19,16 +19,16 @@ export function WriteName({ steps, setSteps }) {
   return (
     <div className={styles.container}>
       <span id="txt-type">
-        {steps.stepOne ? "How shall I call you?" : ""}
+        {steps.stepOne ? "Who's the legend joining us?" : ""}
         {!steps.stepOne && (
           <Typewriter
             onInit={(typewriter) => {
               localStorage.setItem("step1", true);
               typewriter
-                .typeString("How shall I cal y")
+                .typeString("Who's the legend jon")
                 .pauseFor(200)
                 .deleteChars(2)
-                .typeString("l you?")
+                .typeString("oining us?")
                 .start()
                 .callFunction(completeStep);
             }}

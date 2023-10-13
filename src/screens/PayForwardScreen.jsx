@@ -49,7 +49,7 @@ export default function PayForwardScreen({
         subscriptions[payPeriod][selectedIndex]?.price
       );
     }
-    setSubscriptionAmount(9.99);
+    setSubscriptionAmount(47.88);
   }, [payPeriod]);
 
   useEffect(() => {

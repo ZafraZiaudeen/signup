@@ -211,7 +211,7 @@ const Child = ({
   const handleNameNext = () => {
     if (name.trim() === "") {
       dispatch(
-        updateErrorMessage({ message: "Name cannot be empty!", negative: true })
+        updateErrorMessage({ message: "Hey legend, the name box can’t be blank! Please type your name.", negative: true })
       );
       // setEmptyName(true);
       return;

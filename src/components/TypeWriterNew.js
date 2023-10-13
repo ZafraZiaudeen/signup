@@ -56,14 +56,14 @@ export function WriteEmail({ steps, setSteps }) {
   }, []);
 
   if (steps.stepTwo) {
-    return <>What is your email?</>;
+    return <>Legend's inbox, please?</>;
   } else {
     return (
       <Typewriter
         onInit={(typewriter) => {
           localStorage.setItem("step2", true);
           typewriter
-            .typeString("What is your email")
+            .typeString("Legend's inbox, please")
             .pauseFor(500)
             .typeString("?")
             .start()

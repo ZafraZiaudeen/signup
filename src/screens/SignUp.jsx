@@ -17,10 +17,11 @@ import anims from "../styles/animations.module.css";
 import smile from "../images/smile.png";
 import smallSmile from "../images/smallsmiley.png";
 import padlock from "../images/padlock.svg";
+import letter from "../images/letter.png"
 import arrowBtnSignUp from "../images/arrowBtnLoginTransparent.svg";
 import arrowForward from "../images/arrowOnly.svg";
 import arrowBack from "../images/backArrow.svg";
-import mail from "../images/482947.svg";
+import mail from "../images/smallMail.svg";
 import lock from "../images/2886699.svg";
 import badge from "../images/badgeMark.svg";
 import star from "../images/ratingStar.svg";
@@ -511,7 +512,8 @@ const Child = ({
       console.log("password cannot be empty");
       dispatch(
         updateErrorMessage({
-          message: "Uh-oh! 🙈 It seems you forgot to add the magic word. A password, please add one! 🔒😅",
+          message:
+            "Uh-oh! 🙈 It seems you forgot to add the magic word. A password, please add one! 🔒😅",
           negative: true,
         })
       );
@@ -630,11 +632,7 @@ const Child = ({
                       value={name}
                       required
                     />
-                    {emptyName && (
-                      <span className={styles.requiredMsg}>
-                        Name cannot be a blank
-                      </span>
-                    )}
+                    {emptyName && <span className={styles.requiredMsg}></span>}
                   </div>
                 </div>
               </div>
@@ -719,7 +717,7 @@ const Child = ({
                     type="email"
                     name="email"
                     id="email"
-                    placeholder="email"
+                    placeholder="Email"
                     onChange={handleEmailChange}
                     onKeyDown={(e) => {
                       if (e.code === "Enter") handleEmailNext(e);
@@ -1083,14 +1081,12 @@ const Child = ({
               <img
                 width={step === "2" ? 65 : 68}
                 height={step === "2" ? 65 : 68}
-                src={step === "2" ? padlock : smile}
+                src={step === "2" ? letter : smile}
                 className={step === "2" ? styles.padlockImg : styles.smileImg}
                 alt={step === "2" ? "Padlock" : "Smiling face"}
               />
             </div>
-            <h1 className={styles.greeting}>
-              Hi Amazing!
-            </h1>
+            <h1 className={styles.greeting}>Hi Amazing!</h1>
             <form>{insideForm}</form>
           </section>
           <div className={styles.footerLinks}>

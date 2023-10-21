@@ -1087,7 +1087,7 @@ const Child = ({
                 alt={step === "2" ? "Padlock" : "Smiling face"}
               />
             </div>
-            <h1 className={styles.greeting}>Hi Amazing!</h1>
+            <h1 className={styles.greeting}>{step === '1' ? "Hi Amazing!": `Hi Amazing, ${name}!`}</h1>
             <form>{insideForm}</form>
           </section>
           <div className={styles.footerLinks}>

@@ -50,7 +50,7 @@ export default function PayForwardScreen({
       );
     }
     setSubscriptionAmount(47.88);
-  }, [payPeriod]);
+  }, [payPeriod, subscriptions]);
 
   useEffect(() => {
     let signUpForm = localStorage.getItem("signUpForm");
@@ -60,7 +60,6 @@ export default function PayForwardScreen({
         let _payPeriod = parsedForm.payPeriod;
         setPayPeriod(_payPeriod);
         setSubAmounts(subscriptions[_payPeriod]);
-        console.log("PARSED FORM", parsedForm);
         setSubscriptionAmount(parsedForm.subscriptionAmount);
         if (parsedForm.planId) setPlanId(parsedForm.planId);
       }

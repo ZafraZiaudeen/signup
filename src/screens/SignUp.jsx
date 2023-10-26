@@ -309,7 +309,7 @@ const Child = ({
       const token = query.get("token");
       setEmailParam(email);
       setUserToken(token);
-      console.log(email);
+      // console.log(email);
       if (!email) return;
       const subscribed = await userApi.checkIfSubscribed({
         email: email,
@@ -394,8 +394,8 @@ const Child = ({
         price: clientData.subscriptionAmount,
         planId: clientData.planId,
       });
-      console.log({ customerResult });
-      console.log({ subscriptionResult });
+      // console.log({ customerResult });
+      // console.log({ subscriptionResult });
       resolve({
         customerId: customerResult.data.customer.id,
         subscriptionId: subscriptionResult.data.subscription.id,

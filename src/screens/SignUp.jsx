@@ -406,6 +406,7 @@ const Child = ({
         clientSecret:
           subscriptionResult?.data?.subscription?.latest_invoice?.payment_intent
             ?.client_secret || subscriptionResult?.data?.client_secret,
+        paymentIntentId: subscriptionResult?.data?.paymentIntentId,
       });
     });
   };

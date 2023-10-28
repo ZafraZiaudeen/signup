@@ -31,6 +31,7 @@ export default function CheckoutScreen({
     setComplete(true);
     setTimeout(async () => {
       let result = await user.updateStripeCustomer({
+        paymentIntent: clientData.paymentIntent,
         email: clientData.email,
         stripeCustomerId: clientData.paymentIntent.customerId,
         subscriptionAmount: clientData.subscriptionAmount,
@@ -54,11 +55,11 @@ export default function CheckoutScreen({
       <section className={styles.signUpActions}>
         <div className={styles.iconSection}></div>
         <span className={`${styles.checkout_greeting} ${styles.shadow}`}>
-         Time to shine ✨
+          Time to shine ✨
         </span>
         <div className={`${styles.payForwardContainer} ${styles.shadow}`}>
           <h2 id="txt-type" className={styles.payForwardText}>
-          {clientData.name}
+            {clientData.name}
           </h2>
         </div>
         <div className={styles.formAction}>

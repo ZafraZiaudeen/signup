@@ -211,7 +211,11 @@ const Child = ({
   const handleNameNext = () => {
     if (name.trim() === "") {
       dispatch(
-        updateErrorMessage({ message: "Hey legend, the name box can’t be blank! Please type your name.", negative: true })
+        updateErrorMessage({
+          message:
+            "Hey legend, the name box can’t be blank! Please type your name.",
+          negative: true,
+        })
       );
       // setEmptyName(true);
       return;
@@ -395,13 +399,13 @@ const Child = ({
         planId: clientData.planId,
       });
       // console.log({ customerResult });
-      // console.log({ subscriptionResult });
+      console.log({ subscriptionResult });
       resolve({
         customerId: customerResult.data.customer.id,
         subscriptionId: subscriptionResult.data.subscription.id,
         clientSecret:
-          subscriptionResult.data.subscription.latest_invoice.payment_intent
-            .client_secret,
+          subscriptionResult?.data?.subscription?.latest_invoice?.payment_intent
+            ?.client_secret,
       });
     });
   };
@@ -1087,7 +1091,9 @@ const Child = ({
                 alt={step === "2" ? "Padlock" : "Smiling face"}
               />
             </div>
-            <h1 className={styles.greeting}>{step === '1' ? "Hi Amazing!": `Hi Amazing, ${name}!`}</h1>
+            <h1 className={styles.greeting}>
+              {step === "1" ? "Hi Amazing!" : `Hi Amazing, ${name}!`}
+            </h1>
             <form>{insideForm}</form>
           </section>
           <div className={styles.footerLinks}>

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import "../styles/CardElement.css";
 import { updateErrorMessage } from "../actions/common";
 import Alert from "./Alert";
+import CouponInput from "./CouponInput";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -79,6 +80,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
 
   return (
     <form ref={formRef}>
+      <CouponInput /> 
       <Alert gifBell={true} />
       <label className="cardElementContainer">
         <div className="gradientWrapper">

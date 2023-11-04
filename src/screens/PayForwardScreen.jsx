@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
+import CouponInput from "../components/CouponInput";
+
 import styles from "../styles/SignUp.module.css";
 import newStyles from "../styles/PayForward.module.css";
 import anims from "../styles/animations.module.css";

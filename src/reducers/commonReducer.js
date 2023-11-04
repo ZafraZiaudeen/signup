@@ -3,6 +3,7 @@ const initialState = {
     text: "",
     negative: false,
   },
+  couponOpen: false,
 };
 
 const commonReducer = (state = initialState, action) => {
@@ -11,6 +12,11 @@ const commonReducer = (state = initialState, action) => {
       return {
         ...state,
         errorMessage: { ...state.errorMessage, ...action.payload },
+      };
+    case "TOGGLE_COUPON":
+      return {
+        ...state,
+        couponOpen: !state.couponOpen,
       };
 
     default:

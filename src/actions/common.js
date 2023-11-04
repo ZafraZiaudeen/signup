@@ -4,3 +4,8 @@ export const updateErrorMessage = (data) => {
     payload: data,
   };
 };
+export const toggleCoupon = () => {
+  return {
+    type: "TOGGLE_COUPON",
+  };
+};

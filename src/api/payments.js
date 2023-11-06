@@ -13,7 +13,15 @@ const payments = {
   createSubscription: (data) =>
     new Promise(async (resolve) => {
       let result = await axios.post(
-        config.serverUrl + "/stripe/create-sub-html",
+        config.serverUrl + "/api/v1/stripe/create-sub-html",
+        data
+      );
+      resolve(result);
+    }),
+  validateCoupon: (data) =>
+    new Promise(async (resolve) => {
+      let result = await axios.post(
+        config.serverUrl + "/api/v1/stripe/validate-coupon",
         data
       );
       resolve(result);

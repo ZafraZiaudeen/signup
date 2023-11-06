@@ -5,7 +5,7 @@ import extension from "../api/extension";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Lottie from "react-lottie";
 import styles from "../styles/SignUp.module.css";
@@ -18,6 +18,7 @@ import badge from "../images/badgeWithCheck.svg";
 import coupon from "../images/coupon.svg";
 import loadingAnimation from "../images/loading.json";
 import { toggleCoupon } from "../actions/common";
+import axios from "axios";
 
 export default function CheckoutScreen({
   clientData,
@@ -29,12 +30,12 @@ export default function CheckoutScreen({
   const [complete, setComplete] = useState(false);
   const stripePromise = loadStripe(config.stripeSecret);
   const dispatch = useDispatch();
-
-  console.log(clientData);
+  const couponData = useSelector((state) => state.common)?.couponData;
+  const [isTrialActive, setIsTrialActive] = useState(false);
 
   const handleCouponButton = () => {
     dispatch(toggleCoupon());
-  }
+  };
 
   const handleSuccess = async (data) => {
     setComplete(true);
@@ -58,6 +59,17 @@ export default function CheckoutScreen({
   useEffect(() => {
     console.log(clientData);
   }, [clientData, data]);
+
+  useEffect(() => {
+    (async () => {
+      const settingsRes = await axios.get(
+        `${config.serverUrl}/api/v1/settings`
+      );
+      if (settingsRes?.data?.trial) {
+        setIsTrialActive(true);
+      }
+    })();
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -109,12 +121,19 @@ export default function CheckoutScreen({
                 <span>${`${clientData.subscriptionAmount}`}</span>
               </div>
               <div className={styles.cardElemContainer}>
-                <div className={newStyles.couponButtonContainer}>
-                  <img src={coupon} className={newStyles.couponIcon} />
-                  <button className={newStyles.couponButton} onClick={handleCouponButton}>
-                    HAVE A COUPON CODE?
-                  </button>
-                </div>
+                {isTrialActive && (
+                  <div className={newStyles.couponButtonContainer}>
+                    <img src={coupon} className={newStyles.couponIcon} />
+                    <button
+                      className={newStyles.couponButton}
+                      onClick={handleCouponButton}
+                    >
+                      {couponData
+                        ? `COUPON APPLIED ${couponData?.coupon?.percent_off}% OFF`
+                        : "HAVE A COUPON CODE?"}
+                    </button>
+                  </div>
+                )}
                 <Elements stripe={stripePromise}>
                   <CheckoutForm
                     handleSuccess={handleSuccess}

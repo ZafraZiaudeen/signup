@@ -9,3 +9,12 @@ export const toggleCoupon = () => {
     type: "TOGGLE_COUPON",
   };
 };
+export const setCouponData = (data) => {
+  return {
+    type: "SET_COUPON_DATA",
+    payload: data,
+  };
+};
+
+
+

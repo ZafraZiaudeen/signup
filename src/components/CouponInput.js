@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleCoupon } from "../actions/common";
+import { toggleCoupon, setCouponData } from "../actions/common";
+import payments from "../api/payments";
 import styles from "../styles/couponInput.module.scss";
 import animations from "../styles/animations.module.css";
 
@@ -10,6 +11,8 @@ import closeIcon from "../images/close.svg";
 export default function CouponInput() {
   const [error, setError] = useState("");
   const [coupon, setCoupon] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const visible = useSelector((state) => state.common).couponOpen;
   const dispatch = useDispatch();
 
@@ -20,15 +23,24 @@ export default function CouponInput() {
 
   const handleChange = (e) => {
     const { value } = e.target;
-    const upperCaseValue = value.toUpperCase();  
-    
+    const upperCaseValue = value.toUpperCase();
+
     setCoupon(upperCaseValue);
     setError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("Invalid code");
+    setLoading(true);
+    const result = await payments.validateCoupon({ coupon });
+    if (result?.data?.coupon?.id) {
+      dispatch(setCouponData(result?.data?.coupon));
+      dispatch(toggleCoupon());
+      setLoading(false);
+      return;
+    }
+    setLoading(false);
+    setError("Invalid coupon code");
   };
 
   if (visible)
@@ -53,10 +65,15 @@ export default function CouponInput() {
               placeholder="BTFCHPNSPLNR"
               onChange={handleChange}
               value={coupon}
+              disabled={loading}
             />
             <span className={styles.errorMessages}>{error}</span>
           </div>
-          <button className={styles.button} onClick={handleSubmit}>
+          <button
+            className={styles.button}
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             Apply
           </button>
         </div>

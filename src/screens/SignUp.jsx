@@ -528,20 +528,24 @@ const Child = ({
     }
 
     //check if password is strong
-    const strongRegex = new RegExp(
-      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-    );
-    const mediumRegex = new RegExp(
-      "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
+    const uppercaseAndNumberRegex = new RegExp(
+      "^(?=.*[A-Z])(?=.*[0-9]).{" + 8 + ",}$"
     );
 
-    if (strongRegex.test(password)) {
+    // const strongRegex = new RegExp(
+    //   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+    // );
+    // const mediumRegex = new RegExp(
+    //   "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})"
+    // );
+
+    if (uppercaseAndNumberRegex.test(password)) {
       return true;
     }
 
-    if (mediumRegex.test(password)) {
-      return true;
-    }
+    // if (mediumRegex.test(password)) {
+    //   return true;
+    // }
 
     dispatch(
       updateErrorMessage({

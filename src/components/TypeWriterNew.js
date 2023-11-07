@@ -58,22 +58,23 @@ export function WriteEmail({ steps, setSteps }) {
   if (steps.stepTwo) {
     return <>Legend's inbox, please?</>;
   } else {
-    return (
-      <Typewriter
-        onInit={(typewriter) => {
-          localStorage.setItem("step2", true);
-          typewriter
-            .typeString("Legend's inbox, please")
-            .pauseFor(500)
-            .typeString("?")
-            .start()
-            .callFunction(completeStep);
-        }}
-        options={{
-          delay: 100,
-        }}
-      />
-    );
+    return <>Legend's inbox, please?</>;
+    // return (
+    //   <Typewriter
+    //     onInit={(typewriter) => {
+    //       localStorage.setItem("step2", true);
+    //       typewriter
+    //         .typeString("Legend's inbox, please")
+    //         .pauseFor(500)
+    //         .typeString("?")
+    //         .start()
+    //         .callFunction(completeStep);
+    //     }}
+    //     options={{
+    //       delay: 100,
+    //     }}
+    //   />
+    // );
   }
 }
 export function WritePassword({ steps, setSteps }) {
@@ -93,23 +94,24 @@ export function WritePassword({ steps, setSteps }) {
   if (steps.stepThree) {
     return <>Craft your Password</>;
   } else {
-    return (
-      <Typewriter
-        onInit={(typewriter) => {
-          localStorage.setItem("step3", true);
-          typewriter
-            .typeString("Craft your  Pass")
-            .deleteChars(6)
-            .pauseFor(200)
-            .typeString(" Password")
-            .start()
-            .callFunction(completeStep);
-        }}
-        options={{
-          delay: 100,
-        }}
-      />
-    );
+    return <>Craft your Password</>;
+    // return (
+    //   <Typewriter
+    //     onInit={(typewriter) => {
+    //       localStorage.setItem("step3", true);
+    //       typewriter
+    //         .typeString("Craft your  Pass")
+    //         .deleteChars(6)
+    //         .pauseFor(200)
+    //         .typeString(" Password")
+    //         .start()
+    //         .callFunction(completeStep);
+    //     }}
+    //     options={{
+    //       delay: 100,
+    //     }}
+    //   />
+    // );
   }
 }
 

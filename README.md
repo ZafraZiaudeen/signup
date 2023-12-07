@@ -10,4 +10,3 @@
 ## Deployment
 
 Merge to master and push to Github. CI/CD will deploy the webpage on AWS. [https://signup.beatific.co](https://signup.beatific.co)
-

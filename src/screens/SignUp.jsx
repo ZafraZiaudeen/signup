@@ -43,6 +43,7 @@ import PayForwardScreenB from "./PayForwardScreenB";
 import PayForwardScreen from "./PayForwardScreen";
 import Alert from "../components/Alert";
 import { updateErrorMessage } from "../actions/common";
+import { createGAEvent } from "../utils/utils";
 
 // import io from "socket.io-client";
 
@@ -142,7 +143,6 @@ const Child = ({
   const [userToken, setUserToken] = useState("");
   const [userCount, setUserCount] = useState(0);
   const dispatch = useDispatch();
-  
 
   //TODO remove this if multiple plans are added
   useEffect(() => {
@@ -215,6 +215,7 @@ const Child = ({
   }, []);
 
   const handleNameNext = () => {
+    console.log("name ===>", name);
     if (name.trim() === "") {
       dispatch(
         updateErrorMessage({
@@ -223,7 +224,7 @@ const Child = ({
           negative: true,
         })
       );
-      // setEmptyName(true);
+      createGAEvent("Button", "Click", "Sign Up - Name", name);
       return;
     }
     setStep("2");

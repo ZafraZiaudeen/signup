@@ -6,17 +6,19 @@ import CheckoutScreen from "./screens/CheckoutScreen";
 import config from "./config/config";
 
 import { Helmet } from "react-helmet";
+import { useLocation } from "react-router-dom";
 import ReactGA from "react-ga";
 import CanvasBackground from "./components/CanvasBackground";
 
-const TRACKINGID = "G-S9JG17MMY8";
-ReactGA.initialize(TRACKINGID);
+const trackingId = "G-3QHV5V4XDL";
+ReactGA.initialize(trackingId);
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [signUp, setSignUp] = useState(true);
   const [subscribed, setSubscribed] = useState(true);
   const [forgotPassword, setForgotPassword] = useState(false);
+  const location = useLocation();
   // const [bgImage, setBgImage] = useState(
   //   "https://i.postimg.cc/cLjZm9RS/default-01.jpg"
   // );
@@ -163,6 +165,10 @@ function App() {
       clearInterval(timer);
     }, 60 * 1000);
   }, []);
+
+  useEffect(() => {
+    ReactGA.pageview(location.pathname + location.search);
+  }, [location]);
 
   const determineLoggedIn = (loggedInState) => setLoggedIn(loggedInState);
   const wantToSignUp = (goToSignUp) => setSignUp(goToSignUp);

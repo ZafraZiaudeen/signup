@@ -215,7 +215,6 @@ const Child = ({
   }, []);
 
   const handleNameNext = () => {
-    console.log("name ===>", name);
     if (name.trim() === "") {
       dispatch(
         updateErrorMessage({
@@ -224,9 +223,9 @@ const Child = ({
           negative: true,
         })
       );
-      createGAEvent("Button", "Click", "Sign Up - Name", name);
       return;
     }
+    createGAEvent("Button", "button_click", "Sign Up - Name");
     setStep("2");
   };
 
@@ -242,6 +241,8 @@ const Child = ({
         })
       );
     }
+
+    createGAEvent("Button", "button_click", "Sign Up - Email");
 
     const emailRegex = /\S+@\S+\.\S+/;
 
@@ -386,6 +387,7 @@ const Child = ({
           );
           // wantToSignUp(false);
         } else {
+          createGAEvent("Button", "button_click", "Navigated to price plans");
           setStep("3");
         }
       })
@@ -438,6 +440,7 @@ const Child = ({
   };
 
   const handleSubmitSub = async (e) => {
+    createGAEvent("Button", "button_click", "Sign Up Complete. Payment Initiated");
     if (emailParam) return handleActivateSubscribtion();
 
     setLoading(true);

@@ -7,7 +7,7 @@ import config from "./config/config";
 
 import { Helmet } from "react-helmet";
 import { useLocation } from "react-router-dom";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import CanvasBackground from "./components/CanvasBackground";
 
 const trackingId = "G-3QHV5V4XDL";
@@ -166,9 +166,6 @@ function App() {
     }, 60 * 1000);
   }, []);
 
-  useEffect(() => {
-    ReactGA.pageview(location.pathname + location.search);
-  }, [location]);
 
   const determineLoggedIn = (loggedInState) => setLoggedIn(loggedInState);
   const wantToSignUp = (goToSignUp) => setSignUp(goToSignUp);

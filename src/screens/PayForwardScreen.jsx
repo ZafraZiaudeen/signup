@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Countdown from "react-countdown";
 import CouponInput from "../components/CouponInput";
+import { createGAEvent } from "../utils/utils";
 
 import styles from "../styles/SignUp.module.css";
 import newStyles from "../styles/PayForward.module.css";
@@ -174,6 +175,7 @@ export default function PayForwardScreen({
                 type="button"
                 onClick={() => {
                   setPayPeriod("monthly");
+                  createGAEvent("Button", "button_click", "Switched to monthly");
                 }}
                 className={payPeriod === "monthly" ? styles.activePeriod : ""}
               >
@@ -200,6 +202,7 @@ export default function PayForwardScreen({
                 type="button"
                 onClick={() => {
                   setPayPeriod("yearly");
+                  createGAEvent("Button", "button_click", "Switched to yearly");
                 }}
                 className={
                   payPeriod === "yearly"

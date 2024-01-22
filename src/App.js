@@ -64,7 +64,7 @@ function App() {
       setBgImage(todayImg);
     } else {
       axios
-        .get(`${config.serverUrl}/api/v1/images/${today}`)
+        .get(`${config.serverUrl}images/${today}`)
         .then((res) => {
           if (res.data.image) {
             localStorage.setItem(
@@ -91,7 +91,7 @@ function App() {
     }
 
     axios
-      .get(`${config.serverUrl}/api/v1/images/${today}`)
+      .get(`${config.serverUrl}images/${today}`)
       .then((res) => {
         if (res.data.image && res.data.image.toString() !== todayImg) {
           localStorage.setItem(`beatific-image-${todayParsed}`, res.data.image);
@@ -111,7 +111,7 @@ function App() {
 
     if (!tomorrowImg) {
       axios
-        .get(`${config.serverUrl}/api/v1/images/${tomorrowDate}`)
+        .get(`${config.serverUrl}images/${tomorrowDate}`)
         .then((res) => {
           if (res.data.image) {
             localStorage.setItem(

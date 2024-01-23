@@ -58,7 +58,7 @@ function VerifyEmail() {
             setBgImage(todayImg);
         } else {
             axios
-                .get(`${config.serverUrl}background-image/${today}`)
+                .get(`${config.serverUrl}images/${today}`)
                 .then((res) => {
                     if (res.data.image) {
                         localStorage.setItem(
@@ -77,7 +77,7 @@ function VerifyEmail() {
         }
 
         axios
-            .get(`${config.serverUrl}background-image/${today}`)
+            .get(`${config.serverUrl}images/${today}`)
             .then((res) => {
                 if (res.data.image && res.data.image.toString() !== todayImg) {
                     localStorage.setItem(`beatific-image-${todayParsed}`, res.data.image);
@@ -93,7 +93,7 @@ function VerifyEmail() {
 
         if (!tomorrowImg) {
             axios
-                .get(`${config.serverUrl}background-image/${tomorrowDate}`)
+                .get(`${config.serverUrl}images/${tomorrowDate}`)
                 .then((res) => {
                     if (res.data.image) {
                         localStorage.setItem(

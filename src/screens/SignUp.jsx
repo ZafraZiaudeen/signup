@@ -362,24 +362,38 @@ const Child = ({
     setPasswordVisible(!passwordVisible);
   };
 
-  const checkIfAccountExists = async (email) => {
-    try {
-      const response = await userApi.getUserByEmail({ email });
-
-      if (response.data?.success) {
-        return dispatch(
-          updateErrorMessage({
-            message:
-              "This email has already been used to create an account with us!",
-            negative: true,
-          })
-        );
-      }
-      createGAEvent("Button", "button_click", "Navigated to price plans");
-      setStep("3");
-    } catch (e) {
-      console.log(e);
-    }
+  const checkIfAccountExists = (email) => {
+    axios
+      .post(
+        config.serverUrl + "/check-account",
+        { email },
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        // setExists(res.data.message);
+        if (res.data.message === "exists") {
+          // setAlreadyReg(true);
+          dispatch(
+            updateErrorMessage({
+              message:
+                "This email has already been used to create an account with us!",
+              negative: true,
+            })
+          );
+          // wantToSignUp(false);
+        } else {
+          createGAEvent("Button", "button_click", "Navigated to price plans");
+          setStep("3");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const getPaymentIntent = () => {
@@ -426,11 +440,7 @@ const Child = ({
   };
 
   const handleSubmitSub = async (e) => {
-    createGAEvent(
-      "Button",
-      "button_click",
-      "Sign Up Complete. Payment Initiated"
-    );
+    createGAEvent("Button", "button_click", "Sign Up Complete. Payment Initiated");
     if (emailParam) return handleActivateSubscribtion();
 
     setLoading(true);
@@ -444,7 +454,7 @@ const Child = ({
       password,
     };
 
-    const user = await axios.post(config.serverUrl + "auth/register", userData);
+    const user = await axios.post(config.serverUrl + "/api/v1/users", userData);
     if (user) {
       setUserCreated(true);
       localStorage.setItem("user", JSON.stringify(user.data));

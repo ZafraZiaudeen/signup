@@ -5,7 +5,7 @@ const payments = {
   createCustomer: (data) =>
     new Promise(async (resolve) => {
       let result = await axios.post(
-        config.serverUrl + "payments/create-customer",
+        config.serverUrl + "/stripe/create-customer",
         data
       );
       resolve(result);
@@ -13,7 +13,7 @@ const payments = {
   createSubscription: (data) =>
     new Promise(async (resolve) => {
       let result = await axios.post(
-        config.serverUrl + "payments/create-subscription-intent",
+        config.serverUrl + "/api/v1/stripe/create-sub-html",
         data
       );
       resolve(result);
@@ -21,7 +21,7 @@ const payments = {
   validateCoupon: (data) =>
     new Promise(async (resolve) => {
       let result = await axios.post(
-        config.serverUrl + "payments/validate-coupon",
+        config.serverUrl + "/api/v1/stripe/validate-coupon",
         data
       );
       resolve(result);

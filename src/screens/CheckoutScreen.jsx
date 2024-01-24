@@ -63,7 +63,7 @@ export default function CheckoutScreen({
   useEffect(() => {
     (async () => {
       const settingsRes = await axios.get(
-        `${config.serverUrl}settings`
+        `${config.serverUrl}/api/v1/settings`
       );
       if (settingsRes?.data?.trial) {
         setIsTrialActive(true);

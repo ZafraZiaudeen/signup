@@ -5,7 +5,7 @@ const user = {
   updateStripeCustomer: (data) =>
     new Promise(async (resolve) => {
       let result = await axios.post(
-        config.serverUrl + "payments/handle-payment-success",
+        config.serverUrl + "/api/v1/users/paymentSuccess",
         data
       );
       resolve(result);
@@ -14,7 +14,7 @@ const user = {
     new Promise(async (resolve) => {
       let result = await axios.get(
         config.serverUrl +
-          "user/subscribed/" +
+          "/api/v1/subscribed/" +
           data.email +
           "/" +
           new Date().getMonth(),
@@ -36,7 +36,7 @@ const user = {
   getUserByEmail: (data) =>
     new Promise((resolve) => {
       axios
-        .get(config.serverUrl + "user/" + data.email)
+        .post(config.serverUrl + "/api/v1/users/get-user", data)
         .then((res) => {
           resolve(res);
         })

@@ -58,7 +58,7 @@ function VerifyEmail() {
             setBgImage(todayImg);
         } else {
             axios
-                .get(`${config.serverUrl}images/${today}`)
+                .get(`${config.serverUrl}/api/v1/images/${today}`)
                 .then((res) => {
                     if (res.data.image) {
                         localStorage.setItem(
@@ -77,7 +77,7 @@ function VerifyEmail() {
         }
 
         axios
-            .get(`${config.serverUrl}images/${today}`)
+            .get(`${config.serverUrl}/api/v1/images/${today}`)
             .then((res) => {
                 if (res.data.image && res.data.image.toString() !== todayImg) {
                     localStorage.setItem(`beatific-image-${todayParsed}`, res.data.image);
@@ -93,7 +93,7 @@ function VerifyEmail() {
 
         if (!tomorrowImg) {
             axios
-                .get(`${config.serverUrl}images/${tomorrowDate}`)
+                .get(`${config.serverUrl}/api/v1/images/${tomorrowDate}`)
                 .then((res) => {
                     if (res.data.image) {
                         localStorage.setItem(
@@ -165,7 +165,7 @@ function VerifyEmail() {
 
     const resend = async () => {
         setLinkSent(true)
-        const result = await axios.post(`${config.serverUrl}user/resend-email`, { email })
+        const result = await axios.post(`${config.serverUrl}/api/v1/users/resend-email`, { email })
     }
 
     const handleButtonClick = () => {
@@ -181,7 +181,7 @@ function VerifyEmail() {
             try {
                 const { email, token } = parseQueryString(window.location.search);
                 setEmail(email)
-                const url = `${config.serverUrl}user/verify-email`
+                const url = `${config.serverUrl}/api/v1/users/verify-email`
                 if (!email || !token) {
                     setLoading(false);
                     setVerifySuccess(false);

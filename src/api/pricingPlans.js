@@ -4,7 +4,7 @@ import config from "../config/config";
 const pricingPlans = {
   getAllPlans: () =>
     new Promise(async (resolve) => {
-      let result = await axios.get(config.serverUrl + "pricing/getAll");
+      let result = await axios.get(config.serverUrl + "/api/v1/pricingPlans");
       resolve(result);
     }),
 };

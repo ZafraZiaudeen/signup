@@ -1,4 +1,4 @@
-#Beatific Planner Signup Page
+#Beatific Planner Sign Up Page
 
 ## Installation
 

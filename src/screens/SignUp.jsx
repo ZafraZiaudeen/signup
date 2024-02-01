@@ -595,6 +595,7 @@ const Child = ({
           </span>
         </label>
         <div
+          className={styles.inputSectionWrapper}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -602,7 +603,7 @@ const Child = ({
             rowGap: 30,
           }}
         >
-          <div className={styles.inputSection}>
+          <div className={`${styles.inputSection} ${styles.nameInputSection}`}>
             <div
               className={
                 emptyName

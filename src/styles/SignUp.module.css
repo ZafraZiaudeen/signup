@@ -1007,3 +1007,91 @@ input[type="radio"]:hover + label .previousPrice {
   font-size: 14px;
   color: #fff;
 }
+
+@media (max-width: 768px) {
+  .signUpActions .formAction .inputSection {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 4px;
+    gap: 0 !important;
+  }
+
+  .nameInputSection {
+    width: 100% !important;
+  }
+
+  .inputSectionWrapper {
+    width: 100vw;
+  }
+
+  .formInputWrapper {
+    width: 100%;
+    margin-left: 0 !important;
+    /* padding: 0 4px; */
+  }
+
+  .gradientWrapper {
+    width: 100%;
+    /* padding: 0 4px; */
+  }
+
+  .formInput {
+    width: 100% !important;
+  }
+  .inputAndWarning{
+    width: 100%;
+  }
+
+
+  .inputAndWarning input {
+    width: 100% !important;
+  }
+
+  .formAction span {
+    font-size: 32px !important;
+  }
+
+  .formAction span span {
+    display: none;
+  }
+
+  .inputSection .backBtn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .inputSection .backBtn img{
+    width: 25px !important;
+    margin-left: 0 !important;
+  }
+
+  .badgeSection{
+    justify-content: center;
+  }
+  .innerContainer{
+    width: 100%;
+  }
+
+  .buttonWithLoader{
+    width: 100% !important;
+  }
+
+  .monthlyOrYearlyTab{
+    width: 100% !important;
+  }
+
+  .paymentCard{
+    width: 100% !important;
+  }
+
+  .cardElemContainer{
+    width: 100% !important;
+  }
+
+  .cardElemContainer form{
+    width: 100% !important;
+  }
+}

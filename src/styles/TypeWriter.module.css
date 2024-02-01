@@ -4,7 +4,7 @@
 }
 
 .container {
-	font-family: "Canela Light";
+  font-family: "Canela Light";
   letter-spacing: 0px;
   line-height: 80px;
   font-size: 80px;
@@ -20,4 +20,14 @@
 /* cursor styling */
 .txtType > .txt {
   border-right: 0.05em solid white;
+}
+
+/* Media Queries */
+
+@media screen and (max-width: 768px) {
+  .container {
+    font-size: 32px;
+    line-height: 42px;
+    min-height: 60px;
+  }
 }

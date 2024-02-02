@@ -1094,4 +1094,14 @@ input[type="radio"]:hover + label .previousPrice {
   .cardElemContainer form{
     width: 100% !important;
   }
+
+  .welcome{
+    width: 100vw;
+  }
+
+  .mainSection{
+    width: 100%;
+  }
+
+  
 }

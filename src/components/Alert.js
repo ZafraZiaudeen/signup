@@ -56,7 +56,7 @@ export default function Alert({ timer, gifBell }) {
       }, timer + 1000 || 11 * 1000);
     };
 
-    // runTimer();
+    runTimer();
 
     return () => {
       clearTimeout(firstTimer);

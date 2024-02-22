@@ -26,7 +26,9 @@ function App() {
   const [dailyQuestion, setDailyQuestion] = useState("");
   const [checkoutPage, setCheckoutPage] = useState(false);
   const [clientData, setClientData] = useState({});
-  const [outerHeight, setOuterHeight] = useState("100vh");
+  const [outerHeight, setOuterHeight] = useState(
+    document.documentElement.scrollHeight
+  );
   const [userCreated, setUserCreated] = useState(false);
   const [loading, setLoading] = useState(false);
   const appContainerRef = useRef();
@@ -136,22 +138,28 @@ function App() {
   }, [today, tomorrowDate, todayParsed, tomorrowDateParsed, user]);
 
   useEffect(() => {
-    setOuterHeight(`${window.innerHeight}px`);
-    window.addEventListener("resize", () =>
-      setOuterHeight(`${window.innerHeight}px`)
-    );
-    return () => {
-      window.removeEventListener("resize", () =>
-        setOuterHeight(`${window.innerHeight}px`)
-      );
-    };
+    // window.addEventListener("scroll", () => {
+    //   setOuterHeight(`${document.documentElement.scrollHeight}px`);
+    // });
+    // setOuterHeight(`${document.documentElement.scrollHeight}px`);
+    // window.addEventListener("resize", () =>
+    //   setOuterHeight(`${document.documentElement.scrollHeight}px`)
+    // );
+    // return () => {
+    //   window.removeEventListener("resize", () =>
+    //     setOuterHeight(`${document.documentElement.scrollHeight}px`)
+    //   );
+    //   window.removeEventListener("scroll", () => {
+    //     setOuterHeight(`${document.documentElement.scrollHeight}px`);
+    //   });
+    // };
   }, []);
 
   useEffect(() => {
     if (!appContainerRef.current && !overlayRef.current) return;
-    appContainerRef.current.style.maxHeight = outerHeight;
+    //   appContainerRef.current.style.maxHeight = outerHeight;
     appContainerRef.current.style.height = outerHeight;
-    overlayRef.current.style.height = outerHeight;
+    // overlayRef.current.style.height = outerHeight;
   }, [outerHeight]);
 
   useEffect(() => {
@@ -166,21 +174,27 @@ function App() {
     }, 60 * 1000);
   }, []);
 
-
   const determineLoggedIn = (loggedInState) => setLoggedIn(loggedInState);
   const wantToSignUp = (goToSignUp) => setSignUp(goToSignUp);
   const subscriptionState = (subscribedOrNot) => setSubscribed(subscribedOrNot);
   const goToForgotPassword = (goOrNot) => setForgotPassword(goOrNot);
 
+  console.log(!!bgImage);
+
   return (
     <>
-      <CanvasBackground />
-      <div
-        className="background-image"
-        style={{ backgroundImage: `url(${bgImage})` }}
-        ref={appContainerRef}
-      />
+      {/* <CanvasBackground /> */}
+
       <div className="App">
+        <div
+          className="background-image"
+          style={{
+            backgroundImage: !!bgImage
+              ? `url(${bgImage})`
+              : "linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%)",
+          }}
+          ref={appContainerRef}
+        />
         <div className="overlay" ref={overlayRef}>
           {!checkoutPage && (
             <SignUp

@@ -74,84 +74,86 @@ export default function CheckoutScreen({
   return (
     <div className={styles.container}>
       <section className={styles.signUpActions}>
-        <div className={styles.iconSection}></div>
-        <span className={`${styles.checkout_greeting} ${styles.shadow}`}>
-          Time to shine ✨
-        </span>
-        <div className={`${styles.payForwardContainer} ${styles.shadow}`}>
-          <h2 id="txt-type" className={styles.payForwardText}>
-            {clientData.name}
-          </h2>
-        </div>
-        <div className={styles.formAction}>
-          <div className={styles.inputSection}>
-            <button
-              type="button"
-              onClick={() => setCheckoutPage(false)}
-              className={styles.backBtn}
-            >
-              <img
-                src={arrowForward}
-                className={styles.backArrowBtn}
-                alt="go to previous form step"
-              />
-            </button>
-            <div className={`${styles.paymentCard} ${newStyles.relativeDiv}`}>
-              {loading && (
-                <div className={newStyles.lottieContainer}>
-                  <div className={newStyles.prgressbarContainer}>
-                    <div
-                      className={newStyles.progressbar}
-                      style={{ width: !complete ? "40%" : "100%" }}
-                    />
-                  </div>
-                  {/* <Lottie
+        <div style={{margin:"60px 0"}}>
+          <div className={styles.iconSection}></div>
+          <span className={`${styles.checkout_greeting} ${styles.shadow}`}>
+            Time to shine ✨
+          </span>
+          <div className={`${styles.payForwardContainer} ${styles.shadow}`}>
+            <h2 id="txt-type" className={styles.payForwardText}>
+              {clientData.name}
+            </h2>
+          </div>
+          <div className={styles.formAction}>
+            <div className={styles.inputSection}>
+              <button
+                type="button"
+                onClick={() => setCheckoutPage(false)}
+                className={styles.backBtn}
+              >
+                <img
+                  src={arrowForward}
+                  className={styles.backArrowBtn}
+                  alt="go to previous form step"
+                />
+              </button>
+              <div className={`${styles.paymentCard} ${newStyles.relativeDiv}`}>
+                {loading && (
+                  <div className={newStyles.lottieContainer}>
+                    <div className={newStyles.prgressbarContainer}>
+                      <div
+                        className={newStyles.progressbar}
+                        style={{ width: !complete ? "40%" : "100%" }}
+                      />
+                    </div>
+                    {/* <Lottie
                     options={{ animationData: loadingAnimation }}
                     width={48}
                     height={48}
                     className={anims.fadeIn}
                   /> */}
-                </div>
-              )}
-              <img src={padLock} className={styles.padLock} alt="" />
-              <span className={styles.secureText}>100% Secure</span>
-              <div className={styles.bluePrice}>
-                <img src={badge} alt="" />
-                <span className={styles.previousPrice}>$19</span>
-                <span>${`${clientData.subscriptionAmount}`}</span>
-              </div>
-              <div className={styles.cardElemContainer}>
-                {isTrialActive && (
-                  <div className={newStyles.couponButtonContainer}>
-                    <img src={coupon} className={newStyles.couponIcon} />
-                    <button
-                      className={newStyles.couponButton}
-                      onClick={handleCouponButton}
-                    >
-                      {couponData
-                        ? `COUPON APPLIED ${couponData?.coupon?.percent_off}% OFF`
-                        : "HAVE A COUPON CODE?"}
-                    </button>
                   </div>
                 )}
-                <Elements stripe={stripePromise}>
-                  <CheckoutForm
-                    handleSuccess={handleSuccess}
-                    clientData={clientData}
-                    setLoading={setLoading}
-                  />
-                </Elements>
+                <img src={padLock} className={styles.padLock} alt="" />
+                <span className={styles.secureText}>100% Secure</span>
+                <div className={styles.bluePrice}>
+                  <img src={badge} alt="" />
+                  <span className={styles.previousPrice}>$19</span>
+                  <span>${`${clientData.subscriptionAmount}`}</span>
+                </div>
+                <div className={styles.cardElemContainer}>
+                  {isTrialActive && (
+                    <div className={newStyles.couponButtonContainer}>
+                      <img src={coupon} className={newStyles.couponIcon} />
+                      <button
+                        className={newStyles.couponButton}
+                        onClick={handleCouponButton}
+                      >
+                        {couponData
+                          ? `COUPON APPLIED ${couponData?.coupon?.percent_off}% OFF`
+                          : "HAVE A COUPON CODE?"}
+                      </button>
+                    </div>
+                  )}
+                  <Elements stripe={stripePromise}>
+                    <CheckoutForm
+                      handleSuccess={handleSuccess}
+                      clientData={clientData}
+                      setLoading={setLoading}
+                    />
+                  </Elements>
+                </div>
               </div>
+              <button type="button" className={styles.forwardBtnHidden} />
             </div>
-            <button type="button" className={styles.forwardBtnHidden} />
           </div>
+          <span className={styles.stripeName}>
+            Secured by Stripe /{" "}
+            <a href="https://stripe.com/en-gb-us/legal/consumer">
+              Term of Service
+            </a>
+          </span>
         </div>
-        <span className={styles.stripeName}>
-          Secured by Stripe /{" "}
-          <a href="https://stripe.com/en-gb-us/legal/consumer">
-            Term of Service
-          </a>
-        </span>
       </section>
     </div>
   );

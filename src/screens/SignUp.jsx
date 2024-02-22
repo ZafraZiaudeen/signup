@@ -146,7 +146,7 @@ const Child = ({
 
   //TODO remove this if multiple plans are added
   useEffect(() => {
-    setSubscriptionAmount(pricingPlans?.plans?.[0]?.price);
+    setSubscriptionAmount(pricingPlans?.plans?.yearly?.[0]?.price);
   }, [pricingPlans]);
 
   // const [exists, setExists] = useState('');

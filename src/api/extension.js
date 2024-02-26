@@ -11,7 +11,9 @@ const extension = {
         command: "openPage",
         openLoginPage: txId || "",
       });
-    } catch (e) {}
+    } catch (e) {
+      window.open("https://planner.beatific.co");
+    }
   },
 };
 

@@ -1013,10 +1013,24 @@ input[type="radio"]:hover + label .previousPrice {
 
 @media (max-width: 768px) {
   .signUpActions .formAction .inputSection {
-    flex-direction: column;
+    /* flex-direction: column; */
     width: 100%;
     padding: 0 4px;
-    gap: 0 !important;
+    gap: 10px !important;
+  }
+
+  .signUpActions .formAction .inputSection .forwardBtn {
+    min-width: 50px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .signUpActions .formAction .inputSection .forwardBtn img {
+    width: 44px;
+    margin-left: 4px;
   }
 
   .nameInputSection {
@@ -1041,17 +1055,16 @@ input[type="radio"]:hover + label .previousPrice {
   .formInput {
     width: 100% !important;
   }
-  .inputAndWarning{
+  .inputAndWarning {
     width: 100%;
   }
-
 
   .inputAndWarning input {
     width: 100% !important;
   }
 
-  .formAction span {
-    font-size: 32px !important;
+  .signUpActions .formAction span {
+    font-size: 32px ;
   }
 
   .formAction span span {
@@ -1066,45 +1079,55 @@ input[type="radio"]:hover + label .previousPrice {
     height: 30px !important;
   }
 
-  .inputSection .backBtn img{
+  .inputSection .backBtn img {
     width: 25px !important;
     margin-left: 0 !important;
   }
 
-  .badgeSection{
+  .badgeSection {
     justify-content: center;
   }
-  .innerContainer{
+  .innerContainer {
     width: 100%;
   }
 
-  .buttonWithLoader{
+  .buttonWithLoader {
     width: 100% !important;
   }
 
-  .monthlyOrYearlyTab{
+  .monthlyOrYearlyTab {
     width: 100% !important;
   }
 
-  .paymentCard{
+  .paymentCard {
     width: 100% !important;
   }
 
-  .cardElemContainer{
+  .cardElemContainer {
     width: 100% !important;
   }
 
-  .cardElemContainer form{
+  .cardElemContainer form {
     width: 100% !important;
   }
 
-  .welcome{
+  .welcome {
     width: 100vw;
   }
 
-  .mainSection{
+  .mainSection {
     width: 100%;
   }
 
-  
+  .signUpActions .formAction .inputSection .formInput input {
+    border-radius: 0 360px 360px 0;
+  }
+
+  .secureText {
+    font-size: 15px !important;
+  }
+
+  .bluePrice span{
+    font-size: 15px !important;
+  }
 }

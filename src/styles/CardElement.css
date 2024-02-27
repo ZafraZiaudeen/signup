@@ -75,7 +75,21 @@
   border-radius: 360px;
 }
 
-.gradientWrapper:hover, .gradientWrapper:focus-within, .gradientWrapper:active {
+.gradientWrapper:hover,
+.gradientWrapper:focus-within,
+.gradientWrapper:active {
   --myColor1: #ffb600;
   --myColor2: #ca27ff;
+}
+
+@media (max-width: 768px) {
+  .gradientWrapper {
+    width: 90%;
+  }
+  .payButton {
+    max-width: 90%;
+  }
+  .cardElementContainer {
+    max-width: 100%;
+  }
 }

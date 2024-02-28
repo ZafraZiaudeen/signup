@@ -4,7 +4,7 @@
   align-items: center;
   position: absolute;
   overflow: hidden;
-  z-index: 8;
+  z-index: -1;
 }
 .canvasArea {
   animation: rotate 60s linear infinite alternate;

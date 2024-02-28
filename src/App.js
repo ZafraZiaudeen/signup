@@ -183,7 +183,7 @@ function App() {
 
   return (
     <>
-      {/* <CanvasBackground /> */}
+      <CanvasBackground />
 
       <div className="App">
         <div
@@ -191,7 +191,7 @@ function App() {
           style={{
             backgroundImage: !!bgImage
               ? `url(${bgImage})`
-              : "linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%)",
+              : "",
           }}
           ref={appContainerRef}
         />

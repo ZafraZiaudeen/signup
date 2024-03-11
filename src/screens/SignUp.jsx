@@ -42,8 +42,9 @@ import extension from "../api/extension";
 import PayForwardScreenB from "./PayForwardScreenB";
 import PayForwardScreen from "./PayForwardScreen";
 import Alert from "../components/Alert";
-import { updateErrorMessage } from "../actions/common";
+import { setLoadingState, updateErrorMessage } from "../actions/common";
 import { createGAEvent } from "../utils/utils";
+import NextButton from "../components/NextButton";
 
 // import io from "socket.io-client";
 
@@ -230,33 +231,39 @@ const Child = ({
   };
 
   const handleEmailNext = (e) => {
-    e.preventDefault();
-    if (email.trim() === "") {
-      // setEmptyEmail(true);
-      return dispatch(
-        updateErrorMessage({
-          message:
-            "Oopsie-daisy! 🙊 The email field looks lonely. Don't forget to pop in your email to get started! 😃",
-          negative: true,
-        })
-      );
-    }
+    dispatch(setLoadingState(true));
+    try {
+      e.preventDefault();
+      if (email.trim() === "") {
+        // setEmptyEmail(true);
+        return dispatch(
+          updateErrorMessage({
+            message:
+              "Oopsie-daisy! 🙊 The email field looks lonely. Don't forget to pop in your email to get started! 😃",
+            negative: true,
+          })
+        );
+      }
 
-    createGAEvent("Button", "button_click", "Sign Up - Email");
+      createGAEvent("Button", "button_click", "Sign Up - Email");
 
-    const emailRegex = /\S+@\S+\.\S+/;
+      const emailRegex = /\S+@\S+\.\S+/;
 
-    if (!emailRegex.test(email)) {
-      // setInvalidEmail(true);
-      dispatch(
-        updateErrorMessage({
-          message:
-            "Oh dear! 😟 Invalid email. Please double-check and retry! 📧😊",
-          negative: true,
-        })
-      );
-    } else if (email && emailRegex.test(email)) {
-      checkIfAccountExists(email);
+      if (!emailRegex.test(email)) {
+        // setInvalidEmail(true);
+        dispatch(
+          updateErrorMessage({
+            message:
+              "Oh dear! 😟 Invalid email. Please double-check and retry! 📧😊",
+            negative: true,
+          })
+        );
+      } else if (email && emailRegex.test(email)) {
+        checkIfAccountExists(email);
+      }
+      dispatch(setLoadingState(false));
+    } catch {
+      dispatch(setLoadingState(false));
     }
   };
 
@@ -440,7 +447,11 @@ const Child = ({
   };
 
   const handleSubmitSub = async (e) => {
-    createGAEvent("Button", "button_click", "Sign Up Complete. Payment Initiated");
+    createGAEvent(
+      "Button",
+      "button_click",
+      "Sign Up Complete. Payment Initiated"
+    );
     if (emailParam) return handleActivateSubscribtion();
 
     setLoading(true);
@@ -767,17 +778,7 @@ const Child = ({
               </div>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={(e) => handleEmailNext(e)}
-            className={styles.forwardBtn}
-          >
-            <img
-              src={arrowForward}
-              className={styles.arrowBtn}
-              alt="go to next form step"
-            />
-          </button>
+          <NextButton onClick={handleEmailNext} styles={styles} />
         </div>
         <div className={styles.badgeSection}>
           <img src={badge} className={styles.badge} alt="badge" />

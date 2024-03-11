@@ -5,6 +5,7 @@ const initialState = {
   },
   couponOpen: false,
   couponData: null,
+  loading: false,
 };
 
 const commonReducer = (state = initialState, action) => {
@@ -24,6 +25,11 @@ const commonReducer = (state = initialState, action) => {
         ...state,
         couponData: action.payload,
       };
+    case "SET_LOADING":
+      return {
+        ...state,
+        loading: action.payload,
+      }
     default:
       return state;
   }

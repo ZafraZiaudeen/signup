@@ -284,6 +284,11 @@
   box-shadow: 0px 4px 36px 0px rgba(53, 54, 54, 0.45);
 }
 
+.signUpActions .formAction .inputSection .forwardBtn:disabled {
+  background-color: #85858566 !important;
+  cursor: default;
+}
+
 .signUpActions .formAction .inputSection .forwardBtnHidden {
   opacity: 0;
   width: 80px;
@@ -1011,6 +1016,32 @@ input[type="radio"]:hover + label .previousPrice {
   color: #fff;
 }
 
+.buttonSpinner {
+  margin-left: 0 !important;
+  animation: rotation 1s linear infinite, fadeIn 0.3s ease-in; /* Adding fadeIn animation */
+  width: 32px;
+  height: 32px;
+  opacity: 1; /* Initial opacity set to 0 */
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 768px) {
   .signUpActions .formAction .inputSection {
     /* flex-direction: column; */
@@ -1064,7 +1095,7 @@ input[type="radio"]:hover + label .previousPrice {
   }
 
   .signUpActions .formAction span {
-    font-size: 32px ;
+    font-size: 32px;
   }
 
   .formAction span span {
@@ -1127,11 +1158,11 @@ input[type="radio"]:hover + label .previousPrice {
     font-size: 15px !important;
   }
 
-  .bluePrice span{
+  .bluePrice span {
     font-size: 15px !important;
   }
 
-  .footerLinks{
+  .footerLinks {
     bottom: 10px;
   }
 }

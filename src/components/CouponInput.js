@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleCoupon, setCouponData } from "../actions/common";
 import payments from "../api/payments";
 import styles from "../styles/couponInput.module.scss";
 import animations from "../styles/animations.module.css";
+import { mirage } from 'ldrs'
 
 import CouponIcon from "../images/coupon.svg";
-import closeIcon from "../images/close.svg";
+import closeX from "../images/black_x.svg";
+import whiteX from "../images/white_x.svg";
 
 export default function CouponInput() {
+  mirage.register()
+
   const [error, setError] = useState("");
   const [coupon, setCoupon] = useState("");
   const [loading, setLoading] = useState(false);
+  const couponInputRef = useRef();
+  const couponData = useSelector((state) => state.common).couponData;
 
   const visible = useSelector((state) => state.common).couponOpen;
   const dispatch = useDispatch();
@@ -32,6 +38,7 @@ export default function CouponInput() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     const result = await payments.validateCoupon({ coupon });
     if (result?.data?.coupon?.id) {
       dispatch(setCouponData(result?.data?.coupon));
@@ -48,7 +55,8 @@ export default function CouponInput() {
       <div className={styles.wrapper}>
         <div className={`${styles.container} ${animations.scaleUpCenter}`}>
           <button className={styles.closeButton} onClick={handleClose}>
-            <img src={closeIcon} className={styles.closeIcon} alt="" />
+            <img src={closeX} className={styles.closeIcon} alt="" />
+            <img src={whiteX} className={styles.whiteX} alt="" />
           </button>
           <div className={styles.header}>
             <img src={CouponIcon} className={styles.couponIcon} alt="" />
@@ -58,26 +66,40 @@ export default function CouponInput() {
             Unlock hidden discounts! Enter your secret code and save big.
             <br /> Say ‘Yes, please!’ to savings!
           </p>
-          <div className={styles.inputWrapper}>
-            <input
-              type="text"
-              className={styles.input}
-              placeholder="BTFCHPNSPLNR"
-              onChange={handleChange}
-              value={coupon}
-              disabled={loading}
-            />
-            <span className={styles.errorMessages}>{error}</span>
+          <div className={styles.inputBackground} >
+            <div className={styles.inputWrapper}>
+              <div className={styles.gradientWrapper}>
+                <input
+                  type="text"
+                  className={styles.input}
+                  defaultValue={couponData?.code}
+                  placeholder="BTFCHPNSPLNR"
+                  onChange={handleChange}
+                  value={coupon}
+                  disabled={loading}
+                  ref={couponInputRef}
+                />
+              </div>
+              <span className={styles.errorMessages}>{error}</span>
+            </div>
+            <button
+              className={styles.button}
+              onClick={handleSubmit}
+              disabled={loading || (couponData?.code === coupon)}
+            >
+              {loading && (
+                <l-mirage
+                  size="60"
+                  speed="2.5"
+                  color="white"
+                ></l-mirage>
+
+              )}
+              {!loading && "Apply"}
+            </button>
           </div>
-          <button
-            className={styles.button}
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            Apply
-          </button>
         </div>
-      </div>
+      </div >
     );
   return <></>;
 }

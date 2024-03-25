@@ -1,3 +1,15 @@
+@property --myColor1 {
+  syntax: "<color>";
+  initial-value: transparent;
+  inherits: false;
+}
+
+@property --myColor2 {
+  syntax: "<color>";
+  initial-value: transparent;
+  inherits: false;
+}
+
 .wrapper {
   width: 100%;
   height: 100vh;
@@ -13,7 +25,7 @@
 
   .container {
     width: 500px;
-    height: 410px;
+    height: 461px;
     background-color: #fff;
     border-radius: 20px;
     display: flex;
@@ -21,6 +33,35 @@
     align-items: center;
     row-gap: 30px;
     position: relative;
+
+    .inputBackground {
+      width: 440px;
+      background-color: #f8f8f8;
+      border: 1px solid #ededed;
+      padding: 32px 37px;
+      border-radius: 10px;
+    }
+    .gradientWrapper {
+      background: linear-gradient(to right, var(--myColor1), var(--myColor2));
+      transition: --myColor1 0.3s, --myColor2 0.3s;
+      border-radius: 360px;
+      padding: 2px;
+
+      &:hover {
+        --myColor1: #ffb600;
+        --myColor2: #ca27ff;
+      }
+
+      &:focus-within {
+        --myColor1: #ffb600;
+        --myColor2: #ca27ff;
+      }
+
+      &:active {
+        --myColor1: #ffb600;
+        --myColor2: #ca27ff;
+      }
+    }
 
     .closeButton {
       border: none;
@@ -30,19 +71,36 @@
       justify-content: center;
       align-items: center;
       position: absolute;
-      right: 20px;
-      top: 20px;
+      right: 10px;
+      top: 10px;
+
+      &:hover {
+        .closeIcon {
+          opacity: 1;
+        }
+        .whiteX {
+          opacity: 0;
+        }
+      }
 
       .closeIcon {
         width: 24px;
         height: 24px;
         cursor: pointer;
-        opacity: 0.3;
+        opacity: 0;
         transition: 0.3s ease-in-out;
+      }
 
-        &:hover {
-          opacity: 1;
-        }
+      .whiteX {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        opacity: 1;
+        transition: 0.3s ease-in-out;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
     }
 
@@ -58,11 +116,10 @@
       }
 
       .title {
-        font-size: 24px;
+        font-size: 32px;
         font-family: "Canela-Light";
         font-weight: 500;
         color: #000;
-        margin-left: 20px;
       }
     }
     .description {
@@ -83,24 +140,26 @@
       }
 
       .input {
-        width: 380px;
+        width: 100%;
         height: 50px;
         border-radius: 360px;
         border: 1px solid #e8e8e8;
         text-align: center;
         font-family: "QuickSand-Bold";
-        font-size: 24px;
+        font-size: 16px;
         color: #cd2af8;
         letter-spacing: 3px;
+        outline: none;
 
         &::placeholder {
-          opacity: 0.19;
+          opacity: 0.44;
           color: #cd2af8;
+          font-family: "QuickSand-Medium";
         }
       }
     }
     .button {
-      width: 270px;
+      width: 100%;
       height: 50px;
       border-radius: 360px;
       background: linear-gradient(88deg, #469fe7 0%, #cf28fa 100%);
@@ -113,6 +172,15 @@
       color: #fff;
       letter-spacing: 3px;
       text-transform: uppercase;
+
+      &:hover {
+        background: linear-gradient(88deg, #469fe7 0%, #cf28fa 100%);
+      }
+
+      &:disabled {
+        background: linear-gradient(88deg, #77b5e9 0%, #e26cff 100%);
+        cursor: not-allowed;
+      }
     }
   }
 }

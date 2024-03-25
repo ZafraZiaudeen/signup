@@ -7,7 +7,7 @@ import styles from "../styles/SignUp.module.css";
 import newStyles from "../styles/PayForward.module.css";
 import anims from "../styles/animations.module.css";
 import star from "../images/ratingStar.svg";
-import priceBadge from "../images/pricebadge.svg";
+import priceBadge from "../images/badgeBlue.svg";
 import lisa from "../images/Lisa.png";
 
 import Pricing from "../api/pricingPlans";
@@ -277,16 +277,17 @@ export default function PayForwardScreen({
                 // </div>
                 <div className={styles.monthlyPrices}>
                   {/* <span className={styles.mostPopular}>Most Popular</span> */}
-                  <div>
+                  <div className={styles.priceButton}>
                     <input
                       type="radio"
                       name="price"
                       value={subscriptions?.monthly[0]?.price}
                       id={subscriptions?.monthly[0]?.price}
                       onChange={() => handleSubChange(0)}
-                      checked={
-                        subscriptionAmount === subscriptions?.monthly[0]?.price
-                      }
+                      // checked={
+                      //   subscriptionAmount === subscriptions?.monthly[0]?.price
+                      // }
+                      checked={true}
                     />
                     <label
                       htmlFor={subscriptions?.monthly[0]?.price}
@@ -295,15 +296,15 @@ export default function PayForwardScreen({
                         backgroundColor:
                           subscriptionAmount ===
                           subscriptions?.monthly[0]?.price
-                            ? "#0089ff"
+                            ? "#F2F9FF"
                             : "",
                         border:
                           subscriptionAmount === subscriptions.monthly[0]?.price
-                            ? "1px solid #ffffff"
+                            ? "1px solid #C7E1FF"
                             : "",
                         color:
                           subscriptionAmount === subscriptions.monthly[0]?.price
-                            ? "#ffffff"
+                            ? "#0389FF"
                             : "",
                       }}
                     >
@@ -361,16 +362,17 @@ export default function PayForwardScreen({
                 //   })}
                 // </div>
                 <div className={styles.monthlyPrices}>
-                  <div>
+                  <div className={styles.priceButton}>
                     <input
                       type="radio"
                       name="price"
                       value={subscriptions?.yearly[0]?.price}
                       id={subscriptions?.yearly[0]?.price}
                       onChange={() => handleSubChange(0)}
-                      checked={
-                        subscriptionAmount === subscriptions?.yearly[0]?.price
-                      }
+                      // checked={
+                      //   subscriptionAmount === subscriptions?.yearly[0]?.price
+                      // }
+                      checked={true}
                     />
                     <label
                       htmlFor={subscriptions?.yearly[0]?.price}
@@ -378,15 +380,15 @@ export default function PayForwardScreen({
                       style={{
                         backgroundColor:
                           subscriptionAmount === subscriptions?.yearly[0]?.price
-                            ? "#0089ff"
+                            ? "#F2F9FF"
                             : "",
                         border:
                           subscriptionAmount === subscriptions?.yearly[0]?.price
-                            ? "1px solid #ffffff"
+                            ? "1px solid #C7E1FF"
                             : "",
                         color:
                           subscriptionAmount === subscriptions?.yearly[0]?.price
-                            ? "#ffffff"
+                            ? "#0389FF"
                             : "",
                       }}
                     >

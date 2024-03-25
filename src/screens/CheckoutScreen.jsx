@@ -14,14 +14,15 @@ import anims from "../styles/animations.module.css";
 
 import arrowForward from "../images/arrowOnly.svg";
 import padLock from "../images/checkoutPadLock.svg";
-import badge from "../images/badgeWithCheck.svg";
+import badge from "../images/badgeBlue.svg";
+import badgeBlue from "../images/badgeBlue.svg"
 import coupon from "../images/coupon.svg";
 import loadingAnimation from "../images/loading.json";
-import { toggleCoupon } from "../actions/common";
+import { setClientData, toggleCoupon } from "../actions/common";
 import axios from "axios";
+import paymentsApi from "../api/payments";
 
 export default function CheckoutScreen({
-  clientData,
   setCheckoutPage,
   loading,
   setLoading,
@@ -32,6 +33,7 @@ export default function CheckoutScreen({
   const dispatch = useDispatch();
   const couponData = useSelector((state) => state.common)?.couponData;
   const [isTrialActive, setIsTrialActive] = useState(false);
+  const clientData = useSelector((state) => state.common).clientData;
 
   const handleCouponButton = () => {
     dispatch(toggleCoupon());
@@ -46,6 +48,7 @@ export default function CheckoutScreen({
         stripeCustomerId: clientData.paymentIntent.customerId,
         subscriptionAmount: clientData.subscriptionAmount,
         payPeriod: clientData.payPeriod,
+        paymentIntentId: data.paymentIntent.id,
       });
 
       localStorage.removeItem("signUpForm");
@@ -71,10 +74,54 @@ export default function CheckoutScreen({
     })();
   }, []);
 
+  useEffect(() => {
+    if (!couponData?.id) return;
+
+    (async () => {
+      const newPaymentIntent = await paymentsApi.createSubscription({
+        customerId: clientData?.paymentIntent?.customerId,
+        price: clientData.subscriptionAmount,
+        planId: clientData.planId,
+        coupon: couponData?.id,
+      });
+
+      dispatch(
+        setClientData({
+          ...clientData,
+          paymentIntent: {
+            ...clientData.paymentIntent,
+            subscriptionId: newPaymentIntent?.data?.subscription?.id,
+            clientSecret: newPaymentIntent?.data?.client_secret,
+            paymentIntentId: newPaymentIntent?.data?.paymentIntentId,
+          },
+        })
+      );
+      console.log("newPaymentIntent", newPaymentIntent);
+    })();
+  }, [couponData]);
+
+  const CouponComponent = () => {
+    if (isTrialActive)
+      return (
+        <div className={newStyles.couponButtonContainer}>
+          <img src={coupon} className={newStyles.couponIcon} />
+          <button
+            className={newStyles.couponButton}
+            onClick={handleCouponButton}
+          >
+            {couponData
+              ? `COUPON APPLIED ${couponData?.coupon?.percent_off}% OFF`
+              : "Have Promo code click to enter?"}
+          </button>
+        </div>
+      );
+    return <></>;
+  };
+
   return (
     <div className={styles.container}>
       <section className={styles.signUpActions}>
-        <div style={{margin:"60px 0"}}>
+        <div style={{ margin: "60px 0" }}>
           <div className={styles.iconSection}></div>
           <span className={`${styles.checkout_greeting} ${styles.shadow}`}>
             Time to shine ✨
@@ -117,12 +164,14 @@ export default function CheckoutScreen({
                 <img src={padLock} className={styles.padLock} alt="" />
                 <span className={styles.secureText}>100% Secure</span>
                 <div className={styles.bluePrice}>
-                  <img src={badge} alt="" />
+                  <img src={badgeBlue} alt="" />
                   <span className={styles.previousPrice}>$19</span>
-                  <span>${`${clientData.subscriptionAmount}`}</span>
+                  <span className={styles.subscriptionAmount}>
+                    ${`${clientData.subscriptionAmount}`}
+                  </span>
                 </div>
                 <div className={styles.cardElemContainer}>
-                  {isTrialActive && (
+                  {/* {isTrialActive && (
                     <div className={newStyles.couponButtonContainer}>
                       <img src={coupon} className={newStyles.couponIcon} />
                       <button
@@ -134,9 +183,10 @@ export default function CheckoutScreen({
                           : "HAVE A COUPON CODE?"}
                       </button>
                     </div>
-                  )}
+                  )} */}
                   <Elements stripe={stripePromise}>
                     <CheckoutForm
+                      couponComponent={CouponComponent}
                       handleSuccess={handleSuccess}
                       clientData={clientData}
                       setLoading={setLoading}

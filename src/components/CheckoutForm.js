@@ -25,15 +25,19 @@ const CARD_ELEMENT_OPTIONS = {
   },
 };
 
-function CheckoutForm({ clientData, handleSuccess, setLoading }) {
+function CheckoutForm({ clientData, handleSuccess, setLoading, couponComponent }) {
   const stripe = useStripe();
   const elements = useElements();
   const formRef = useRef();
   const dispatch = useDispatch();
 
+  const CouponComponent = couponComponent;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    console.log(clientData.paymentIntent.clientSecret);
 
     if (!stripe || !elements || !clientData.paymentIntent.clientSecret) {
       return;
@@ -78,15 +82,19 @@ function CheckoutForm({ clientData, handleSuccess, setLoading }) {
     }
   };
 
+  // console.log(CouponComponent, "CouponComponent")
+
   return (
     <form ref={formRef}>
-      <CouponInput /> 
+      <CouponInput />
       <Alert gifBell={true} />
+
       <label className="cardElementContainer">
         <div className="gradientWrapper">
           <CardElement options={CARD_ELEMENT_OPTIONS} />
         </div>
       </label>
+      <CouponComponent />
       <Button
         action={handleSubmit}
         text={"Yes! Lets do this"}

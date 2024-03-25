@@ -9,6 +9,8 @@ import { Helmet } from "react-helmet";
 import { useLocation } from "react-router-dom";
 import ReactGA from "react-ga4";
 import CanvasBackground from "./components/CanvasBackground";
+import { useSelector, useDispatch } from "react-redux";
+import { setClientData as setClientDataRedux } from "./actions/common";
 
 const trackingId = "G-3QHV5V4XDL";
 ReactGA.initialize(trackingId);
@@ -25,14 +27,15 @@ function App() {
   const [bgImage, setBgImage] = useState("");
   const [dailyQuestion, setDailyQuestion] = useState("");
   const [checkoutPage, setCheckoutPage] = useState(false);
-  const [clientData, setClientData] = useState({});
   const [outerHeight, setOuterHeight] = useState(
     document.documentElement.scrollHeight
   );
   const [userCreated, setUserCreated] = useState(false);
   const [loading, setLoading] = useState(false);
+  const clientData = useSelector((state) => state.common).clientData;
   const appContainerRef = useRef();
   const overlayRef = useRef();
+  const dispatch = useDispatch();
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -55,6 +58,11 @@ function App() {
   const tomorrowDateParsed = `${yearTomorrow}-${parseInt(
     monthTomorrow
   )}-${parseInt(dayTomorrow)}`;
+
+  const setClientData = (data) => {
+    if (!data) return;
+    dispatch(setClientDataRedux(data));
+  };
 
   useEffect(() => {
     const todayImg = localStorage.getItem(`beatific-image-${todayParsed}`);
@@ -179,7 +187,7 @@ function App() {
   const subscriptionState = (subscribedOrNot) => setSubscribed(subscribedOrNot);
   const goToForgotPassword = (goOrNot) => setForgotPassword(goOrNot);
 
-  console.log(!!bgImage);
+  // console.log(!!bgImage);
 
   return (
     <>

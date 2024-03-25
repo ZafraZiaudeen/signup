@@ -74,26 +74,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-bottom: 30px;
   width: 100%;
-  max-width: 494px;
+  /* max-width: 494px; */
+  padding: 13px;
   position: relative;
+  border: 1px solid #FFECB1;
+  border-radius: 360px;
 }
 .couponIcon {
   position: absolute;
-  left: 0;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
 }
 .couponButton {
   color: #a7a7a7;
-  letter-spacing: 3px;
+  /* letter-spacing: 3px; */
+  font-size: 18px;
   outline: none;
   border: none;
   background-color: transparent;
   cursor: pointer;
-  border-bottom: 1px solid #ede8f8;
-  padding-bottom: 4px;
+  /* border-bottom: 1px solid #EDE8F8; */
+  /* padding-bottom: 4px; */
+  display: flex;
+  align-items: center;
+  line-height: 23px;
+  font-family: 'Quicksand Regular';
 }
 
 @keyframes widthAnim {

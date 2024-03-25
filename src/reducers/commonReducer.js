@@ -5,6 +5,7 @@ const initialState = {
   },
   couponOpen: false,
   couponData: null,
+  clientData: {},
   loading: false,
 };
 
@@ -24,6 +25,11 @@ const commonReducer = (state = initialState, action) => {
       return {
         ...state,
         couponData: action.payload,
+      };
+    case "SET_CLIENT_DATA":
+      return {
+        ...state,
+        clientData: action.payload,
       };
     case "SET_LOADING":
       return {

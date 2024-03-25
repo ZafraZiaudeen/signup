@@ -15,6 +15,13 @@ export const setCouponData = (data) => {
     payload: data,
   };
 };
+export const setClientData = (data) => {
+  return {
+    type: "SET_CLIENT_DATA",
+    payload: data,
+  };
+} 
+
 export const setLoadingState = (data) => {
   return {
     type: "SET_LOADING",

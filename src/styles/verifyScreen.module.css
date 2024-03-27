@@ -137,3 +137,37 @@
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  .greeting {
+    margin-top: 60px;
+  }
+  .heading {
+    font-size: 38px !important;
+  }
+  .card {
+    width: 100%;
+    height: 100%;
+    padding: 62px 20px;
+  }
+  .textContainer {
+    width: 100%;
+    height: 100%;
+    padding: 37px 20px;
+  }
+  .text {
+    font-size: 16px;
+  }
+  .button {
+    font-size: 12px;
+  }
+  .heading {
+    font-size: 60px;
+  }
+  .simpleText {
+    font-size: 10px;
+  }
+  .timer {
+    font-size: 10px;
+  }
+}

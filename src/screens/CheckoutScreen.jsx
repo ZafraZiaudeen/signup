@@ -194,7 +194,7 @@ export default function CheckoutScreen({
                   </Elements>
                 </div>
               </div>
-              <button type="button" className={styles.forwardBtnHidden} />
+              <button type="button" className={`${styles.forwardBtnHidden}`} />
             </div>
           </div>
           <span className={styles.stripeName}>

@@ -738,7 +738,7 @@
   font-size: 15px;
 }
 
-.monthlyPrices .priceButton{
+.monthlyPrices .priceButton {
   font-size: 19px;
 }
 
@@ -814,9 +814,9 @@ input[type="radio"] {
 
 input[type="radio"]:checked + label,
 input[type="radio"]:hover + label {
-  background-color: #F2F9FF;
-  border: 1px solid #C7E1FF;
-  color: #0389FF;
+  background-color: #f2f9ff;
+  border: 1px solid #c7e1ff;
+  color: #0389ff;
   width: 227px;
   /* padding-right: 40px; */
   padding-right: 34px;
@@ -1176,5 +1176,32 @@ input[type="radio"]:hover + label .previousPrice {
 
   .footerLinks {
     bottom: 10px;
+    font-size: 10px;
+  }
+
+  .payFwdMainSection {
+  }
+
+  .payfwdTitle {
+    font-size: 18px !important;
+  }
+
+  .payfwdName,
+  .payForwardText {
+    margin-top: 0px !important;
+    font-size: 42px !important;
+    margin-bottom: 0;
+  }
+
+  .previousPrice {
+    font-size: 12px !important;
+  }
+
+  .checkout_greeting {
+    font-size: 18px !important;
+  }
+
+  .forwardBtnHidden{
+    display: none;
   }
 }

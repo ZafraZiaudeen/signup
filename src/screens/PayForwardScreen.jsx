@@ -142,9 +142,9 @@ export default function PayForwardScreen({
         </button>
       )}
 
-      <div className={styles.mainSection}>
-        <p>Self love feels right</p>
-        <h2>{name}</h2>
+      <div className={`${styles.mainSection} ${styles.payFwdMainSection}`}>
+        <p className={styles.payfwdTitle}>Self love feels right</p>
+        <h2 className={styles.payfwdName}>{name}</h2>
         <div className={`${styles.innerContainer} ${newStyles.relativeDiv}`}>
           {loading && (
             <div className={newStyles.lottieContainer}>

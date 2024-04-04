@@ -6,7 +6,7 @@ export default function DownloadData() {
   const initialized = useRef(false);
   const [downloadFailed, setDownloadFailed] = useState(false);
   const [timeLeft, setTimeLeft] = useState(10);
-  
+
   const currUrl = new URL(window.location.href);
   const email = currUrl.searchParams.get("email");
   const token = currUrl.searchParams.get("token");
@@ -22,13 +22,15 @@ export default function DownloadData() {
     if (res.status !== 200) {
       setDownloadFailed(true);
 
-      setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
+      return setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev === 1) {
+            window.open("", "_self").close();
+            return;
+          }
+          return prev - 1;
+        });
       }, 1000);
-
-      setTimeout(() => {
-        window.open("", "_self").close();
-      }, 10000);
     }
 
     //download file from response
@@ -44,9 +46,9 @@ export default function DownloadData() {
     //set window loading to false
 
     window.loading = false;
-    
+
     //close window
-    window.open('','_self').close()
+    window.open("", "_self").close();
   };
 
   useEffect(() => {
@@ -56,7 +58,11 @@ export default function DownloadData() {
   }, []);
 
   useEffect(() => {}, []);
-  return <>
-    {!downloadFailed ? "Downloading data..." : `Invalid download request. Closing in ${timeLeft} seconds...`}
-  </>;
+  return (
+    <>
+      {!downloadFailed
+        ? "Downloading data..."
+        : `Invalid download request. Closing in ${timeLeft} seconds...`}
+    </>
+  );
 }

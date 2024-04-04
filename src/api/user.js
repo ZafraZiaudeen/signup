@@ -47,6 +47,8 @@ const user = {
   downloadData: (email, token) => new Promise((resolve) => {
     axios.get(config.serverUrl + "/api/v1/users/download-data/" + email + "/" + token).then((res) => {
       resolve(res);
+    }).catch((err) => {
+      resolve({ success: false, status: 500, message: err.response.data.message });
     });
   })
 };

@@ -14,10 +14,10 @@ const user = {
     new Promise(async (resolve) => {
       let result = await axios.get(
         config.serverUrl +
-          "/api/v1/subscribed/" +
-          data.email +
-          "/" +
-          new Date().getMonth(),
+        "/api/v1/subscribed/" +
+        data.email +
+        "/" +
+        new Date().getMonth(),
         data
       );
       resolve(result);
@@ -44,6 +44,11 @@ const user = {
           resolve(err);
         });
     }),
+  downloadData: (email, token) => new Promise((resolve) => {
+    axios.get(config.serverUrl + "/api/v1/users/download-data/" + email + "/" + token).then((res) => {
+      resolve(res);
+    });
+  })
 };
 
 export default user;

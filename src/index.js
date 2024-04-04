@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import Privacy from "./screens/Privacy";
 import VerifyEmail from "./screens/VerifyEmail";
+import DownloadData from "./screens/DownloadData";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import rootReducer from "./reducers";
@@ -25,6 +26,7 @@ root.render(
           <Route path="/" element={<App />} />
           <Route path="/privacy-policy" element={<Privacy />} />
           <Route path="/verify" element={<VerifyEmail />} />
+          <Route path="/download-data" element={<DownloadData />} />
         </Routes>
       </BrowserRouter>
     </Provider>

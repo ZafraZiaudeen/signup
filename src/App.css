@@ -6,17 +6,17 @@
 .App {
   max-width: 100vw;
   min-height: 100vh;
-  /* height: 100vh; */
+  /* height: 100vh; */ 
   width: 100%;
   transition: background 300ms ease-in 200ms;
   /* background-color: rgba(0, 0, 0, 0.2); */
   background-repeat: no-repeat;
   background-size: cover;
-  -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-  -moz-animation: fadein 1s; /* Firefox < 16 */
-  -ms-animation: fadein 1s; /* Internet Explorer */
-  -o-animation: fadein 1s; /* Opera < 12.1 */
-  animation: fadein 1s;
+  -webkit-animation: fadein 0.3s; /* Safari, Chrome and Opera > 12.1 */
+  -moz-animation: fadein 0.3s; /* Firefox < 16 */
+  -ms-animation: fadein 0.3s; /* Internet Explorer */
+  -o-animation: fadein 0.3s; /* Opera < 12.1 */
+  animation: fadein 0.3s;
   z-index: 9;
   /* position: absolute; */
   top: 0;

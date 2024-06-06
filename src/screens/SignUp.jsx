@@ -4,10 +4,11 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements, CardElement } from "@stripe/react-stripe-js";
 import axios from "axios";
 import userApi from "../api/user";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import OtpInput from "react-otp-input";
 import {
   WriteEmail,
+  WriteOTP,
   WriteName,
   WritePassword,
   WhatIsBeatific,
@@ -42,9 +43,15 @@ import extension from "../api/extension";
 import PayForwardScreenB from "./PayForwardScreenB";
 import PayForwardScreen from "./PayForwardScreen";
 import Alert from "../components/Alert";
-import { setLoadingState, updateErrorMessage } from "../actions/common";
+import {
+  setLoadingState,
+  setVerificationPopup,
+  updateErrorMessage,
+} from "../actions/common";
 import { createGAEvent } from "../utils/utils";
 import NextButton from "../components/NextButton";
+import VerificationInput from "../components/VerificationInput";
+import user from "../api/user";
 
 // import io from "socket.io-client";
 
@@ -112,8 +119,12 @@ const Child = ({
     right: "$9.99",
   });
 
+  const verificationPopup = useSelector(
+    (state) => state.common
+  ).verificationPopup;
   const nameRef = useRef(null);
   const emailRef = useRef(null);
+  const pinRef = useRef(null);
   const passwordRef = useRef(null);
   const [step, setStep] = useState("1");
   const [welcomeStep, setWelcomeStep] = useState("");
@@ -124,8 +135,10 @@ const Child = ({
   const [name, setName] = useState("");
   const [emptyName, setEmptyName] = useState(false);
   const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [emptyEmail, setEmptyEmail] = useState(false);
   const [invalidEmail, setInvalidEmail] = useState(false);
+  const [invalidOtp, setInvalidOtp] = useState(false);
   const [alreadyReg, setAlreadyReg] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(true);
@@ -161,12 +174,7 @@ const Child = ({
   //get pricing plans
 
   useEffect(() => {
-    console.log("planId changed ===>", planId);
-  }, [planId]);
-
-  useEffect(() => {
     const fetchPlans = async () => {
-      console.log("fetching plans");
       const response = await Pricing.getAllPlans();
       setPricingPlans(response.data[0]);
     };
@@ -230,8 +238,41 @@ const Child = ({
     setStep("2");
   };
 
+  const sendCode = async (resend) => {
+    console.log("SEND CODE");
+    const sent = await userApi.sendVerificationCode({ email: email });
+    console.log(sent);
+    if (sent.data?.success) {
+      dispatch(
+        updateErrorMessage({
+          message: resend
+            ? "We've resent you a temporary login secret code. Please check your email inbox."
+            : "We've sent you a temporary login secret code. Please check your email inbox.",
+          negative: false,
+        })
+      );
+    } else {
+      dispatch(
+        updateErrorMessage({
+          message: sent?.response?.data?.message,
+          negative: true,
+        })
+      );
+    }
+  };
+
+  const handleEmailVerifySuccess = () => {
+    dispatch(
+      updateErrorMessage({
+        message:
+          "Yay! 🎉 You're all set! Let's get you started on your journey to happiness! 🚀",
+        negative: false,
+      })
+    );
+    setStep("4");
+  };
+
   const handleEmailNext = (e) => {
-    dispatch(setLoadingState(true));
     try {
       e.preventDefault();
       if (email.trim() === "") {
@@ -267,6 +308,33 @@ const Child = ({
     }
   };
 
+  const handleOtpNext = async (e) => {
+    e.preventDefault();
+    if (otp.trim() === "") {
+      dispatch(
+        updateErrorMessage({
+          message:
+            "Oh no! 🙈 The code field can’t be blank! Please type the code you received.",
+          negative: true,
+        })
+      );
+      return;
+    }
+
+    const verified = await userApi.verifyEmailCode({ email: email, code: otp });
+    console.log(verified);
+    if (verified?.data?.success) {
+      handleEmailVerifySuccess();
+    } else {
+      dispatch(
+        updateErrorMessage({
+          message: "Invalid code. Please double-check and retry!",
+          negative: true,
+        })
+      );
+    }
+  };
+
   // on render
   useEffect(() => {
     if (step === "1") {
@@ -278,7 +346,11 @@ const Child = ({
     } else if (step === "3") {
       steps.stepTwo = true;
       setSteps({ ...steps });
-      passwordRef.current.focus();
+      pinRef.current?.focus();
+    } else if (step === "4") {
+      steps.stepThree = true;
+      setSteps({ ...steps });
+      passwordRef.current?.focus();
     }
 
     if (welcomeStep === "1") {
@@ -340,16 +412,24 @@ const Child = ({
     })();
   }, []);
 
-  useEffect(() => {
-    console.log("welcomeStep changed ===>", welcomeStep);
-  }, [welcomeStep]);
-
   // form validation
   const handleEmailChange = (e) => {
     setEmptyEmail(false);
     setInvalidEmail(false);
     setAlreadyReg(false);
     setEmail(e.target.value);
+    const emailInput = document.getElementById("emailGroup");
+    const warning = document.getElementById("warning");
+
+    if (email) {
+      if (warning) warning.style.display = "none";
+      if (emailInput) emailInput.style.border = "none";
+    }
+  };
+
+  const handleOtpChange = (e) => {
+    setInvalidOtp(false);
+    setOtp(e.target.value);
     const emailInput = document.getElementById("emailGroup");
     const warning = document.getElementById("warning");
 
@@ -395,6 +475,9 @@ const Child = ({
           // wantToSignUp(false);
         } else {
           createGAEvent("Button", "button_click", "Navigated to price plans");
+          sendCode();
+          // dispatch(setVerificationPopup(true));
+
           setStep("3");
         }
       })
@@ -411,8 +494,10 @@ const Child = ({
       });
       let subscriptionResult = await payments.createSubscription({
         customerId: customerResult.data.customer.id,
-        price: clientData.subscriptionAmount,
-        planId: clientData.planId,
+        price: config.devMode
+          ? config.devPriceId
+          : clientData.subscriptionAmount,
+        planId: config.devMode ? config.devPriceId : clientData.planId,
       });
       // console.log({ customerResult });
       console.log({ subscriptionResult });
@@ -462,13 +547,21 @@ const Child = ({
     const userData = {
       name,
       email,
-      password,
+      password: password,
     };
 
-    const user = await axios.post(config.serverUrl + "/api/v1/users", userData);
-    if (user) {
+    const coupon = sessionStorage.getItem("coupon");
+
+    let user;
+    if (!coupon) {
+      user = await axios.post(config.serverUrl + "/api/v1/users", userData);
+    }
+    if (user || coupon) {
       setUserCreated(true);
-      localStorage.setItem("user", JSON.stringify(user.data));
+
+      if (!coupon) {
+        localStorage.setItem("user", JSON.stringify(user.data));
+      }
       let paymentIntentResult = await getPaymentIntent();
 
       clientData.paymentIntent = paymentIntentResult;
@@ -682,11 +775,14 @@ const Child = ({
             </button>
           </div>
           <div className={styles.badgeSection}>
-            <img
-              src={badge}
-              className={`${styles.badge} ${anims.scaleUpCenter}`}
-              alt="badge"
-            />
+            <div className={styles.dot}>
+              <img
+                src={badge}
+                className={`${styles.badge} ${anims.scaleUpCenter}`}
+                alt="badge"
+              />
+            </div>
+            <div className={styles.dot}></div>
             <div className={styles.dot}></div>
             <div className={styles.dot}></div>
           </div>
@@ -781,18 +877,146 @@ const Child = ({
           <NextButton onClick={handleEmailNext} styles={styles} />
         </div>
         <div className={styles.badgeSection}>
-          <img src={badge} className={styles.badge} alt="badge" />
-          <img
-            src={badge}
-            className={`${styles.badge} ${anims.scaleUpCenter}`}
-            style={{ marginLeft: "-20px" }}
-            alt="badge"
-          />
+          <div className={styles.dot}>
+            <img src={badge} className={styles.badge} alt="badge" />
+          </div>
+          <div className={styles.dot}>
+            <img
+              src={badge}
+              className={`${styles.badge} ${anims.scaleUpCenter}`}
+              alt="badge"
+            />
+          </div>
+          <div className={styles.dot}></div>
           <div className={styles.dot}></div>
         </div>
       </div>
     );
   } else if (step === "3") {
+    insideForm = (
+      <div className={styles.formAction}>
+        <label htmlFor="name">
+          <span
+            style={{
+              width: "100%",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <WriteOTP steps={steps} setSteps={setSteps} />
+          </span>
+          <span className={styles.subtitle}>
+            Can't find it?{" "}
+            <a href="#" onClick={() => sendCode(true)}>
+              Try again
+            </a>
+          </span>
+        </label>
+
+        <div className={styles.inputSection}>
+          <button
+            type="button"
+            onClick={() => {
+              setStep("2");
+            }}
+            className={styles.backBtn}
+          >
+            <img
+              src={arrowForward}
+              className={styles.backArrowBtn}
+              alt="go to previous form step"
+            />
+          </button>
+          <div className={styles.inputAndWarning}>
+            {/* <p
+              id="warning"
+              style={{ color: "#FF0000" }}
+              className={styles.warning}
+            >
+              Invalid email address. Valid e-mail can contain only latin
+              letters, numbers, '@' and '.'
+            </p> */}
+            <div
+              className={
+                emptyEmail || invalidEmail || alreadyReg
+                  ? `${styles.formInputWrapper} ${styles.wrapperError}`
+                  : styles.formInputWrapper
+              }
+            >
+              <div className={styles.gradientWrapper}>
+                <div id="otpGroup" className={styles.formInput}>
+                  <span className={styles.icon}>
+                    <img src={lock} alt="lock icon" className={styles.lock} />
+                  </span>
+                  <OtpInput
+                    value={otp}
+                    onChange={setOtp}
+                    numInputs={6}
+                    renderSeparator={<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+                    renderInput={(props) => (
+                      <input
+                        {...props}
+                        style={{ width: 36, textAlign: "center" }}
+                      />
+                    )}
+                    containerStyle={styles.otpInputContainer}
+                    inputStyle={styles.otpInput}
+                    shouldAutoFocus={true}
+                  />
+                  {/* <input
+                    style={{
+                      paddingLeft: "10px",
+                      letterSpacing: 2,
+                      textAlign: "center",
+                    }}
+                    ref={pinRef}
+                    type="text"
+                    inputmode="numeric"
+                    name="otp"
+                    id="otp"
+                    placeholder="One time passcode"
+                    onChange={handleOtpChange}
+                    onKeyDown={(e) => {
+                      if (e.code === "Enter") handleOtpNext(e);
+                    }}
+                    value={otp}
+                    // required
+                  /> */}
+                  <span className={styles.requiredMsg} style={{ left: "58%" }}>
+                    {emptyEmail
+                      ? "Email Required"
+                      : invalidEmail
+                      ? "Invalid code"
+                      : ""}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <NextButton onClick={handleOtpNext} styles={styles} />
+        </div>
+        <div className={styles.badgeSection}>
+          <div className={styles.dot}>
+            <img src={badge} className={styles.badge} alt="badge" />
+          </div>
+          <div className={styles.dot}>
+            <img src={badge} className={styles.badge} alt="badge" />
+          </div>
+          <div className={styles.dot}>
+            <img
+              src={badge}
+              className={`${styles.badge} ${anims.scaleUpCenter}`}
+              alt="badge"
+            />
+          </div>
+          <div className={styles.dot}></div>
+        </div>
+      </div>
+    );
+  } else if (step === "4") {
     insideForm = (
       <div className={styles.formAction}>
         <label htmlFor="name">
@@ -809,7 +1033,7 @@ const Child = ({
         <div className={styles.inputSection}>
           <button
             type="button"
-            onClick={() => setStep("2")}
+            onClick={() => setStep("3")}
             className={styles.backBtn}
           >
             <img
@@ -833,6 +1057,7 @@ const Child = ({
                 onChange={handlePasswordChange}
                 onKeyDown={handlePasswordKeyDown}
                 value={password}
+                className={styles.codeInput}
               />
 
               <span className={styles.showPass} onClick={handleClick}>
@@ -865,19 +1090,22 @@ const Child = ({
           </button>
         </div>
         <div className={styles.badgeSection}>
-          <img src={badge} className={styles.badge} alt="badge" />
-          <img
-            src={badge}
-            className={styles.badge}
-            alt="badge"
-            style={{ marginLeft: "-20px" }}
-          />
-          <img
-            src={badge}
-            className={`${styles.badge} ${anims.scaleUpCenter}`}
-            alt="badge"
-            style={{ marginLeft: "-20px" }}
-          />
+          <div className={styles.dot}>
+            <img src={badge} className={styles.badge} alt="badge" />
+          </div>
+          <div className={styles.dot}>
+            <img src={badge} className={styles.badge} alt="badge" />
+          </div>
+          <div className={styles.dot}>
+            <img src={badge} className={styles.badge} alt="badge" />
+          </div>
+          <div className={styles.dot}>
+            <img
+              src={badge}
+              className={`${styles.badge} ${anims.scaleUpCenter}`}
+              alt="badge"
+            />
+          </div>
         </div>
       </div>
     );
@@ -1099,6 +1327,11 @@ const Child = ({
       ) : (
         <>
           <section className={styles.signUpActions}>
+            <VerificationInput
+              email={email}
+              onSuccess={handleEmailVerifySuccess}
+              resend={sendCode}
+            />
             <div className={styles.iconSection}>
               <img
                 width={step === "2" ? 65 : 68}
@@ -1113,7 +1346,7 @@ const Child = ({
             </h1>
             <form>{insideForm}</form>
           </section>
-          <div className={styles.footerLinks}>
+          <div className={`${styles.footerLinks} ${styles.footerLinkLogin}`}>
             <p className={styles.footerP}>HAVE AN ACCOUNT?</p>
             <p className={styles.footerP}>LOG IN</p>
             <button
@@ -1126,6 +1359,9 @@ const Child = ({
             >
               <img src={arrowBtnSignUp} className={styles.arrow} alt="Arrow" />
             </button>
+          </div>
+          <div className={`${styles.footerLinks} ${styles.disclaimer}`}>
+            <p className={styles.footerP}>By continuing, you agree to Beatific Consumer Terms and Acceptable Use Policy, and acknowledge our Privacy Policy.</p>
           </div>
         </>
       )}

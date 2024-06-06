@@ -50,7 +50,35 @@ const user = {
     }).catch((err) => {
       resolve({ success: false, status: 500, message: err.response.data.message });
     });
-  })
+  }),
+  getDropOffData: (token) => new Promise((resolve) => {
+    axios.get(config.serverUrl + "/api/v1/users/drop-off-token/" + token).then((res) => {
+      resolve(res);
+    }).catch((err) => {
+      resolve({ success: false, status: 500, message: err.response.data.message });
+    });
+  }),
+  saveEmail: (data) => new Promise((resolve) => {
+    axios.post(config.serverUrl + "/api/v1/users/save-drop-off", data).then((res) => {
+      resolve(res);
+    }).catch((err) => {
+      resolve(err);
+    });
+  }),
+  verifyEmailCode: (data) => new Promise((resolve) => {
+    axios.post(config.serverUrl + "/api/v1/users/verify-email-code", data).then((res) => {
+      resolve(res);
+    }).catch((err) => {
+      resolve(err);
+    });
+  }),
+  sendVerificationCode: (data) => new Promise((resolve) => {
+    axios.post(config.serverUrl + "/api/v1/users/send-confirm-email", data).then((res) => {
+      resolve(res);
+    }).catch((err) => {
+      resolve(err);
+    });
+  }),
 };
 
 export default user;

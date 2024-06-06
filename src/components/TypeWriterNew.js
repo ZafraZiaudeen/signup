@@ -77,6 +77,42 @@ export function WriteEmail({ steps, setSteps }) {
     // );
   }
 }
+export function WriteOTP({ steps, setSteps }) {
+  const completeStep = () => {
+    steps.stepTwo = true;
+    setSteps({ ...steps });
+  };
+
+  useEffect(() => {
+    let isStepTwo = localStorage.getItem("step2");
+    if (isStepTwo) {
+      steps.stepTwo = true;
+      setSteps({ ...steps });
+    }
+  }, []);
+
+  if (steps.stepTwo) {
+    return <>Paste the secret code?</>;
+  } else {
+    return <>Paste the secret code?</>;
+    // return (
+    //   <Typewriter
+    //     onInit={(typewriter) => {
+    //       localStorage.setItem("step2", true);
+    //       typewriter
+    //         .typeString("Legend's inbox, please")
+    //         .pauseFor(500)
+    //         .typeString("?")
+    //         .start()
+    //         .callFunction(completeStep);
+    //     }}
+    //     options={{
+    //       delay: 100,
+    //     }}
+    //   />
+    // );
+  }
+}
 export function WritePassword({ steps, setSteps }) {
   const completeStep = () => {
     steps.stepThree = true;

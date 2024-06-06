@@ -1,0 +1,141 @@
+@font-face {
+  font-family: "Quicksand";
+  src: url(../fonts/Quicksand-Bold.ttf);
+}
+
+.dropOffContainer {
+  background-color: #fff;
+  overflow: hidden;
+
+  .ovalOne {
+    width: 30vw;
+    height: 30vw;
+    background-color: #ff2f87;
+    border-radius: 360px;
+    position: fixed;
+    top: -5vw;
+    right: -10vw;
+  }
+
+  .ovalTwo {
+    width: 30vw;
+    height: 30vw;
+    background-color: #ffce31;
+    border-radius: 360px;
+    position: fixed;
+    top: -5vw;
+    right: 5vw;
+  }
+
+  .ovalThree {
+    width: 30vw;
+    height: 30vw;
+    background-color: #7826ff;
+    border-radius: 360px;
+    position: fixed;
+    bottom: 2vw;
+    left: -4vw;
+  }
+
+  .ovalFour {
+    width: 30vw;
+    height: 30vw;
+    background-color: #83a3ff;
+    border-radius: 360px;
+    position: fixed;
+    bottom: -5vw;
+    left: -15vw;
+  }
+
+  .content {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: #ffffffbb;
+    backdrop-filter: blur(80px);
+    z-index: 999;
+    row-gap: 20px;
+
+    .subtitle {
+      font-size: 24px;
+      font-weight: 500;
+      color: #212121;
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #212121;
+      font-family: "Quicksand";
+    }
+  }
+}
+
+.textFocusIn {
+  -webkit-animation: text-focus-in 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53)
+    alternate both;
+  animation: text-focus-in 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) alternate
+    both;
+}
+.pulsateFwd {
+  -webkit-animation: pulsate-fwd 4s ease-in-out infinite both;
+  animation: pulsate-fwd 4s ease-in-out infinite both;
+}
+
+@-webkit-keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+@keyframes text-focus-in {
+  0% {
+    -webkit-filter: blur(12px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-filter: blur(0px);
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pulsate-fwd {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}

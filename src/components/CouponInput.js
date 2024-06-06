@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleCoupon, setCouponData } from "../actions/common";
+import { toggleCoupon, setCouponData, setFromSession } from "../actions/common";
 import payments from "../api/payments";
 import styles from "../styles/couponInput.module.scss";
 import animations from "../styles/animations.module.css";
@@ -14,10 +14,11 @@ export default function CouponInput() {
   mirage.register()
 
   const [error, setError] = useState("");
-  const [coupon, setCoupon] = useState("");
+  const [coupon, setCoupon] = useState(sessionStorage.getItem("coupon") || "");
   const [loading, setLoading] = useState(false);
   const couponInputRef = useRef();
   const couponData = useSelector((state) => state.common).couponData;
+  const sessionCoupon = sessionStorage.getItem("coupon");
 
   const visible = useSelector((state) => state.common).couponOpen;
   const dispatch = useDispatch();
@@ -35,20 +36,35 @@ export default function CouponInput() {
     setError("");
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e, fromSession) => {
+    e?.preventDefault();
     setLoading(true);
 
     const result = await payments.validateCoupon({ coupon });
     if (result?.data?.coupon?.id) {
+      // console.log(result)
       dispatch(setCouponData(result?.data?.coupon));
-      dispatch(toggleCoupon());
+      dispatch(toggleCoupon(false));
+      dispatch(setFromSession(!!fromSession));
       setLoading(false);
       return;
     }
     setLoading(false);
     setError("Invalid coupon code");
+    sessionStorage.removeItem("coupon");
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      //couponData?.code !== sessionCoupon
+      if (sessionCoupon && !visible) {
+        setCoupon(sessionCoupon);
+        handleSubmit(null, true)
+      };
+    }, 1000);
+  }, [dispatch, sessionCoupon, visible]);
+
+
 
   if (visible)
     return (

@@ -7,20 +7,17 @@ import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import { useDispatch, useSelector } from "react-redux";
 
-import Lottie from "react-lottie";
 import styles from "../styles/SignUp.module.css";
 import newStyles from "../styles/PayForward.module.css";
-import anims from "../styles/animations.module.css";
 
 import arrowForward from "../images/arrowOnly.svg";
 import padLock from "../images/checkoutPadLock.svg";
-import badge from "../images/badgeBlue.svg";
-import badgeBlue from "../images/badgeBlue.svg"
+import badgeBlue from "../images/badgeBlue.svg";
 import coupon from "../images/coupon.svg";
-import loadingAnimation from "../images/loading.json";
-import { setClientData, toggleCoupon } from "../actions/common";
-import axios from "axios";
+import { setClientData, setCouponData, toggleCoupon } from "../actions/common";
+
 import paymentsApi from "../api/payments";
+import { persistor } from "../redux/configureStore";
 
 export default function CheckoutScreen({
   setCheckoutPage,
@@ -32,8 +29,14 @@ export default function CheckoutScreen({
   const stripePromise = loadStripe(config.stripeSecret);
   const dispatch = useDispatch();
   const couponData = useSelector((state) => state.common)?.couponData;
-  const [isTrialActive, setIsTrialActive] = useState(false);
+
   const clientData = useSelector((state) => state.common).clientData;
+  const sessionCoupon = sessionStorage.getItem("coupon");
+  const fromSession = useSelector((state) => state.common).fromSession;
+  const isTrialActive = useSelector((state) => state.common?.settings)?.trial;
+  const selectedSubscription = useSelector(
+    (state) => state.common
+  )?.selectedSubscription;
 
   const handleCouponButton = () => {
     dispatch(toggleCoupon());
@@ -55,33 +58,21 @@ export default function CheckoutScreen({
       localStorage.removeItem("step1");
       localStorage.removeItem("step2");
       localStorage.removeItem("step3");
+      persistor.purge();
       extension.openLoginPage(data.paymentIntent.id);
     }, 1300);
   };
 
   useEffect(() => {
-    console.log(clientData);
-  }, [clientData, data]);
-
-  useEffect(() => {
-    (async () => {
-      const settingsRes = await axios.get(
-        `${config.serverUrl}/api/v1/settings`
-      );
-      if (settingsRes?.data?.trial) {
-        setIsTrialActive(true);
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    if (!couponData?.id) return;
+    // if (!couponData?.id) return;
 
     (async () => {
       const newPaymentIntent = await paymentsApi.createSubscription({
         customerId: clientData?.paymentIntent?.customerId,
-        price: clientData.subscriptionAmount,
-        planId: clientData.planId,
+        price: config?.devMode
+          ? config.devPrice
+          : clientData.subscriptionAmount,
+        planId: config?.devMode ? config.devPriceId : clientData.planId,
         coupon: couponData?.id,
       });
 
@@ -96,12 +87,26 @@ export default function CheckoutScreen({
           },
         })
       );
-      console.log("newPaymentIntent", newPaymentIntent);
     })();
   }, [couponData]);
 
+  const CouponApplied = () => {
+    return (
+      <div className={newStyles.sessionCouponContainer}>
+        <img src={coupon} className={newStyles.sessionCouponIcon} />
+        <span className={newStyles.sessionCouponTitle}>
+          30 Days Trial Coupon Applied
+        </span>
+        <span className={newStyles.sessionCouponSubtitle}>
+          - $0 charge / cancel anytime
+        </span>
+      </div>
+    );
+  };
+
   const CouponComponent = () => {
-    if (isTrialActive)
+    if (sessionCoupon) return <></>;
+    if (false)
       return (
         <div className={newStyles.couponButtonContainer}>
           <img src={coupon} className={newStyles.couponIcon} />
@@ -165,11 +170,23 @@ export default function CheckoutScreen({
                 <span className={styles.secureText}>100% Secure</span>
                 <div className={styles.bluePrice}>
                   <img src={badgeBlue} alt="" />
-                  <span className={styles.previousPrice}>$19</span>
-                  <span className={styles.subscriptionAmount}>
-                    ${`${clientData.subscriptionAmount}`}
+                  {!(fromSession && isTrialActive) && (
+                    <span className={styles.previousPrice}>$19</span>
+                  )}
+                  <span
+                    className={
+                      fromSession && isTrialActive
+                        ? styles.previousPrice
+                        : styles.subscriptionAmount
+                    }
+                  >
+                    ${`${selectedSubscription[0]?.price}`}
                   </span>
-                </div>
+                  {fromSession && isTrialActive && (
+                    <span className={styles.subscriptionAmount}>$0</span>
+                  )}
+                </div>{" "}
+                {fromSession && isTrialActive && <CouponApplied />}
                 <div className={styles.cardElemContainer}>
                   {/* {isTrialActive && (
                     <div className={newStyles.couponButtonContainer}>

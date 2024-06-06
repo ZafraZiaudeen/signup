@@ -10,11 +10,17 @@ import star from "../images/ratingStar.svg";
 import priceBadge from "../images/badgeBlue.svg";
 import lisa from "../images/Lisa.png";
 
+import axios from "axios";
 import Pricing from "../api/pricingPlans";
 import Loader from "../components/Loader";
 import arrowForward from "../images/arrowOnly.svg";
 import Lottie from "react-lottie";
 import loadingAnimation from "../images/loading.json";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedSubscription } from "../actions/common";
+import config from "../config/config";
+import { setSettings } from "../actions/common";
+import userApi from "../api/user";
 
 export default function PayForwardScreen({
   name,
@@ -44,8 +50,14 @@ export default function PayForwardScreen({
     "Join our family and pay forward for one person"
   );
   const [time, setTime] = useState(1000 * 60 * 30);
+  const sessionCoupon = sessionStorage.getItem("coupon");
+  const couponData = useSelector((state) => state.common)?.couponData;
+  const percentage = couponData?.coupon?.percent_off || 0 / 100;
+  const clientData = useSelector((state) => state.common)?.clientData;
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setSelectedSubscription(subscriptions[payPeriod]));
     if (subscriptions?.monthly?.length > 0) {
       setPlanId(subscriptions[payPeriod][selectedIndex]?.priceId);
       return setSubscriptionAmount(
@@ -61,6 +73,7 @@ export default function PayForwardScreen({
       let parsedForm = JSON.parse(signUpForm);
       if (parsedForm.subscriptionAmount) {
         let _payPeriod = parsedForm.payPeriod;
+
         setPayPeriod(_payPeriod);
         setSubAmounts(subscriptions[_payPeriod]);
         setSubscriptionAmount(parsedForm.subscriptionAmount);
@@ -126,6 +139,25 @@ export default function PayForwardScreen({
     }
   }, [time]);
 
+  useEffect(() => {
+    (async () => {
+      const settingsRes = await axios.get(
+        `${config.serverUrl}/api/v1/settings`
+      );
+
+      dispatch(setSettings(settingsRes.data));
+    })();
+  }, []);
+
+  useEffect(() => {
+    (async () => {
+      const saved = await userApi.saveEmail({
+        name: clientData.name,
+        email: clientData.email,
+      });
+    })();
+  }, [clientData]);
+
   return (
     <div className={styles.welcome}>
       {!userCreated && (
@@ -175,11 +207,15 @@ export default function PayForwardScreen({
                 type="button"
                 onClick={() => {
                   setPayPeriod("monthly");
-                  createGAEvent("Button", "button_click", "Switched to monthly");
+                  createGAEvent(
+                    "Button",
+                    "button_click",
+                    "Switched to monthly"
+                  );
                 }}
                 className={payPeriod === "monthly" ? styles.activePeriod : ""}
               >
-                COMMIT MONTHLY
+                {sessionCoupon ? "TRY" : "COMMIT"} MONTHLY
                 <div
                   className={
                     payPeriod === "monthly"
@@ -212,7 +248,7 @@ export default function PayForwardScreen({
               >
                 <div className={styles.mostPopular}>Most Popular</div>
                 <div className={styles.buttonText}>
-                  COMMIT ANNUALLY{" "}
+                  {sessionCoupon ? "TRY" : "COMMIT"} ANNUALLY{" "}
                   <span className={styles.youSave}>Save 18%</span>
                 </div>
                 <div
@@ -222,15 +258,6 @@ export default function PayForwardScreen({
                       : styles.PeriodUnderline
                   }
                 ></div>
-                {/* <span
-                  className={
-                    payPeriod === "yearly"
-                      ? `${styles.commit} ${styles.active}`
-                      : styles.commit
-                  }
-                >
-                  Commit Annually
-                </span> */}
               </button>
             </div>
             <div className={styles.pricesWrapper}>
@@ -310,9 +337,16 @@ export default function PayForwardScreen({
                     >
                       <img src={priceBadge} alt="badge" />
                       <span className={styles.previousPrice}>
-                        ${subscriptions.monthly[0]?.previousPrice}
+                        {sessionCoupon
+                          ? `$${subscriptions.monthly[0]?.price}`
+                          : `$${subscriptions.monthly[0]?.previousPrice}`}
                       </span>
-                      ${subscriptions.monthly[0]?.price}
+                      {sessionCoupon
+                        ? `$${
+                            subscriptions.monthly[0]?.price -
+                            (subscriptions.monthly[0]?.price * percentage) / 100
+                          }`
+                        : `$${subscriptions.monthly[0]?.price}`}
                     </label>
                     <span className={newStyles.countdown}>
                       Deal ends in {formatTime(time)}
@@ -394,9 +428,16 @@ export default function PayForwardScreen({
                     >
                       <img src={priceBadge} alt="badge" />
                       <span className={styles.previousPrice}>
-                        ${subscriptions?.yearly[0]?.previousPrice}
+                        {sessionCoupon
+                          ? `$${subscriptions.yearly[0]?.price}`
+                          : `$${subscriptions.yearly[0]?.previousPrice}`}
                       </span>
-                      ${subscriptions?.yearly[0]?.price}
+                      {sessionCoupon
+                        ? `$${
+                            subscriptions.yearly[0]?.price -
+                            (subscriptions.yearly[0]?.price * percentage) / 100
+                          }`
+                        : `$${subscriptions.yearly[0]?.price}`}
                     </label>
                     <span className={newStyles.countdown}>
                       Deal ends in {formatTime(time)}

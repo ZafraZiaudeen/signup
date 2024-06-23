@@ -151,6 +151,7 @@ export default function PayForwardScreen({
 
   useEffect(() => {
     (async () => {
+      if(sessionStorage.getItem("subscriptionRenew")) return;
       const saved = await userApi.saveEmail({
         name: clientData.name,
         email: clientData.email,

@@ -548,18 +548,20 @@ const Child = ({
       name,
       email,
       password: password,
+      planId: clientData.planId,
     };
 
     const coupon = sessionStorage.getItem("coupon");
+    const subscriptionRenew = sessionStorage.getItem("subscriptionRenew");
 
     let user;
-    if (!coupon) {
+    if (!coupon && !subscriptionRenew) {
       user = await axios.post(config.serverUrl + "/api/v1/users", userData);
     }
-    if (user || coupon) {
+    if (user || coupon || subscriptionRenew) {
       setUserCreated(true);
 
-      if (!coupon) {
+      if (!coupon && !subscriptionRenew) {
         localStorage.setItem("user", JSON.stringify(user.data));
       }
       let paymentIntentResult = await getPaymentIntent();

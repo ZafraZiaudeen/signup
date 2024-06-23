@@ -26,5 +26,20 @@ const payments = {
       );
       resolve(result);
     }),
+  renewSubscription: (data) => {
+    return new Promise(async (resolve) => {
+      const headers = {
+        Authorization: `Bearer ${data.token}`,
+      };
+      const email = data.email;
+
+      const result = await axios.get(
+        config.serverUrl + "/api/v1/stripe/renew-subscription?email=" + email,
+        { headers }
+      );
+      resolve(result.data);
+
+    });
+  },
 };
 export default payments;

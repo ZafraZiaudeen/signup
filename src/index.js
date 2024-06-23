@@ -7,6 +7,7 @@ import Privacy from "./screens/Privacy";
 import VerifyEmail from "./screens/VerifyEmail";
 import DownloadData from "./screens/DownloadData";
 import DropOffHandleScreen from "./screens/DropOffHandleScreen";
+import SubscriptionFailedScreen from "./screens/SubscriptionFailed";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import rootReducer from "./reducers";
@@ -35,6 +36,7 @@ root.render(
             <Route path="/verify" element={<VerifyEmail />} />
             <Route path="/download-data" element={<DownloadData />} />
             <Route path="/drop-off" element={<DropOffHandleScreen />} />
+            <Route path="/subscription-failed" element={<SubscriptionFailedScreen />} />
           </Routes>
         </BrowserRouter>
       </PersistGate>

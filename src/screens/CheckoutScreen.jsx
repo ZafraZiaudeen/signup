@@ -44,14 +44,20 @@ export default function CheckoutScreen({
 
   const handleSuccess = async (data) => {
     setComplete(true);
+    const localUser = localStorage.getItem("user");
+    let parsedUser;
+
+    if (localUser) parsedUser = JSON.parse(localUser);
+
     setTimeout(async () => {
       let result = await user.updateStripeCustomer({
         paymentIntent: clientData.paymentIntent,
-        email: clientData.email,
+        email: clientData.email || parsedUser.email,
         stripeCustomerId: clientData.paymentIntent.customerId,
         subscriptionAmount: clientData.subscriptionAmount,
         payPeriod: clientData.payPeriod,
         paymentIntentId: data.paymentIntent.id,
+        subscriptionId: clientData.paymentIntent.subscriptionId,
       });
 
       localStorage.removeItem("signUpForm");

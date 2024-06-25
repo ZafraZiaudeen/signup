@@ -52,6 +52,7 @@ import { createGAEvent } from "../utils/utils";
 import NextButton from "../components/NextButton";
 import VerificationInput from "../components/VerificationInput";
 import user from "../api/user";
+import Countdown from "react-countdown";
 
 // import io from "socket.io-client";
 
@@ -156,6 +157,10 @@ const Child = ({
   const [emailParam, setEmailParam] = useState("");
   const [userToken, setUserToken] = useState("");
   const [userCount, setUserCount] = useState(0);
+  const [nextTime, setNextTime] = useState(Date.now());
+  const [timer, setTimer] = useState("");
+  const [tryAgainDisabled, setTryAgainDisabled] = useState(false);
+
   const dispatch = useDispatch();
 
   //TODO remove this if multiple plans are added
@@ -239,15 +244,16 @@ const Child = ({
   };
 
   const sendCode = async (resend) => {
-    console.log("SEND CODE");
+    if (nextTime < Date.now()) setNextTime(Date.now() + 120000);
+
     const sent = await userApi.sendVerificationCode({ email: email });
     console.log(sent);
     if (sent.data?.success) {
       dispatch(
         updateErrorMessage({
           message: resend
-            ? "We've resent you a temporary login secret code. Please check your email inbox."
-            : "We've sent you a temporary login secret code. Please check your email inbox.",
+            ? `Please check again, I’ve just resent the code to your email ${email}`
+            : "We've sent you a temporary login secret code. Please check your emails quickly! It expires in 5 minutes ",
           negative: false,
         })
       );
@@ -682,6 +688,25 @@ const Child = ({
     }
   };
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const secondsToNextTime = Math.floor((nextTime - Date.now()) / 1000);
+      if (secondsToNextTime < 0) {
+        clearInterval(timer);
+        setTryAgainDisabled(false);
+        return setTimer("");
+      }
+
+      const minutes = Math.floor(secondsToNextTime / 60);
+      const seconds = secondsToNextTime % 60;
+
+      setTimer(` in ${minutes}:${seconds < 10 ? `0${seconds}` : seconds}`);
+      setTryAgainDisabled(true);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [nextTime]);
+
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
 
   let insideForm;
@@ -912,9 +937,14 @@ const Child = ({
           </span>
           <span className={styles.subtitle}>
             Can't find it?{" "}
-            <a href="#" onClick={() => sendCode(true)}>
+            <a
+              href="#"
+              onClick={() => sendCode(true)}
+              className={tryAgainDisabled ? styles.disabledLink : null}
+            >
               Try again
             </a>
+            {timer}
           </span>
         </label>
 
@@ -1363,7 +1393,10 @@ const Child = ({
             </button>
           </div>
           <div className={`${styles.footerLinks} ${styles.disclaimer}`}>
-            <p className={styles.footerP}>By continuing, you agree to Beatific Consumer Terms and Acceptable Use Policy, and acknowledge our Privacy Policy.</p>
+            <p className={styles.footerP}>
+              By continuing, you agree to Beatific Consumer Terms and Acceptable
+              Use Policy, and acknowledge our Privacy Policy.
+            </p>
           </div>
         </>
       )}

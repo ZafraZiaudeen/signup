@@ -323,7 +323,7 @@
   opacity: 0.6 !important;
 }
 
-.disclaimer p{
+.disclaimer p {
   letter-spacing: normal;
 }
 
@@ -1248,4 +1248,10 @@ input[type="radio"]:hover + label .previousPrice {
   .forwardBtnHidden {
     display: none;
   }
+}
+
+.disabledLink {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
 }

@@ -38,15 +38,23 @@
       height: 30px;
     }
   }
-  .messageText {
-    color: #000;
-    font-family: Quicksand;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: 0;
-    margin-right: 20px;
+  .messageContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    column-gap: 20px;
+    
+    .messageText {
+      color: #000;
+      font-family: Quicksand;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+      letter-spacing: 0;
+      margin-right: 20px;
+    }
   }
 }
 

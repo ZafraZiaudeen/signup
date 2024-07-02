@@ -2,6 +2,7 @@ const initialState = {
   errorMessage: {
     text: "",
     negative: false,
+    subText: "",
   },
   couponOpen: false,
   couponData: null,

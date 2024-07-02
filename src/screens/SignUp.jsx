@@ -253,8 +253,9 @@ const Child = ({
         updateErrorMessage({
           message: resend
             ? `Please check again, I’ve just resent the code to your email ${email}`
-            : "We've sent you a temporary login secret code. Please check your emails quickly! It expires in 5 minutes ",
+            : "We've sent you a temporary login secret code. Please check your emails quickly! ",
           negative: false,
+          subText: resend ? "" : "It expires in 5 minutes",
         })
       );
     } else {
@@ -942,7 +943,7 @@ const Child = ({
               onClick={() => sendCode(true)}
               className={tryAgainDisabled ? styles.disabledLink : null}
             >
-              Try again
+              Resend the secret code
             </a>
             {timer}
           </span>

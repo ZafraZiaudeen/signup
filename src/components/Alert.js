@@ -77,11 +77,15 @@ export default function Alert({ timer, gifBell }) {
           {negative && gifBell && (
             <img src={gifBellIcon} alt="" className={styles.gifBell} />
           )}
-
-          <span className={styles.messageText}>
-            {message ||
-              "Oops! Mind typing in the right current password for us? 😊"}
-          </span>
+          <div className={styles.messageContainer}>
+            <span className={styles.messageText}>
+              {message ||
+                "Oops! Mind typing in the right current password for us? 😊"}
+            </span>
+            {errorMessage.subText && (
+              <span className={styles.messageText}>{errorMessage.subText}</span>
+            )}
+          </div>
           <div className={styles.iconContainer}>
             <FailedIcon className={styles.alertIcon} onClick={handleClose} />
           </div>

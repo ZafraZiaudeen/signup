@@ -11,10 +11,10 @@ import ReactGA from "react-ga4";
 import CanvasBackground from "./components/CanvasBackground";
 import { useSelector, useDispatch } from "react-redux";
 import { setClientData as setClientDataRedux } from "./actions/common";
-import { getBingImage } from "./utils/utils";
+import { getBingImage, getImageForToday } from "./utils/utils";
 
 const trackingId = "G-3QHV5V4XDL";
-ReactGA.initialize(trackingId); 
+ReactGA.initialize(trackingId);
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -73,7 +73,7 @@ function App() {
 
 
   useEffect(() => {
-    
+
     // const todayImg = localStorage.getItem(`beatific-image-${todayParsed}`);
     // const tomorrowImg = localStorage.getItem(
     //   `beatific-image-${tomorrowDateParsed}`
@@ -153,26 +153,13 @@ function App() {
     //     });
     // }
 
-    getImage();
+    // getImage(); 
   }, [today, tomorrowDate, todayParsed, tomorrowDateParsed, user]);
 
   useEffect(() => {
-    // window.addEventListener("scroll", () => {
-    //   setOuterHeight(`${document.documentElement.scrollHeight}px`);
-    // });
-    // setOuterHeight(`${document.documentElement.scrollHeight}px`);
-    // window.addEventListener("resize", () =>
-    //   setOuterHeight(`${document.documentElement.scrollHeight}px`)
-    // );
-    // return () => {
-    //   window.removeEventListener("resize", () =>
-    //     setOuterHeight(`${document.documentElement.scrollHeight}px`)
-    //   );
-    //   window.removeEventListener("scroll", () => {
-    //     setOuterHeight(`${document.documentElement.scrollHeight}px`);
-    //   });
-    // };
-  }, []);
+    const todayImage = getImageForToday();
+    setBgImage(todayImage);
+  }, [])
 
   useEffect(() => {
     if (!appContainerRef.current && !overlayRef.current) return;
@@ -205,6 +192,15 @@ function App() {
       <CanvasBackground />
 
       <div className="App">
+        {/* <div
+          className="background-image"
+          style={{
+            backgroundImage: !!bgImage
+              ? `url(${bgImage})`
+              : "",
+          }}
+          ref={appContainerRef}
+        /> */}
         <div
           className="background-image"
           style={{

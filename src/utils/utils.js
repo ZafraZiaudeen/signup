@@ -1,14 +1,7 @@
 import ReactGA from "react-ga4";
-import image1 from "../images/bgImages/1.jpg";
 import image2 from "../images/bgImages/2.jpg";
 import image3 from "../images/bgImages/3.jpg";
-import image4 from "../images/bgImages/4.jpg";
-import image5 from "../images/bgImages/5.jpg";
-import image6 from "../images/bgImages/6.jpg";
-import image7 from "../images/bgImages/7.jpg";
 import image8 from "../images/bgImages/8.jpg";
-import image9 from "../images/bgImages/9.jpg";
-import image10 from "../images/bgImages/10.jpg";
 const trackingId = "G-3QHV5V4XDL";
 
 ReactGA.initialize(trackingId);
@@ -68,16 +61,9 @@ export const getBingImage = () => {
 
 export const getImageForToday = () => {
   const images = [
-    image1,
     image2,
     image3,
-    image4,
-    image5,
-    image6,
-    image7,
     image8,
-    image9,
-    image10,
   ];
   const today = new Date();
   const dayOfMonth = today.getDate();

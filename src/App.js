@@ -168,17 +168,17 @@ function App() {
     // overlayRef.current.style.height = outerHeight;
   }, [outerHeight]);
 
-  useEffect(() => {
-    let timer = setInterval(() => {
-      let localImage = localStorage.getItem(`beatific-image${todayParsed}`);
-      if (localImage) {
-        setBgImage(localImage);
-      }
-    }, 300);
-    setTimeout(() => {
-      clearInterval(timer);
-    }, 60 * 1000);
-  }, []);
+  // useEffect(() => {
+  //   let timer = setInterval(() => {
+  //     let localImage = localStorage.getItem(`beatific-image${todayParsed}`);
+  //     if (localImage) {
+  //       setBgImage(localImage);
+  //     }
+  //   }, 300);
+  //   setTimeout(() => {
+  //     clearInterval(timer);
+  //   }, 60 * 1000);
+  // }, []);
 
   const determineLoggedIn = (loggedInState) => setLoggedIn(loggedInState);
   const wantToSignUp = (goToSignUp) => setSignUp(goToSignUp);

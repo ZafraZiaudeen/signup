@@ -34,7 +34,13 @@ export default function Alert({ timer, gifBell }) {
   const handleClose = () => {
     if (alertRef.current) {
       alertRef.current.classList.add(styles.slideOut);
-      setMessage({ text: "", subText: "" });
+      dispatch(
+        updateErrorMessage({
+          message: "",
+          negative: false,
+          subText: "",
+        })
+      );
       setNegative(false);
     }
   };

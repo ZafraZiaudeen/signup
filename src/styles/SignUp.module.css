@@ -1146,6 +1146,10 @@ input[type="radio"]:hover + label .previousPrice {
     width: 100%;
   }
 
+  .otpInput {
+    width: 14px !important;
+  }
+  
   .inputAndWarning input {
     width: 100% !important;
   }
@@ -1223,6 +1227,10 @@ input[type="radio"]:hover + label .previousPrice {
     font-size: 10px;
   }
 
+  .footerLinkLogin {
+    bottom: 60px !important;
+  }
+
   .payFwdMainSection {
   }
 
@@ -1254,4 +1262,9 @@ input[type="radio"]:hover + label .previousPrice {
   pointer-events: none;
   cursor: default;
   opacity: 0.5;
+}
+
+.resendLink {
+  width: 100%;
+  font-size: 12px !important;
 }

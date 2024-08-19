@@ -51,8 +51,6 @@ import {
 import { createGAEvent } from "../utils/utils";
 import NextButton from "../components/NextButton";
 import VerificationInput from "../components/VerificationInput";
-import user from "../api/user";
-import Countdown from "react-countdown";
 
 // import io from "socket.io-client";
 
@@ -160,6 +158,7 @@ const Child = ({
   const [nextTime, setNextTime] = useState(Date.now());
   const [timer, setTimer] = useState("");
   const [tryAgainDisabled, setTryAgainDisabled] = useState(false);
+  const isMobile = window.innerWidth < 768;
 
   const dispatch = useDispatch();
 
@@ -946,7 +945,7 @@ const Child = ({
           >
             <WriteOTP steps={steps} setSteps={setSteps} />
           </span>
-          <span className={styles.subtitle}>
+          <span className={`${styles.subtitle} ${styles.resendLink}`}>
             Can't find it?{" "}
             <a
               href="#"
@@ -998,11 +997,21 @@ const Child = ({
                     value={otp}
                     onChange={setOtp}
                     numInputs={6}
-                    renderSeparator={<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+                    renderSeparator={
+                      !isMobile ? (
+                        <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      ) : (
+                        <span>&nbsp;</span>
+                      )
+                    }
                     renderInput={(props) => (
                       <input
                         {...props}
-                        style={{ width: 36, textAlign: "center" }}
+                        style={{
+                          width: isMobile ? 14 : 36,
+                          textAlign: "center",
+                          borderRadius: 0,
+                        }}
                       />
                     )}
                     containerStyle={styles.otpInputContainer}

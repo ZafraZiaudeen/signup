@@ -39,7 +39,6 @@ export default function CheckoutScreen({
     (state) => state.common
   )?.selectedSubscription;
   const couponDataRef = useRef(null);
-
   const handleCouponButton = () => {
     dispatch(toggleCoupon());
   };
@@ -181,7 +180,9 @@ export default function CheckoutScreen({
                 <div className={styles.bluePrice}>
                   <img src={badgeBlue} alt="" />
                   {!(fromSession && isTrialActive) && (
-                    <span className={styles.previousPrice}>$19</span>
+                    <span className={styles.previousPrice}>
+                      ${selectedSubscription[0].previousPrice || 19}
+                    </span>
                   )}
                   <span
                     className={

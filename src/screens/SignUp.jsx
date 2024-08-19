@@ -235,6 +235,7 @@ const Child = ({
           message:
             "Hey legend, the name box can’t be blank! Please type your name.",
           negative: true,
+          subText: "",
         })
       );
       return;
@@ -263,6 +264,7 @@ const Child = ({
         updateErrorMessage({
           message: sent?.response?.data?.message,
           negative: true,
+          subText: "",
         })
       );
     }
@@ -274,6 +276,7 @@ const Child = ({
         message:
           "Yay! 🎉 You're all set! Let's get you started on your journey to happiness! 🚀",
         negative: false,
+        subText: "",
       })
     );
     setStep("4");
@@ -289,6 +292,7 @@ const Child = ({
             message:
               "Oopsie-daisy! 🙊 The email field looks lonely. Don't forget to pop in your email to get started! 😃",
             negative: true,
+            subText: "",
           })
         );
       }
@@ -304,6 +308,7 @@ const Child = ({
             message:
               "Oh dear! 😟 Invalid email. Please double-check and retry! 📧😊",
             negative: true,
+            subText: "",
           })
         );
       } else if (email && emailRegex.test(email)) {
@@ -323,6 +328,7 @@ const Child = ({
           message:
             "Oh no! 🙈 The code field can’t be blank! Please type the code you received.",
           negative: true,
+          subText: "",
         })
       );
       return;
@@ -337,6 +343,7 @@ const Child = ({
         updateErrorMessage({
           message: "Invalid code. Please double-check and retry!",
           negative: true,
+          subText: "",
         })
       );
     }
@@ -477,6 +484,7 @@ const Child = ({
               message:
                 "This email has already been used to create an account with us!",
               negative: true,
+              subText: "",
             })
           );
           // wantToSignUp(false);
@@ -644,6 +652,7 @@ const Child = ({
           message:
             "Uh-oh! 🙈 It seems you forgot to add the magic word. A password, please add one! 🔒😅",
           negative: true,
+          subText: "",
         })
       );
       return false;
@@ -675,6 +684,7 @@ const Child = ({
         message:
           "Craft a strong Password! Blend uppercase, lowercase, digits to 8-long.",
         negative: true,
+        subText: "",
       })
     );
   };

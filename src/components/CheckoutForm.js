@@ -65,6 +65,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading, couponComponent }
               "Your card number info? 🎩✨ We need it to continue the journey! 🚀🌟",
             negative: true,
             animated: true,
+            subText: "",
           })
         );
       }
@@ -73,6 +74,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading, couponComponent }
           message: result.error.message,
           negative: true,
           animated: true,
+          subText: "",
         })
       );
     } else {

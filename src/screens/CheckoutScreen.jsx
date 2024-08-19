@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import config from "../config/config";
 import user from "../api/user";
 import extension from "../api/extension";
@@ -18,6 +18,7 @@ import { setClientData, setCouponData, toggleCoupon } from "../actions/common";
 
 import paymentsApi from "../api/payments";
 import { persistor } from "../redux/configureStore";
+import isEqual from "lodash/isEqual";
 
 export default function CheckoutScreen({
   setCheckoutPage,
@@ -37,6 +38,7 @@ export default function CheckoutScreen({
   const selectedSubscription = useSelector(
     (state) => state.common
   )?.selectedSubscription;
+  const couponDataRef = useRef(null);
 
   const handleCouponButton = () => {
     dispatch(toggleCoupon());
@@ -70,7 +72,9 @@ export default function CheckoutScreen({
   };
 
   useEffect(() => {
-    // if (!couponData?.id) return;
+    if (!couponData?.id) return;
+    if (isEqual(couponData, couponDataRef?.current)) return;
+    couponDataRef.current = couponData;
 
     (async () => {
       const newPaymentIntent = await paymentsApi.createSubscription({

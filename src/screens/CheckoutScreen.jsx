@@ -135,7 +135,7 @@ export default function CheckoutScreen({
   return (
     <div className={styles.container}>
       <section className={styles.signUpActions}>
-        <div style={{ margin: "60px 0" }}>
+        <div style={{ margin: "60px 0", marginTop: "98px" }}>
           <div className={styles.iconSection}></div>
           <span className={`${styles.checkout_greeting} ${styles.shadow}`}>
             Time to shine ✨

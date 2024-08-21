@@ -17,6 +17,9 @@ export default function Alert({ timer, gifBell }) {
   const errorMessage = useSelector((state) => state.common)?.errorMessage;
   const negative = errorMessage?.negative;
   const message = errorMessage?.message;
+  const trigger = errorMessage?.trigger
+  const firstTimerRef = useRef();
+  const secondTimerRef = useRef();
 
   const setMessage = useCallback(
     (msg) => {
@@ -42,34 +45,35 @@ export default function Alert({ timer, gifBell }) {
         })
       );
       setNegative(false);
+      clearTimeout(firstTimerRef.current);
+      clearTimeout(secondTimerRef.current);
     }
   };
 
   useEffect(() => {
     if (!message) return;
-    let firstTimer;
-    let secondTimer;
-
     const runTimer = () => {
-      firstTimer = setTimeout(() => {
+      if (firstTimerRef.current) clearTimeout(firstTimerRef.current);
+      if (secondTimerRef.current) clearTimeout(secondTimerRef.current);
+      firstTimerRef.current = setTimeout(() => {
         if (alertRef.current) {
           alertRef.current.classList.add(styles.slideOut);
         }
       }, timer || 10 * 1000);
-      secondTimer = setTimeout(() => {
+      secondTimerRef.current = setTimeout(() => {
         setMessage(null);
         setNegative(false);
-      }, timer + 1000 || 11 * 1000);
+      }, timer + 300 || 10.3 * 1000);
     };
 
     runTimer();
 
     return () => {
-      clearTimeout(firstTimer);
-      clearTimeout(secondTimer);
+      if (firstTimerRef.current) clearTimeout(firstTimerRef.current);
+      if (secondTimerRef.current) clearTimeout(secondTimerRef.current);
       runTimer();
     };
-  }, [message, setMessage, timer]);
+  }, [message, setMessage, timer, trigger]);
 
   if (message)
     return (

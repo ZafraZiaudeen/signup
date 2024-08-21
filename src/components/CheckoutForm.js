@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import Button from "./Button";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "../styles/CardElement.css";
 import { updateErrorMessage } from "../actions/common";
 import Alert from "./Alert";
@@ -30,6 +30,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading, couponComponent }
   const elements = useElements();
   const formRef = useRef();
   const dispatch = useDispatch();
+  const trigger = useSelector((state) => state.common)?.errorMessage?.trigger
 
   const CouponComponent = couponComponent;
 
@@ -66,6 +67,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading, couponComponent }
             negative: true,
             animated: true,
             subText: "",
+            trigger: !trigger
           })
         );
       }
@@ -75,6 +77,7 @@ function CheckoutForm({ clientData, handleSuccess, setLoading, couponComponent }
           negative: true,
           animated: true,
           subText: "",
+          trigger: !trigger
         })
       );
     } else {

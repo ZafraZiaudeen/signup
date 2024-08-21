@@ -3,6 +3,7 @@ const initialState = {
     text: "",
     negative: false,
     subText: "",
+    trigger: false
   },
   couponOpen: false,
   couponData: null,

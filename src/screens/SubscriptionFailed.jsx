@@ -58,11 +58,43 @@ export default function SubscriptionFailedScreen() {
     [dispatch, clientData, urlInfo.current]
   );
 
+  const handleUserCreatedByAdmin = useCallback(
+    (data) => {
+      dispatch(
+        setClientData({
+          ...clientData,
+          email: data.email,
+          name: data.name,
+        })
+      );
+
+      localStorage.setItem(
+        "signUpForm",
+        JSON.stringify({
+          email: data.email,
+          name: data.name,
+          payPeriod: "yearly",
+          planId: null,
+          step: "welcome",
+          subscriptionAmount: 47.98,
+          welcomeStep: "2",
+        })
+      );
+
+      sessionStorage.setItem("subscriptionRenew", true);
+      window.location.replace("/");
+    },
+    [clientData]
+  );
+
   const getRenewIntent = async () => {
     const email = window.location.search.split("email=")[1]?.split("&")[0];
     const token = window.location.search.split("token=")[1];
 
     const result = await payments.renewSubscription({ token, email });
+    const isByAdmin = result?.isByAdmin;
+
+    if (isByAdmin) return handleUserCreatedByAdmin(result);
 
     if (!result.clientSecret) return handleNewPaymentIntent(result);
 
@@ -87,7 +119,7 @@ export default function SubscriptionFailedScreen() {
     );
 
     sessionStorage.setItem("subscriptionRenew", true);
-    window.location.replace("/");
+    // window.location.replace("/");
   };
 
   useEffect(() => {

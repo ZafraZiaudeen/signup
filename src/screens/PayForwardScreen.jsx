@@ -38,7 +38,7 @@ export default function PayForwardScreen({
   userCreated,
 }) {
   const handleGoBack = () => {
-    setStep("3");
+    setStep("4");
   };
 
   const [subscriptions, setSubscriptions] = useState({

@@ -274,13 +274,14 @@ const Child = ({
   };
 
   const handleEmailVerifySuccess = () => {
+    localStorage.setItem("emailVerified", true);
     dispatch(
       updateErrorMessage({
         message:
           "Yay! 🎉 You're all set! Let's get you started on your journey to happiness! 🚀",
         negative: false,
         subText: "",
-        trigger: !trigger
+        trigger: !trigger,
       })
     );
     setStep("4");
@@ -297,7 +298,7 @@ const Child = ({
               "Oopsie-daisy! 🙊 The email field looks lonely. Don't forget to pop in your email to get started! 😃",
             negative: true,
             subText: "",
-            trigger: !trigger
+            trigger: !trigger,
           })
         );
       }
@@ -314,7 +315,7 @@ const Child = ({
               "Oh dear! 😟 Invalid email. Please double-check and retry! 📧😊",
             negative: true,
             subText: "",
-            trigger: !trigger
+            trigger: !trigger,
           })
         );
       } else if (email && emailRegex.test(email)) {
@@ -335,7 +336,7 @@ const Child = ({
             "Oh no! 🙈 The code field can’t be blank! Please type the code you received.",
           negative: true,
           subText: "",
-          trigger: !trigger
+          trigger: !trigger,
         })
       );
       return;
@@ -351,7 +352,7 @@ const Child = ({
           message: "Invalid code. Please double-check and retry!",
           negative: true,
           subText: "",
-          trigger: !trigger
+          trigger: !trigger,
         })
       );
     }
@@ -493,15 +494,18 @@ const Child = ({
                 "This email has already been used to create an account with us!",
               negative: true,
               subText: "",
-              trigger: !trigger
+              trigger: !trigger,
             })
           );
           // wantToSignUp(false);
         } else {
           createGAEvent("Button", "button_click", "Navigated to price plans");
+
+          if (res.data.emailVerified) {
+            return setStep("4");
+          }
           sendCode();
           // dispatch(setVerificationPopup(true));
-
           setStep("3");
         }
       })
@@ -662,7 +666,7 @@ const Child = ({
             "Uh-oh! 🙈 It seems you forgot to add the magic word. A password, please add one! 🔒😅",
           negative: true,
           subText: "",
-          trigger: !trigger
+          trigger: !trigger,
         })
       );
       return false;
@@ -695,7 +699,7 @@ const Child = ({
           "Craft a strong Password! Blend uppercase, lowercase, digits to 8-long.",
         negative: true,
         subText: "",
-        trigger: !trigger
+        trigger: !trigger,
       })
     );
   };
@@ -728,6 +732,15 @@ const Child = ({
 
     return () => clearInterval(timer);
   }, [nextTime]);
+
+  const handleBackFromPassword = () => {
+    const isEmailVerified = localStorage.getItem("emailVerified");
+    if (isEmailVerified === "true") {
+      setStep("2");
+    } else {
+      setStep("3");
+    }
+  };
 
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
 
@@ -1097,7 +1110,7 @@ const Child = ({
         <div className={styles.inputSection}>
           <button
             type="button"
-            onClick={() => setStep("3")}
+            onClick={handleBackFromPassword}
             className={styles.backBtn}
           >
             <img
@@ -1321,7 +1334,7 @@ const Child = ({
       <div className={styles.welcome}>
         <button
           type="button"
-          onClick={() => setWelcomeStep("2")}
+          onClick={() => setWelcomeStep("4")}
           className={styles.backBtn}
         >
           <img

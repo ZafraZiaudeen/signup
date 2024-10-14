@@ -246,11 +246,12 @@ const Child = ({
   };
 
   const sendCode = async (resend) => {
-    if (nextTime < Date.now()) setNextTime(Date.now() + 120000);
-
     const sent = await userApi.sendVerificationCode({ email: email });
     console.log(sent);
     if (sent.data?.success) {
+      setTimeout(() => {
+        if (nextTime < Date.now()) setNextTime(Date.now() + 120000);
+      }, 3000);
       dispatch(
         updateErrorMessage({
           message: resend

@@ -92,9 +92,9 @@ export function WriteOTP({ steps, setSteps }) {
   }, []);
 
   if (steps.stepTwo) {
-    return <>Paste the secret code?</>;
+    return <>Confirm your email</>;
   } else {
-    return <>Paste the secret code?</>;
+    return <>Confirm your email</>;
     // return (
     //   <Typewriter
     //     onInit={(typewriter) => {

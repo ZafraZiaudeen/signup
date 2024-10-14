@@ -255,9 +255,9 @@ const Child = ({
         updateErrorMessage({
           message: resend
             ? `Please check again, I’ve just resent the code to your email ${email}`
-            : "We've sent you a temporary login secret code. Please check your emails quickly! ",
+            : "I've just sent your secret confirmation code! Check your email—it'll expire in 5 minutes. ",
           negative: false,
-          subText: resend ? "" : "It expires in 5 minutes",
+          subText: resend ? "" : "",
           trigger: !trigger,
         })
       );
@@ -278,7 +278,7 @@ const Child = ({
     dispatch(
       updateErrorMessage({
         message:
-          "Yay! 🎉 You're all set! Let's get you started on your journey to happiness! 🚀",
+          "Awesomeness! 🙌🏼 Your email is confirmed. Time to continue the adventure!",
         negative: false,
         subText: "",
         trigger: !trigger,
@@ -349,7 +349,8 @@ const Child = ({
     } else {
       dispatch(
         updateErrorMessage({
-          message: "Invalid code. Please double-check and retry!",
+          message:
+            "Uh-oh! That code doesn’t seem right. Double-check and give it another try!",
           negative: true,
           subText: "",
           trigger: !trigger,

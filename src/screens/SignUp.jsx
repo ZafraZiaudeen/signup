@@ -744,6 +744,15 @@ const Child = ({
     }
   };
 
+  const getResendLinkContainerHeight = () => {
+    const badgeSection = document.querySelector("#badgeSection");
+    if (!badgeSection) return "auto";
+    const bottom = badgeSection.getBoundingClientRect().bottom;
+    const height = window.innerHeight;
+    const diff = height - bottom;
+    return diff / 2+ "px";
+  };
+
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
 
   let insideForm;
@@ -972,7 +981,8 @@ const Child = ({
           >
             <WriteOTP steps={steps} setSteps={setSteps} />
           </span>
-          <span className={`${styles.subtitle} ${styles.resendLink}`}>
+        </label>
+        {/* <span className={`${styles.subtitle} ${styles.resendLink}`}>
             Can't find it?{" "}
             <a
               href="#"
@@ -982,8 +992,7 @@ const Child = ({
               Resend the secret code
             </a>
             {timer}
-          </span>
-        </label>
+          </span> */}
 
         <div className={styles.inputSection}>
           <button
@@ -1077,7 +1086,7 @@ const Child = ({
           </div>
           <NextButton onClick={handleOtpNext} styles={styles} />
         </div>
-        <div className={styles.badgeSection}>
+        <div className={styles.badgeSection} id="badgeSection">
           <div className={styles.dot}>
             <img src={badge} className={styles.badge} alt="badge" />
           </div>
@@ -1093,6 +1102,21 @@ const Child = ({
           </div>
           <div className={styles.dot}></div>
         </div>
+
+        <span
+          className={`${styles.subtitle} ${styles.resendLink}`}
+          style={{ bottom: getResendLinkContainerHeight() }}
+        >
+          Can't find it?{" "}
+          <a
+            href="#"
+            onClick={() => sendCode(true)}
+            className={tryAgainDisabled ? styles.disabledLink : null}
+          >
+            Resend the secret code
+          </a>
+          {timer}
+        </span>
       </div>
     );
   } else if (step === "4") {
@@ -1425,7 +1449,13 @@ const Child = ({
             </h1>
             <form>{insideForm}</form>
           </section>
-          <div className={`${styles.footerLinks} ${styles.footerLinkLogin}`}>
+          <div
+            className={
+              step === "1"
+                ? `${styles.footerLinks} ${styles.footerLinkLogin}`
+                : styles.footerLinks
+            }
+          >
             <p className={styles.footerP}>HAVE AN ACCOUNT?</p>
             <p className={styles.footerP}>LOG IN</p>
             <button
@@ -1439,12 +1469,14 @@ const Child = ({
               <img src={arrowBtnSignUp} className={styles.arrow} alt="Arrow" />
             </button>
           </div>
-          <div className={`${styles.footerLinks} ${styles.disclaimer}`}>
-            <p className={styles.footerP}>
-              By continuing, you agree to Beatific Consumer Terms and Acceptable
-              Use Policy, and acknowledge our Privacy Policy.
-            </p>
-          </div>
+          {step === "1" && (
+            <div className={`${styles.footerLinks} ${styles.disclaimer}`}>
+              <p className={styles.footerP}>
+                By continuing, you agree to Beatific Consumer Terms and
+                Acceptable Use Policy, and acknowledge our Privacy Policy.
+              </p>
+            </div>
+          )}
         </>
       )}
     </div>

@@ -1296,6 +1296,11 @@ input[type="radio"]:hover + label .previousPrice {
   opacity: 0.5;
 }
 
+/* .resendLink {
+  width: 100%;
+  font-size: 14px !important;
+} */
+
 .resendLink {
   width: 100%;
   font-size: 14px !important;

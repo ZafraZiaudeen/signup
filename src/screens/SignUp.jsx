@@ -750,7 +750,7 @@ const Child = ({
     const bottom = badgeSection.getBoundingClientRect().bottom;
     const height = window.innerHeight;
     const diff = height - bottom;
-    return diff / 2+ "px";
+    return diff / 2 + "px";
   };
 
   // const handleRadioButtonChange = (e) => setSubscriptionAmount(e.target.value)
@@ -1473,7 +1473,13 @@ const Child = ({
             <div className={`${styles.footerLinks} ${styles.disclaimer}`}>
               <p className={styles.footerP}>
                 By continuing, you agree to Beatific Consumer Terms and
-                Acceptable Use Policy, and acknowledge our Privacy Policy.
+                Acceptable Use Policy, and acknowledge our{" "}
+                <a
+                  href="https://signup.beatific.co/privacy-policy"
+                  target="_blank" rel="noreferrer"
+                >
+                  Privacy Policy.
+                </a>
               </p>
             </div>
           )}

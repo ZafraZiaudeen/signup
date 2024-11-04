@@ -91,7 +91,7 @@ const PrivacyPolicy = () => {
         data we collect, please contact us at:
       </p>
 
-      <h4>Email: kusal@beatific.co</h4>
+      <h4>Email: hi@beatific.co</h4>
 
       <h4>Website: https://beatific.co</h4>
 

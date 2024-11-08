@@ -7,7 +7,7 @@ const extension = {
         openLoginPage: txId || "",
       });
       // eslint-disable-next-line no-undef
-      chrome.runtime.sendMessage("ammdbipcanekinkojengpemphaeienjk", {
+      chrome.runtime.sendMessage("gpiecjfijpkmalkpchnifdaldpmchahn", {
         command: "openPage",
         openLoginPage: txId || "",
       });

@@ -96,7 +96,25 @@ export default function SubscriptionFailedScreen() {
 
     if (isByAdmin) return handleUserCreatedByAdmin(result);
 
-    if (!result.clientSecret) return handleNewPaymentIntent(result);
+    if (!result.clientSecret) {
+      if (result.noPlan) {
+        localStorage.setItem(
+          "signUpForm",
+          JSON.stringify({
+            email: result.email,
+            name: result.name,
+            payPeriod: "yearly",
+            planId: null,
+            step: "welcome",
+            subscriptionAmount: 47.98,
+            welcomeStep: "2",
+          })
+        );
+        sessionStorage.setItem("subscriptionRenew", true);
+        return window.location.replace("/");
+      }
+      return handleNewPaymentIntent(result);
+    }
 
     dispatch(
       setClientData({
@@ -157,10 +175,12 @@ export default function SubscriptionFailedScreen() {
       <div className={styles.ovalFour} />
       <div className={styles.content}>
         <span className={`${styles.subtitle} ${styles.textFocusIn}`}>
-          Oops! It's an issue with your subscription
+          Uh-oh! It looks like there's an issue with your subscription.
+          <br />
+          No worries, we can sort this out together.
         </span>
         <span className={`${styles.title} ${styles.textFocusIn} `}>
-          Don't worry, let's fix it...
+          Let's get you back in...
         </span>
       </div>
     </div>

@@ -85,7 +85,7 @@ export default function PayForwardScreenB({
               >
                 <div className={styles.topText}>
                   UP FRONT
-                  <span className={styles.youSave}>Save 18%</span>
+                  <span className={styles.youSave}>Save 50%</span>
                 </div>
                 <span className={styles.commitPeriod}>Commit Annually</span>
                 <div

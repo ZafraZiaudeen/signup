@@ -151,7 +151,7 @@ export default function PayForwardScreen({
 
   useEffect(() => {
     (async () => {
-      if(sessionStorage.getItem("subscriptionRenew")) return;
+      if (sessionStorage.getItem("subscriptionRenew")) return;
       const saved = await userApi.saveEmail({
         name: clientData.name,
         email: clientData.email,
@@ -250,7 +250,7 @@ export default function PayForwardScreen({
                 <div className={styles.mostPopular}>Most Popular</div>
                 <div className={styles.buttonText}>
                   {sessionCoupon ? "TRY" : "COMMIT"} ANNUALLY{" "}
-                  <span className={styles.youSave}>Save 18%</span>
+                  <span className={styles.youSave}>Save 50%</span>
                 </div>
                 <div
                   className={
@@ -337,17 +337,24 @@ export default function PayForwardScreen({
                       }}
                     >
                       <img src={priceBadge} alt="badge" />
-                      <span className={styles.previousPrice}>
-                        {sessionCoupon
-                          ? `$${subscriptions.monthly[0]?.price}`
-                          : `$${subscriptions.monthly[0]?.previousPrice}`}
-                      </span>
+                      {!(subscriptions.monthly[0]?.previousPrice ===
+                        subscriptions.monthly[0]?.price) && (
+                        <span className={styles.previousPrice}>
+                          {sessionCoupon
+                            ? `$${subscriptions.monthly[0]?.price}`
+                            : `$${subscriptions.monthly[0]?.previousPrice}`}
+                        </span>
+                      )}
                       {sessionCoupon
                         ? `$${
                             subscriptions.monthly[0]?.price -
                             (subscriptions.monthly[0]?.price * percentage) / 100
                           }`
                         : `$${subscriptions.monthly[0]?.price}`}
+                      
+                      {/* just to make the price centered */}
+                      {subscriptions.monthly[0]?.previousPrice ===
+                        subscriptions.monthly[0]?.price && <span></span>}
                     </label>
                     <span className={newStyles.countdown}>
                       Deal ends in {formatTime(time)}

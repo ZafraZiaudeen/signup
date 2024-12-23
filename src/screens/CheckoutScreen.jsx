@@ -179,11 +179,13 @@ export default function CheckoutScreen({
                 <span className={styles.secureText}>100% Secure</span>
                 <div className={styles.bluePrice}>
                   <img src={badgeBlue} alt="" />
-                  {!(fromSession && isTrialActive) && (
-                    <span className={styles.previousPrice}>
-                      ${selectedSubscription[0].previousPrice || 19}
-                    </span>
-                  )}
+                  {!(fromSession && isTrialActive) &&
+                    selectedSubscription[0]?.price !==
+                      selectedSubscription[0].previousPrice && (
+                      <span className={styles.previousPrice}>
+                        ${selectedSubscription[0].previousPrice || 19}
+                      </span>
+                    )}
                   <span
                     className={
                       fromSession && isTrialActive

@@ -12,7 +12,7 @@ const extension = {
         openLoginPage: txId || "",
       });
     } catch (e) {
-      window.open("https://planner.beatific.co");
+      window.open("http://localhost:5173/");
     }
   },
 };

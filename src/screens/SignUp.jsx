@@ -477,7 +477,7 @@ const Child = ({
   const checkIfAccountExists = (email) => {
     axios
       .post(
-        config.serverUrl + "/check-account",
+        config.serverUrl + "/api/v1/check-account",
         { email },
         {
           headers: {

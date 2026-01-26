@@ -1,7 +1,7 @@
 const { REACT_APP_SERVER_URL, REACT_APP_STRIPE_SECRET, REACT_APP_ENV, REACT_APP_PRICE_ID, REACT_APP_DEV_PRICE } = process.env;
 
 module.exports = {
-  serverUrl: REACT_APP_SERVER_URL || "https://beatific-dev-backend.vercel.app",
+  serverUrl: REACT_APP_SERVER_URL,
   stripeSecret: REACT_APP_STRIPE_SECRET,
   devMode: REACT_APP_ENV === "development",
   devPrice: REACT_APP_DEV_PRICE,

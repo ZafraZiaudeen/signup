@@ -12,7 +12,8 @@ const extension = {
         openLoginPage: txId || "",
       });
     } catch (e) {
-      window.open("http://localhost:5173/");
+        const url = process.env.REACT_APP_EXTENSION_URL || "http://localhost:5173/";
+        window.open(url);
     }
   },
 };

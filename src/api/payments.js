@@ -5,7 +5,7 @@ const payments = {
   createCustomer: (data) =>
     new Promise(async (resolve) => {
       let result = await axios.post(
-        config.serverUrl + "/stripe/create-customer",
+        config.serverUrl + "/api/v1/stripe/create-customer",
         data
       );
       resolve(result);

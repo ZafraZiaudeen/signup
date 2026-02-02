@@ -14,7 +14,7 @@ const extension = {
     } catch (e) {
       const base = process.env.REACT_APP_EXTENSION_URL || "http://localhost:5173";
       const url = base.replace(/\/$/, "") + "/#/sign-in";
-      window.open(url);
+       window.location.href = url;
     }
   },
 };

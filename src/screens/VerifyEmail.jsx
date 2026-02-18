@@ -162,7 +162,7 @@ function VerifyEmail() {
     setLinkSent(true);
     const result = await axios.post(
       `${config.serverUrl}/api/v1/users/resend-email`,
-      { email }
+      { email: email.toLowerCase() }
     );
   };
 
@@ -185,7 +185,7 @@ function VerifyEmail() {
           console.log("Something is missing");
         }
 
-        const result = await axios.post(url, { email, token });
+       const result = await axios.post(url, { email: email.toLowerCase(), token });
         setLoading(false);
 
         const data = result.data;

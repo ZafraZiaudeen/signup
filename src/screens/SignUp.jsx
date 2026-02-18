@@ -246,7 +246,7 @@ const Child = ({
   };
 
   const sendCode = async (resend) => {
-    const sent = await userApi.sendVerificationCode({ email: email });
+      const sent = await userApi.sendVerificationCode({ email: email.toLowerCase() });
     console.log(sent);
     if (sent.data?.success) {
       setTimeout(() => {
@@ -478,7 +478,7 @@ const Child = ({
     axios
       .post(
         config.serverUrl + "/api/v1/common/check-account",
-        { email },
+               { email: email.toLowerCase() },
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
